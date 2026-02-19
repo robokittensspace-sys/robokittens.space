@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>RoboKittens — Coming Soon</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+    .container {
+      max-width: 520px;
+      padding: 20px;
+    }
+    h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+    p {
+      opacity: 0.85;
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+    .buttons a {
+      display: inline-block;
+      margin: 8px;
+      padding: 12px 22px;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #fff;
+      background: #22c55e;
+    }
+    .lang {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+    .lang button {
+      margin-left: 5px;
+      background: none;
+      border: 1px solid #fff;
+      color: #fff;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="lang">
+  <button onclick="setLang('ru')">RU</button>
+  <button onclick="setLang('en')">EN</button>
+  <button onclick="setLang('pt')">PT</button>
+</div>
+
+<div class="container">
+  <h1 id="title">🚧 Сайт в разработке</h1>
+  <p id="text">
+    RoboKittens — курсы робототехники для детей в Порту<br>
+    Следите за нами в соцсетях
+  </p>
+
+  <div class="buttons">
+    <a href="https://t.me/your_channel" target="_blank">Telegram</a>
+    <a href="https://instagram.com/your_profile" target="_blank">Instagram</a>
+  </div>
+</div>
+
+<script>
+  const content = {
+    ru: {
+      title: "🚧 Сайт в разработке",
+      text: "RoboKittens — курсы робототехники для детей в Порту<br>Следите за нами в соцсетях"
+    },
+    en: {
+      title: "🚧 Website under construction",
+      text: "RoboKittens — robotics courses for kids in Porto<br>Follow us on social media"
+    },
+    pt: {
+      title: "🚧 Site em desenvolvimento",
+      text: "RoboKittens — cursos de robótica para crianças no Porto<br>Siga-nos nas redes sociais"
+    }
+  };
+
+  function setLang(lang) {
+    document.getElementById("title").innerText = content[lang].title;
+    document.getElementById("text").innerHTML = content[lang].text;
+  }
+</script>
+
+</body>
+</html>
