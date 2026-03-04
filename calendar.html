@@ -20,7 +20,6 @@
       --shadow: 0 18px 60px rgba(0,0,0,0.10);
       --shadow2: 0 12px 28px rgba(30,41,59,0.22);
       --radius: 18px;
-      --pill: rgba(30,41,59,0.06);
     }
 
     *{ box-sizing:border-box; }
@@ -133,13 +132,13 @@
       background: rgba(255,255,255,0.55);
       border: 1px solid rgba(15,23,42,0.10);
       color: var(--text);
-      font-weight: 700;
+      font-weight: 800;
     }
     select{
       border: 0;
       background: transparent;
       outline: none;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--text);
       cursor: pointer;
     }
@@ -195,9 +194,10 @@
       gap: 8px;
       margin-bottom: 8px;
       color: rgba(51,65,85,0.95);
-      font-weight: 800;
+      font-weight: 900;
       font-size: 12px;
       text-align:center;
+      user-select:none;
     }
 
     .days{
@@ -206,23 +206,28 @@
       gap: 8px;
     }
 
+    /* day cell — clearer */
     .day{
-      min-height: 92px;
+      min-height: 108px;
       border-radius: 14px;
-      background: rgba(255,255,255,0.65);
-      border: 1px solid rgba(15,23,42,0.08);
+      background: rgba(255,255,255,0.82);
+      border: 1.5px solid rgba(15,23,42,0.14);
       padding: 10px;
       text-align:left;
       cursor:pointer;
       transition: box-shadow .2s ease, transform .06s ease;
       position: relative;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.04);
     }
     .day:hover{ box-shadow: 0 14px 28px rgba(0,0,0,0.08); }
     .day:active{ transform: scale(0.995); }
 
     .day.muted{
-      opacity: 0.45;
+      opacity: 0.35;
       cursor: default;
+      background: rgba(255,255,255,0.60);
+      border-color: rgba(15,23,42,0.10);
+      box-shadow: none;
     }
     .day.muted:hover{ box-shadow: none; }
     .day.muted:active{ transform:none; }
@@ -235,6 +240,7 @@
       font-weight: 900;
       font-size: 12px;
       color: rgba(15,23,42,0.95);
+      user-select:none;
     }
 
     .mini{
@@ -244,25 +250,34 @@
       gap: 6px;
     }
 
+    /* preview chip: time + name (single line) */
     .chip{
       display:flex;
-      justify-content: space-between;
-      gap: 6px;
       align-items:center;
+      gap: 6px;
       border-radius: 10px;
       padding: 6px 8px;
       background: rgba(30,41,59,0.06);
       border: 1px solid rgba(15,23,42,0.08);
       font-size: 11px;
-      color: rgba(30,41,59,0.95);
-      font-weight: 800;
-    }
-
-    .chip small{
       font-weight: 900;
-      color: rgba(51,65,85,0.95);
-      opacity: .95;
+      color: rgba(30,41,59,0.95);
+    }
+    .chip .t{
+      flex: 0 0 auto;
+      opacity: 0.95;
+    }
+    .chip .n{
+      flex: 1 1 auto;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
       white-space: nowrap;
+      opacity: 0.95;
+    }
+    .chip.more{
+      justify-content:center;
+      font-weight: 900;
     }
 
     .side{
@@ -373,7 +388,6 @@
     }
     .btn:hover{ box-shadow: 0 18px 40px rgba(30,41,59,0.22); }
     .btn:active{ transform: scale(0.99); }
-
     .btn[disabled]{
       opacity: .55;
       cursor:not-allowed;
@@ -476,12 +490,6 @@
       height: auto;
       display:block;
     }
-
-    .sr-only{
-      position:absolute; width:1px; height:1px;
-      padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0);
-      white-space:nowrap; border:0;
-    }
   </style>
 </head>
 
@@ -529,9 +537,7 @@
         <div class="calendar" aria-label="Calendar">
           <div class="dow" id="dowRow"></div>
           <div class="days" id="daysGrid"></div>
-          <div class="hint" id="hintText">
-            Tip: click a day to see classes on the right.
-          </div>
+          <div class="hint" id="hintText">Tip: click a day to see classes on the right.</div>
         </div>
 
         <div class="side" aria-label="Day details">
@@ -561,9 +567,10 @@
       <h3 id="detailsTitle">Class details</h3>
       <p id="detailsText">…</p>
       <div class="photo" id="detailsPhotoWrap">
-        <img id="detailsPhoto" src="class-photo.jpg" alt="Class photo" onerror="this.style.display='none'; document.getElementById('detailsPhotoWrap').style.display='none';">
+        <img id="detailsPhoto" src="class-photo.jpg" alt="Class photo"
+             onerror="this.style.display='none'; document.getElementById('detailsPhotoWrap').style.display='none';">
       </div>
-      <div class="actions">
+      <div class="modal-actions actions">
         <button class="close" type="button" onclick="closeDetails()" id="detailsClose">Close</button>
         <button class="go" type="button" onclick="openBookingFromDetails()" id="detailsBook">Book</button>
       </div>
@@ -574,9 +581,7 @@
   <div class="modal-backdrop" id="bookingBackdrop" role="dialog" aria-modal="true" aria-labelledby="bookingTitle">
     <div class="modal">
       <h3 id="bookingTitle">Booking request</h3>
-      <p id="bookingText">
-        Leave your contacts and we’ll confirm the spot.
-      </p>
+      <p id="bookingText">Leave your contacts and we’ll confirm the spot.</p>
 
       <div class="row">
         <div>
@@ -602,11 +607,9 @@
         <textarea id="inpNotes" placeholder="Any details: preferred time, language, etc."></textarea>
       </div>
 
-      <div class="hint" id="bookingHint">
-        This is a lightweight preview. We can later connect it to a real booking system.
-      </div>
+      <div class="hint" id="bookingHint">This is a lightweight preview. We can later connect it to a real booking system.</div>
 
-      <div class="actions">
+      <div class="modal-actions actions">
         <button class="close" type="button" onclick="closeBooking()" id="bookingClose">Close</button>
         <button class="go" type="button" onclick="submitBooking()" id="bookingSend">Send</button>
       </div>
@@ -615,7 +618,7 @@
 
   <script>
     // -----------------------------
-    // Content (EN/PT/RU)
+    // i18n
     // -----------------------------
     const i18n = {
       en: {
@@ -631,17 +634,8 @@
         emailBtn: "Email",
         dow: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
         monthNames: ["January","February","March","April","May","June","July","August","September","October","November","December"],
-        labels: {
-          spots: "spots",
-          full: "full",
-          details: "Details",
-          book: "Book"
-        },
-        details: {
-          title: "Class details",
-          close: "Close",
-          book: "Book"
-        },
+        labels: { spots:"spots", full:"full", details:"Details", book:"Book", more:"more" },
+        details: { title:"Class details", close:"Close", book:"Book" },
         booking: {
           title: "Booking request",
           text: "Leave your contacts and we’ll confirm the spot.",
@@ -678,17 +672,8 @@
         emailBtn: "Email",
         dow: ["Seg","Ter","Qua","Qui","Sex","Sáb","Dom"],
         monthNames: ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"],
-        labels: {
-          spots: "vagas",
-          full: "lotado",
-          details: "Detalhes",
-          book: "Inscrever"
-        },
-        details: {
-          title: "Detalhes da aula",
-          close: "Fechar",
-          book: "Inscrever"
-        },
+        labels: { spots:"vagas", full:"lotado", details:"Detalhes", book:"Inscrever", more:"mais" },
+        details: { title:"Detalhes da aula", close:"Fechar", book:"Inscrever" },
         booking: {
           title: "Pedido de inscrição",
           text: "Deixa os teus contactos e confirmamos a vaga.",
@@ -725,17 +710,8 @@
         emailBtn: "Email",
         dow: ["Пн","Вт","Ср","Чт","Пт","Сб","Вс"],
         monthNames: ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"],
-        labels: {
-          spots: "мест",
-          full: "нет мест",
-          details: "Подробнее",
-          book: "Записаться"
-        },
-        details: {
-          title: "Детали занятия",
-          close: "Закрыть",
-          book: "Записаться"
-        },
+        labels: { spots:"мест", full:"нет мест", details:"Подробнее", book:"Записаться", more:"ещё" },
+        details: { title:"Детали занятия", close:"Закрыть", book:"Записаться" },
         booking: {
           title: "Заявка на запись",
           text: "Оставь контакты — мы подтвердим место.",
@@ -762,8 +738,6 @@
 
     // -----------------------------
     // Demo schedule data (edit later)
-    // date format: YYYY-MM-DD
-    // branch: gaia / matosinhos
     // -----------------------------
     const schedule = [
       {
@@ -837,18 +811,22 @@
     // -----------------------------
     function pad2(n){ return String(n).padStart(2, "0"); }
     function fmtDateISO(y, m, d){ return `${y}-${pad2(m+1)}-${pad2(d)}`; }
+    function startOfMonth(y, m){ return new Date(y, m, 1); }
+    function daysInMonth(y, m){ return new Date(y, m+1, 0).getDate(); }
 
-    function startOfMonth(y, m){
-      return new Date(y, m, 1);
-    }
-    function daysInMonth(y, m){
-      return new Date(y, m+1, 0).getDate();
-    }
-
-    // make Monday=0 .. Sunday=6
+    // Monday=0 .. Sunday=6
     function weekdayMon0(date){
       const wd = date.getDay(); // Sun=0..Sat=6
       return (wd + 6) % 7;
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
     }
 
     function setActiveLangButtons(){
@@ -868,70 +846,30 @@
       return "en";
     }
 
-    function setLang(lang){
-      currentLang = i18n[lang] ? lang : "en";
-      localStorage.setItem("rk_lang", currentLang);
-      document.documentElement.lang = currentLang;
+    function eventsForDate(branch, isoDate){
+      return schedule.filter(e => e.branch === branch && e.date === isoDate);
+    }
 
+    // -----------------------------
+    // Render weekday header rotated for month
+    // -----------------------------
+    function renderDow(firstWd){
       const t = i18n[currentLang];
+      const dowRow = document.getElementById("dowRow");
+      dowRow.innerHTML = "";
 
-      document.getElementById("backLink").innerText = t.back;
-      document.getElementById("pageTitle").innerText = t.pageTitle;
-      document.getElementById("pageSubtitle").innerText = t.pageSubtitle;
-      document.getElementById("branchLabel").innerText = t.branchLabel;
-      document.getElementById("hintText").innerText = t.hint;
-      document.getElementById("panelTitle").innerText = t.panelTitle;
-      document.getElementById("sideHint").innerText = t.sideHint;
-      document.getElementById("contactBtn").innerText = t.contactBtn;
-      document.getElementById("emailBtn").innerText = t.emailBtn;
-
-      // DOW
-      const dow = document.getElementById("dowRow");
-      dow.innerHTML = "";
-      t.dow.forEach(x=>{
-        const d = document.createElement("div");
-        d.innerText = x;
-        dow.appendChild(d);
+      // rotate labels so day 1 sits under first column
+      const rotated = t.dow.slice(firstWd).concat(t.dow.slice(0, firstWd));
+      rotated.forEach(label=>{
+        const el = document.createElement("div");
+        el.innerText = label;
+        dowRow.appendChild(el);
       });
-
-      // Modals text
-      document.getElementById("detailsClose").innerText = t.details.close;
-      document.getElementById("detailsBook").innerText = t.details.book;
-
-      document.getElementById("bookingTitle").innerText = t.booking.title;
-      document.getElementById("bookingText").innerText = t.booking.text;
-      document.getElementById("lblParent").innerText = t.booking.parent;
-      document.getElementById("lblChildAge").innerText = t.booking.childAge;
-      document.getElementById("lblPhone").innerText = t.booking.phone;
-      document.getElementById("lblEmail").innerText = t.booking.email;
-      document.getElementById("lblNotes").innerText = t.booking.notes;
-      document.getElementById("bookingHint").innerText = t.booking.hint;
-      document.getElementById("bookingClose").innerText = t.booking.close;
-      document.getElementById("bookingSend").innerText = t.booking.send;
-
-      document.getElementById("inpParent").placeholder = t.booking.placeholders.parent;
-      document.getElementById("inpAge").placeholder = t.booking.placeholders.age;
-      document.getElementById("inpPhone").placeholder = t.booking.placeholders.phone;
-      document.getElementById("inpEmail").placeholder = t.booking.placeholders.email;
-      document.getElementById("inpNotes").placeholder = t.booking.placeholders.notes;
-
-      setActiveLangButtons();
-      renderMonthTitle();
-      renderCalendar();
-      renderSide();
     }
 
     function renderMonthTitle(){
       const t = i18n[currentLang];
       document.getElementById("monthTitle").innerText = `${t.monthNames[viewMonth]} ${viewYear}`;
-    }
-
-    function eventsForDate(branch, isoDate){
-      return schedule.filter(e => e.branch === branch && e.date === isoDate);
-    }
-
-    function hasEvents(branch, isoDate){
-      return eventsForDate(branch, isoDate).length > 0;
     }
 
     function renderCalendar(){
@@ -942,14 +880,9 @@
       const firstWd = weekdayMon0(first);
       const dim = daysInMonth(viewYear, viewMonth);
 
-      // fill leading blanks
-      for(let i=0;i<firstWd;i++){
-        const blank = document.createElement("div");
-        blank.className = "day muted";
-        blank.innerHTML = `<div class="daynum"> </div>`;
-        grid.appendChild(blank);
-      }
+      renderDow(firstWd);
 
+      // day 1 is always in first column (no leading blanks)
       for(let d=1; d<=dim; d++){
         const iso = fmtDateISO(viewYear, viewMonth, d);
 
@@ -957,24 +890,30 @@
         cell.className = "day";
         if(selectedDate === iso) cell.classList.add("selected");
 
-        const minis = eventsForDate(currentBranch, iso).slice(0,2);
+        const events = eventsForDate(currentBranch, iso);
+        const minis = events.slice(0, 3);
+
         const miniHtml = minis.map(ev=>{
-          return `<div class="chip">
-                    <span>${ev.time} • ${escapeHtml(ev.name[currentLang] || ev.name.en)}</span>
-                    <small>${ev.spotsLeft > 0 ? ev.spotsLeft + " " + i18n[currentLang].labels.spots : i18n[currentLang].labels.full}</small>
-                  </div>`;
+          const name = (ev.name[currentLang] || ev.name.en);
+          return `
+            <div class="chip">
+              <span class="t">${escapeHtml(ev.time)}</span>
+              <span class="n">${escapeHtml(name)}</span>
+            </div>
+          `;
         }).join("");
+
+        const moreCount = Math.max(0, events.length - minis.length);
+        const moreWord = i18n[currentLang].labels.more || "more";
+        const moreHtml = moreCount > 0 ? `<div class="chip more">+${moreCount} ${moreWord}</div>` : "";
 
         cell.innerHTML = `
           <div class="daynum">${d}</div>
-          <div class="mini">${miniHtml}</div>
+          <div class="mini">${miniHtml}${moreHtml}</div>
         `;
 
-        if(hasEvents(currentBranch, iso)){
-          // make it feel clickable even more
-          cell.style.borderColor = "rgba(30,41,59,0.18)";
-        } else {
-          cell.style.opacity = "0.9";
+        if(events.length > 0){
+          cell.style.borderColor = "rgba(30,41,59,0.20)";
         }
 
         cell.addEventListener("click", ()=>{
@@ -985,6 +924,15 @@
         });
 
         grid.appendChild(cell);
+      }
+
+      // trailing blanks to complete last row
+      const remainder = (7 - (dim % 7)) % 7;
+      for(let i=0;i<remainder;i++){
+        const blank = document.createElement("div");
+        blank.className = "day muted";
+        blank.innerHTML = `<div class="daynum"> </div>`;
+        grid.appendChild(blank);
       }
     }
 
@@ -999,10 +947,13 @@
       }
 
       const dObj = new Date(selectedDate + "T00:00:00");
-      const nice = dObj.toLocaleDateString(currentLang === "ru" ? "ru-RU" : (currentLang === "pt" ? "pt-PT" : "en-GB"), {
-        weekday: "long", year: "numeric", month: "long", day: "numeric"
-      });
-      document.getElementById("panelSub").innerText = `${nice} • ${currentBranch === "gaia" ? "Gaia" : "Matosinhos"}`;
+      const nice = dObj.toLocaleDateString(
+        currentLang === "ru" ? "ru-RU" : (currentLang === "pt" ? "pt-PT" : "en-GB"),
+        { weekday: "long", year: "numeric", month: "long", day: "numeric" }
+      );
+
+      document.getElementById("panelSub").innerText =
+        `${nice} • ${currentBranch === "gaia" ? "Gaia" : "Matosinhos"}`;
 
       const evs = eventsForDate(currentBranch, selectedDate);
 
@@ -1053,6 +1004,50 @@
       });
     }
 
+    function setLang(lang){
+      currentLang = i18n[lang] ? lang : "en";
+      localStorage.setItem("rk_lang", currentLang);
+      document.documentElement.lang = currentLang;
+
+      const t = i18n[currentLang];
+
+      document.getElementById("backLink").innerText = t.back;
+      document.getElementById("pageTitle").innerText = t.pageTitle;
+      document.getElementById("pageSubtitle").innerText = t.pageSubtitle;
+      document.getElementById("branchLabel").innerText = t.branchLabel;
+      document.getElementById("hintText").innerText = t.hint;
+      document.getElementById("panelTitle").innerText = t.panelTitle;
+      document.getElementById("sideHint").innerText = t.sideHint;
+      document.getElementById("contactBtn").innerText = t.contactBtn;
+      document.getElementById("emailBtn").innerText = t.emailBtn;
+
+      // modals
+      document.getElementById("detailsClose").innerText = t.details.close;
+      document.getElementById("detailsBook").innerText = t.details.book;
+
+      document.getElementById("bookingTitle").innerText = t.booking.title;
+      document.getElementById("bookingText").innerText = t.booking.text;
+      document.getElementById("lblParent").innerText = t.booking.parent;
+      document.getElementById("lblChildAge").innerText = t.booking.childAge;
+      document.getElementById("lblPhone").innerText = t.booking.phone;
+      document.getElementById("lblEmail").innerText = t.booking.email;
+      document.getElementById("lblNotes").innerText = t.booking.notes;
+      document.getElementById("bookingHint").innerText = t.booking.hint;
+      document.getElementById("bookingClose").innerText = t.booking.close;
+      document.getElementById("bookingSend").innerText = t.booking.send;
+
+      document.getElementById("inpParent").placeholder = t.booking.placeholders.parent;
+      document.getElementById("inpAge").placeholder = t.booking.placeholders.age;
+      document.getElementById("inpPhone").placeholder = t.booking.placeholders.phone;
+      document.getElementById("inpEmail").placeholder = t.booking.placeholders.email;
+      document.getElementById("inpNotes").placeholder = t.booking.placeholders.notes;
+
+      setActiveLangButtons();
+      renderMonthTitle();
+      renderCalendar();
+      renderSide();
+    }
+
     function prevMonth(){
       viewMonth--;
       if(viewMonth < 0){ viewMonth = 11; viewYear--; }
@@ -1067,15 +1062,6 @@
       renderCalendar();
     }
 
-    function escapeHtml(str){
-      return String(str)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-    }
-
     // -----------------------------
     // Modals: Details
     // -----------------------------
@@ -1088,7 +1074,6 @@
       document.getElementById("detailsText").innerText =
         `${ev.time} • ${ev.name[currentLang] || ev.name.en}\n\n${ev.desc[currentLang] || ev.desc.en}\n\nAge: ${ev.age} • ${ev.durationMin} min`;
 
-      // photo
       const img = document.getElementById("detailsPhoto");
       const wrap = document.getElementById("detailsPhotoWrap");
       img.style.display = "block";
@@ -1115,9 +1100,7 @@
     function openBooking(eventId){
       selectedEventId = eventId;
       const ev = schedule.find(x => x.id === eventId);
-      const t = i18n[currentLang];
 
-      // prefill message in notes (optional)
       document.getElementById("inpNotes").value =
         `${ev.name[currentLang] || ev.name.en} • ${ev.date} ${ev.time} • Branch: ${ev.branch}`;
 
@@ -1140,7 +1123,6 @@
       const email = document.getElementById("inpEmail").value.trim();
       const notes = document.getElementById("inpNotes").value.trim();
 
-      // Very light validation
       if(!parent || (!phone && !email)){
         alert(currentLang === "ru"
           ? "Пожалуйста, укажи имя и телефон/Email."
@@ -1150,32 +1132,28 @@
         return;
       }
 
-      // For now: open a prefilled email (no backend)
       const subject = encodeURIComponent("RoboKittens booking request");
-      const body =
-        encodeURIComponent(
-          `Booking request\n\n` +
-          `Class: ${ev.name[currentLang] || ev.name.en}\n` +
-          `Date/time: ${ev.date} ${ev.time}\n` +
-          `Branch: ${ev.branch}\n` +
-          `Spots left: ${ev.spotsLeft}\n\n` +
-          `Parent: ${parent}\n` +
-          `Child age: ${age}\n` +
-          `Phone/WhatsApp: ${phone}\n` +
-          `Email: ${email}\n\n` +
-          `Notes:\n${notes}\n`
-        );
+      const body = encodeURIComponent(
+        `Booking request\n\n` +
+        `Class: ${ev.name[currentLang] || ev.name.en}\n` +
+        `Date/time: ${ev.date} ${ev.time}\n` +
+        `Branch: ${ev.branch}\n` +
+        `Spots left: ${ev.spotsLeft}\n\n` +
+        `Parent: ${parent}\n` +
+        `Child age: ${age}\n` +
+        `Phone/WhatsApp: ${phone}\n` +
+        `Email: ${email}\n\n` +
+        `Notes:\n${notes}\n`
+      );
 
       closeBooking();
 
-      // quick confirmation modal using details modal (reuse)
       document.getElementById("detailsTitle").innerText = t.booking.sentTitle;
       document.getElementById("detailsText").innerText = t.booking.sentText;
       document.getElementById("detailsPhotoWrap").style.display = "none";
       document.getElementById("detailsBackdrop").style.display = "flex";
       document.body.style.overflow = "hidden";
 
-      // open email client
       window.location.href = `mailto:robokittens.space@gmail.com?subject=${subject}&body=${body}`;
     }
 
