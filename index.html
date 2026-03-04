@@ -1,103 +1,241 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>RoboKittens — Coming Soon</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="RoboKittens STEAM Space — пространство, где идеи становятся реальностью. Сайт в разработке." />
+
+  <!-- Optional: favicon -->
+  <link rel="icon" href="favicon.ico" />
+
   <style>
-    body {
-      margin: 0;
+    :root{
+      --bg1:#faf6ed;
+      --bg2:#f3efe4;
+      --text:#0f172a;
+      --muted:#334155;
+      --card: rgba(255,255,255,0.65);
+      --border: rgba(15,23,42,0.10);
+      --btn1:#1e293b;
+      --btn2:#334155;
+      --ring: rgba(30,41,59,0.25);
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
       font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #faf6ed, #f3efe4);
-      color: linear-gradient(135deg, #1e293b, #334155);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      text-align: center;
+      background: linear-gradient(135deg, var(--bg1), var(--bg2));
+      color: var(--text);
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 24px;
+      text-align:center;
     }
-    .container {
-      max-width: 520px;
-      padding: 20px;
+
+    .wrap{
+      width:100%;
+      max-width: 740px;
+      position: relative;
     }
-    h1 {
-      font-size: 32px;
-      margin-bottom: 10px;
+
+    .lang{
+      position:absolute;
+      top:0;
+      right:0;
+      display:flex;
+      gap:8px;
     }
-    p {
-      opacity: 0.85;
-      margin-bottom: 25px;
-      line-height: 1.5;
+
+    .lang button{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,0.55);
+      color: var(--muted);
+      padding: 8px 10px;
+      border-radius: 10px;
+      cursor:pointer;
+      transition: transform .06s ease, box-shadow .2s ease, background .2s ease;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
-    .buttons a {
-      display: inline-block;
-      margin: 8px;
-      padding: 12px 22px;
-      border-radius: 8px;
-      text-decoration: none;
-      color:  #fff;
-      /*linear-gradient(135deg, #1e293b, #334155);*/
-      background: linear-gradient(135deg, #1e293b, #334155);/* #22c55e;*/
+    .lang button:hover{ box-shadow: 0 8px 22px rgba(0,0,0,0.08); }
+    .lang button:active{ transform: scale(0.98); }
+    .lang button.active{
+      background: rgba(30,41,59,0.08);
+      border-color: rgba(30,41,59,0.22);
+      color: var(--text);
     }
-    .lang {
-      position: absolute;
-      top: 20px;
-      right: 20px;
+
+    .card{
+      margin-top: 52px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px 22px;
+      box-shadow: 0 18px 60px rgba(0,0,0,0.10);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
-    .lang button {
-      margin-left: 5px;
-      background: none;
-      border: 1px solid #fff;
-      color: linear-gradient(135deg, #1e293b, #334155); /*#fff;*/
-      padding: 5px 10px;
-      cursor: pointer;
+
+    .logo{
+      width: 320px;
+      max-width: 85%;
+      margin: 6px auto 18px;
+      display:block;
+    }
+
+    h1{
+      margin: 10px 0 10px;
+      font-size: clamp(24px, 4vw, 34px);
+      letter-spacing: -0.02em;
+    }
+
+    p{
+      margin: 0 auto 18px;
+      max-width: 620px;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 16px;
+      opacity: 0.95;
+    }
+
+    .buttons{
+      display:flex;
+      flex-wrap: wrap;
+      justify-content:center;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .buttons a{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+      padding: 12px 18px;
+      border-radius: 12px;
+      text-decoration:none;
+      color:#fff;
+      background: linear-gradient(135deg, var(--btn1), var(--btn2));
+      box-shadow: 0 12px 28px rgba(30,41,59,0.25);
+      border: 1px solid rgba(255,255,255,0.12);
+      transition: transform .06s ease, box-shadow .2s ease, opacity .2s ease;
+      min-width: 150px;
+    }
+    .buttons a:hover{ box-shadow: 0 18px 40px rgba(30,41,59,0.30); }
+    .buttons a:active{ transform: scale(0.99); }
+
+    .note{
+      margin-top: 18px;
+      font-size: 13px;
+      color: rgba(51,65,85,0.9);
+    }
+
+    .sr-only{
+      position:absolute; width:1px; height:1px;
+      padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0);
+      white-space:nowrap; border:0;
     }
   </style>
 </head>
+
 <body>
+  <div class="wrap">
+    <div class="lang" aria-label="Language switcher">
+      <button id="btn-ru" onclick="setLang('ru')" type="button">RU</button>
+      <button id="btn-en" onclick="setLang('en')" type="button">EN</button>
+      <button id="btn-pt" onclick="setLang('pt')" type="button">PT</button>
+    </div>
 
-<div class="lang">
-  <button onclick="setLang('ru')">RU</button>
-  <button onclick="setLang('en')">EN</button>
-  <button onclick="setLang('pt')">PT</button>
-</div>
+    <div class="card">
+      <img class="logo" src="logo.png" alt="RoboKittens logo" />
 
-<div class="container">
-  <img src="logo.png"
-     alt="RoboKittens logo"
-     style="width:300px; max-width:80%; margin-bottom:30px;">
-  <h1 id="title">🚧 Website under construction</h1>
-  <p id="text">
-    STEAM Space RoboKittens is more than just classes.<br>It is a space where ideas come to life.<br>We are creating STEAM Space as an educational concept where learning is not about memorizing, but about trying, making mistakes, asking questions, and finding your own solutions.<br>
-  </p>
+      <h1 id="title">🚧 Website under construction</h1>
+      <p id="text">
+        STEAM Space RoboKittens is more than just classes.<br>
+        It is a space where ideas come to life.<br>
+        We are creating STEAM Space as an educational concept where learning is not about memorizing, but about trying, making mistakes, asking questions, and finding your own solutions.
+      </p>
 
-  <div class="buttons">
-    <a href="https://t.me/RoboKittens" target="_blank">Telegram</a>
-    <a href="https://www.instagram.com/robokittens.space?igsh=MTIz" target="_blank">Instagram</a>
+      <div class="buttons">
+        <a href="https://t.me/RoboKittens" target="_blank" rel="noopener">Telegram</a>
+        <a href="https://www.instagram.com/robokittens.space?igsh=MTIz" target="_blank" rel="noopener">Instagram</a>
+        <!-- Optional -->
+        <a href="mailto:hello@robokittens.space" rel="noopener">Email</a>
+      </div>
+
+      <div class="note" id="note">
+        Мы скоро откроемся. Подпишись, чтобы не пропустить старт ✨
+      </div>
+    </div>
   </div>
-</div>
 
-<script>
-  const content = {
-    ru: {
-      title: "🚧 Сайт в разработке",
-      text: "STEAM Space RoboKittens — это больше, чем занятия.<br>Это пространство, где идеи становятся реальностью.<br>Мы создаём STEAM Space как образовательную концепцию, в которой обучение — не про «зубрить», а про пробовать, ошибаться, задавать вопросы и находить собственные решения."
-    },
-    en: {
-      title: "🚧 Website under construction",
-      text: "STEAM Space RoboKittens is more than just classes.<br>It is a space where ideas come to life.<br>We are creating STEAM Space as an educational concept where learning is not about memorizing, but about trying, making mistakes, asking questions, and finding your own solutions."
-    },
-    pt: {
-      title: "🚧 Site em desenvolvimento",
-      text: "STEAM Space RoboKittens é mais do que apenas aulas.<br>É um espaço onde as ideias se tornam realidade.<br>Estamos a criar o STEAM Space como um conceito educativo, onde aprender não é memorizar, mas sim experimentar, errar, fazer perguntas e encontrar soluções próprias."
+  <script>
+    const content = {
+      ru: {
+        title: "🚧 Сайт в разработке",
+        text:
+          "STEAM Space RoboKittens — это больше, чем занятия.<br>" +
+          "Это пространство, где идеи становятся реальностью.<br>" +
+          "Мы создаём STEAM Space как образовательную концепцию, в которой обучение — не про «зубрить», " +
+          "а про пробовать, ошибаться, задавать вопросы и находить собственные решения.",
+        note: "Мы скоро откроемся. Подпишись, чтобы не пропустить старт ✨",
+        htmlLang: "ru"
+      },
+      en: {
+        title: "🚧 Website under construction",
+        text:
+          "RoboKittens STEAM Space is more than just classes.<br>" +
+          "It’s a space where ideas come to life.<br>" +
+          "We’re building an educational concept where learning isn’t memorizing — it’s experimenting, making mistakes, asking questions, and finding your own solutions.",
+        note: "We’re launching soon. Follow us to catch the opening ✨",
+        htmlLang: "en"
+      },
+      pt: {
+        title: "🚧 Site em desenvolvimento",
+        text:
+          "O STEAM Space RoboKittens é mais do que apenas aulas.<br>" +
+          "É um espaço onde as ideias ganham vida.<br>" +
+          "Estamos a criar um conceito educativo em que aprender não é memorizar — é experimentar, errar, fazer perguntas e encontrar as suas próprias soluções.",
+        note: "Vamos abrir em breve. Segue-nos para não perderes o lançamento ✨",
+        htmlLang: "pt"
+      }
+    };
+
+    function highlightActive(lang){
+      ["ru","en","pt"].forEach(l=>{
+        const btn = document.getElementById("btn-" + l);
+        if(!btn) return;
+        btn.classList.toggle("active", l === lang);
+      });
     }
-  };
 
-  function setLang(lang) {
-    document.getElementById("title").innerText = content[lang].title;
-    document.getElementById("text").innerHTML = content[lang].text;
-  }
-</script>
+    function setLang(lang) {
+      const c = content[lang] || content.en;
+      document.documentElement.lang = c.htmlLang || lang;
+      document.getElementById("title").innerText = c.title;
+      document.getElementById("text").innerHTML = c.text;
+      document.getElementById("note").innerText = c.note;
+      localStorage.setItem("rk_lang", lang);
+      highlightActive(lang);
+    }
 
+    function detectDefaultLang(){
+      const saved = localStorage.getItem("rk_lang");
+      if(saved && content[saved]) return saved;
+
+      const nav = (navigator.language || "en").toLowerCase();
+      if(nav.startsWith("ru")) return "ru";
+      if(nav.startsWith("pt")) return "pt";
+      return "en";
+    }
+
+    setLang(detectDefaultLang());
+  </script>
 </body>
 </html>
