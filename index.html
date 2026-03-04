@@ -1,29 +1,37 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>RoboKittens — Coming Soon</title>
-  <meta name="description" content="RoboKittens STEAM Space — пространство, где идеи становятся реальностью. Сайт в разработке." />
+  <title>RoboKittens — STEAM Space in Gaia</title>
+  <meta name="description" content="RoboKittens STEAM Space — a place where kids build, experiment, and grow. Robotics, coding (soon), science labs, and kids yoga in Vila Nova de Gaia." />
 
-  <!-- Optional: favicon -->
   <link rel="icon" href="favicon.ico" />
 
   <style>
     :root{
       --bg1:#faf6ed;
       --bg2:#f3efe4;
+
       --text:#0f172a;
       --muted:#334155;
-      --card: rgba(255,255,255,0.65);
-      --border: rgba(15,23,42,0.10);
+
+      --card: rgba(255,255,255,0.72);
+      --border: rgba(15,23,42,0.12);
+
       --btn1:#1e293b;
       --btn2:#334155;
-      --ring: rgba(30,41,59,0.25);
+
+      --pill: rgba(30,41,59,0.06);
+      --shadow: 0 18px 60px rgba(0,0,0,0.10);
+      --shadow2: 0 12px 28px rgba(30,41,59,0.22);
+
+      --radius: 18px;
     }
 
     *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
 
     body{
       margin:0;
@@ -35,23 +43,42 @@
       align-items:center;
       justify-content:center;
       padding: 24px;
-      text-align:center;
     }
 
     .wrap{
       width:100%;
-      max-width: 740px;
+      max-width: 980px;
       position: relative;
     }
 
+    /* top bar */
+    .top{
+      display:flex;
+      justify-content: space-between;
+      align-items:center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .brand-mini{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color: var(--muted);
+      font-size: 13px;
+      opacity: .95;
+    }
+    .dot{
+      width:8px; height:8px; border-radius:99px;
+      background: rgba(34,197,94,0.75);
+      box-shadow: 0 0 0 6px rgba(34,197,94,0.10);
+      flex: 0 0 auto;
+    }
+
     .lang{
-      position:absolute;
-      top:0;
-      right:0;
       display:flex;
       gap:8px;
     }
-
     .lang button{
       border:1px solid var(--border);
       background: rgba(255,255,255,0.55);
@@ -62,6 +89,8 @@
       transition: transform .06s ease, box-shadow .2s ease, background .2s ease;
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
+      font-weight: 600;
+      letter-spacing: .02em;
     }
     .lang button:hover{ box-shadow: 0 8px 22px rgba(0,0,0,0.08); }
     .lang button:active{ transform: scale(0.98); }
@@ -71,48 +100,72 @@
       color: var(--text);
     }
 
+    /* card */
     .card{
-      margin-top: 52px;
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 28px 22px;
-      box-shadow: 0 18px 60px rgba(0,0,0,0.10);
+      border-radius: var(--radius);
+      padding: 26px 22px;
+      box-shadow: var(--shadow);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
     }
 
+    .hero{
+      display:grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+      align-items:center;
+    }
+
+    @media (max-width: 880px){
+      .hero{ grid-template-columns: 1fr; }
+    }
+
     .logo{
-      width: 320px;
-      max-width: 85%;
-      margin: 6px auto 18px;
+      width: 360px;
+      max-width: 95%;
       display:block;
+      margin: 0 auto;
+    }
+
+    .kicker{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      padding: 8px 12px;
+      background: var(--pill);
+      border: 1px solid rgba(15,23,42,0.08);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 12px;
     }
 
     h1{
-      margin: 10px 0 10px;
-      font-size: clamp(24px, 4vw, 34px);
+      margin: 0 0 10px;
+      font-size: clamp(26px, 4vw, 40px);
       letter-spacing: -0.02em;
+      line-height: 1.08;
     }
 
     p{
-      margin: 0 auto 18px;
-      max-width: 620px;
+      margin: 0 0 14px;
       color: var(--muted);
-      line-height: 1.55;
+      line-height: 1.6;
       font-size: 16px;
       opacity: 0.95;
     }
 
-    .buttons{
+    .cta-row{
       display:flex;
       flex-wrap: wrap;
-      justify-content:center;
       gap: 10px;
-      margin-top: 18px;
+      margin-top: 16px;
+      align-items:center;
     }
 
-    .buttons a{
+    .btn{
       display:inline-flex;
       align-items:center;
       justify-content:center;
@@ -122,31 +175,128 @@
       text-decoration:none;
       color:#fff;
       background: linear-gradient(135deg, var(--btn1), var(--btn2));
-      box-shadow: 0 12px 28px rgba(30,41,59,0.25);
+      box-shadow: var(--shadow2);
       border: 1px solid rgba(255,255,255,0.12);
       transition: transform .06s ease, box-shadow .2s ease, opacity .2s ease;
-      min-width: 150px;
+      min-width: 160px;
+      font-weight: 700;
     }
-    .buttons a:hover{ box-shadow: 0 18px 40px rgba(30,41,59,0.30); }
-    .buttons a:active{ transform: scale(0.99); }
-    .buttons a{ flex: 0 1 170px; }
+    .btn:hover{ box-shadow: 0 18px 40px rgba(30,41,59,0.30); }
+    .btn:active{ transform: scale(0.99); }
 
-    .note{
+    .btn.secondary{
+      background: rgba(255,255,255,0.6);
+      color: var(--text);
+      border: 1px solid rgba(15,23,42,0.12);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+    }
+
+    .btn.secondary:hover{ box-shadow: 0 14px 28px rgba(0,0,0,0.10); }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
       margin-top: 18px;
-      font-size: 13px;
-      color: rgba(51,65,85,0.9);
+    }
+    @media (max-width: 880px){
+      .grid{ grid-template-columns: 1fr; }
     }
 
-    .sr-only{
-      position:absolute; width:1px; height:1px;
-      padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0);
-      white-space:nowrap; border:0;
+    .tile{
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(15,23,42,0.10);
+      border-radius: 16px;
+      padding: 14px;
+      text-align:left;
     }
-    
+    .tile h3{
+      margin: 0 0 6px;
+      font-size: 15px;
+      letter-spacing: -0.01em;
+    }
+    .tile p{
+      margin: 0;
+      font-size: 14px;
+      color: rgba(51,65,85,0.95);
+    }
+
+    .section{
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(15,23,42,0.08);
+    }
+
+    .section h2{
+      margin: 0 0 10px;
+      font-size: 18px;
+      letter-spacing: -0.01em;
+    }
+
+    .pill-row{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(15,23,42,0.10);
+      color: rgba(51,65,85,0.95);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .muted{
+      color: rgba(51,65,85,0.95);
+    }
+
+    .nav-pages{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .page-link{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(15,23,42,0.10);
+      text-decoration:none;
+      color: var(--text);
+      transition: box-shadow .2s ease, transform .06s ease;
+      font-weight: 700;
+    }
+    .page-link:hover{ box-shadow: 0 14px 28px rgba(0,0,0,0.09); }
+    .page-link:active{ transform: scale(0.99); }
+    .badge{
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: rgba(30,41,59,0.08);
+      border: 1px solid rgba(30,41,59,0.14);
+      color: rgba(30,41,59,0.95);
+    }
+
     .contact{
       margin-top: 14px;
       font-size: 14px;
       color: var(--muted);
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
     }
     .contact a{
       color: var(--text);
@@ -156,94 +306,524 @@
     .contact a:hover{
       border-bottom-color: rgba(15,23,42,0.45);
     }
+
+    .address{
+      margin-top: 12px;
+      font-size: 14px;
+      color: rgba(51,65,85,0.95);
+      text-align:center;
+    }
+
+    .note{
+      margin-top: 14px;
+      font-size: 13px;
+      color: rgba(51,65,85,0.9);
+      text-align:center;
+    }
+
+    /* simple modal */
+    .modal-backdrop{
+      position: fixed;
+      inset: 0;
+      background: rgba(2,6,23,0.45);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+      z-index: 50;
+    }
+    .modal{
+      width: 100%;
+      max-width: 520px;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(15,23,42,0.14);
+      border-radius: 18px;
+      box-shadow: 0 22px 80px rgba(0,0,0,0.22);
+      padding: 18px;
+      text-align:left;
+    }
+    .modal h3{ margin: 0 0 8px; }
+    .modal p{ margin: 0 0 12px; }
+    .modal .actions{
+      display:flex;
+      gap: 10px;
+      justify-content:flex-end;
+      margin-top: 12px;
+    }
+    .modal .close{
+      background: rgba(255,255,255,0.7);
+      border: 1px solid rgba(15,23,42,0.12);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 12px;
+      cursor:pointer;
+      font-weight: 700;
+    }
+    .modal .go{
+      text-decoration:none;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-weight: 700;
+      color:#fff;
+      background: linear-gradient(135deg, var(--btn1), var(--btn2));
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .sr-only{
+      position:absolute; width:1px; height:1px;
+      padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0);
+      white-space:nowrap; border:0;
+    }
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <div class="lang" aria-label="Language switcher">
-      <button id="btn-ru" onclick="setLang('ru')" type="button">RU</button>
-      <button id="btn-en" onclick="setLang('en')" type="button">EN</button>
-      <button id="btn-pt" onclick="setLang('pt')" type="button">PT</button>
+
+    <div class="top">
+      <div class="brand-mini" aria-label="Status">
+        <span class="dot" aria-hidden="true"></span>
+        <span id="statusText">New space in Gaia • Launching soon</span>
+      </div>
+
+      <div class="lang" aria-label="Language switcher">
+        <button id="btn-en" onclick="setLang('en')" type="button">EN</button>
+        <button id="btn-pt" onclick="setLang('pt')" type="button">PT</button>
+        <button id="btn-ru" onclick="setLang('ru')" type="button">RU</button>
+      </div>
     </div>
 
     <div class="card">
-      <img class="logo" src="logo.png" alt="RoboKittens logo" />
+      <div class="hero">
+        <div>
+          <div class="kicker" id="kicker">
+            🧠 Hands-on learning • Robotics • Science • Creativity
+          </div>
 
-      <h1 id="title">🚧 Website under construction</h1>
-      <p id="text">
-        STEAM Space RoboKittens is more than just classes.<br>
-        It is a space where ideas come to life.<br>
-        We are creating STEAM Space as an educational concept where learning is not about memorizing, but about trying, making mistakes, asking questions, and finding your own solutions.
-      </p>
+          <h1 id="title">STEAM Space where kids build, experiment, and grow</h1>
 
-      <div class="buttons">
-        <a href="https://t.me/RoboKittens" target="_blank" rel="noopener">Telegram</a>
-        <a href="https://www.instagram.com/robokittens.space?igsh=MTIz" target="_blank" rel="noopener">Instagram</a>
-      
-        <a href="mailto:robokittens.space@gmail.com?subject=RoboKittens%20classes&body=Hello%20RoboKittens!" rel="noopener">
-          Email
-        </a>
-      
-        <a href="https://wa.me/351912510486" target="_blank" rel="noopener">WhatsApp</a>
+          <p id="text">
+            RoboKittens is more than classes — it’s a space where ideas become real.
+            We teach through practice: trying, making mistakes, asking questions, and finding your own solutions.
+          </p>
+
+          <div class="pill-row" aria-label="Key info">
+            <span class="pill" id="agePill">Ages 4–16</span>
+            <span class="pill" id="approachPill">STEAM approach</span>
+            <span class="pill" id="goalPill">Competitions & exhibitions</span>
+          </div>
+
+          <div class="nav-pages" aria-label="Pages">
+            <a class="page-link" href="#" onclick="openModal('programs'); return false;">
+              Programs <span class="badge" id="badgePrograms">In progress</span>
+            </a>
+            <a class="page-link" href="#" onclick="openModal('calendar'); return false;">
+              Calendar <span class="badge" id="badgeCalendar">In progress</span>
+            </a>
+          </div>
+
+          <div class="cta-row" aria-label="Contacts">
+            <a class="btn" href="https://t.me/RoboKittens" target="_blank" rel="noopener" id="btnTelegram">Telegram</a>
+            <a class="btn" href="https://www.instagram.com/robokittens.space?igsh=MTIz" target="_blank" rel="noopener" id="btnInstagram">Instagram</a>
+            <a class="btn" href="https://wa.me/351912510486" target="_blank" rel="noopener" id="btnWhatsapp">WhatsApp</a>
+            <a class="btn secondary" href="mailto:robokittens.space@gmail.com?subject=RoboKittens%20classes&body=Hello%20RoboKittens!" rel="noopener" id="btnEmail">
+              Email
+            </a>
+          </div>
+
+          <div class="contact" id="contactLine">
+            <span>Contact:</span>
+            <a href="mailto:robokittens.space@gmail.com">robokittens.space@gmail.com</a>
+          </div>
+        </div>
+
+        <div>
+          <img class="logo" src="logo.png" alt="RoboKittens logo" />
+        </div>
       </div>
-      
-      <div class="contact">
-        Contact: <a href="mailto:robokittens.space@gmail.com">robokittens.space@gmail.com</a>
+
+      <div class="section" aria-label="What is STEAM">
+        <h2 id="steamTitle">The STEAM approach</h2>
+        <p id="steamText" class="muted">
+          STEAM is a multidisciplinary way of learning where science and creativity support each other.
+          This builds flexible thinking and real-world skills that stay with a child for years.
+        </p>
+
+        <div class="grid" aria-label="STEAM blocks">
+          <div class="tile">
+            <h3 id="sTitle">Science</h3>
+            <p id="sText">Physics, chemistry, biology — through experiments and curiosity.</p>
+          </div>
+          <div class="tile">
+            <h3 id="tTitle">Technology</h3>
+            <p id="tText">Digital skills, tools, and coding logic.</p>
+          </div>
+          <div class="tile">
+            <h3 id="eTitle">Engineering</h3>
+            <p id="eText">Building, circuits, robotics, and design thinking.</p>
+          </div>
+          <div class="tile">
+            <h3 id="aTitle">Arts</h3>
+            <p id="aText">Creativity, design, prototyping, and imagination.</p>
+          </div>
+          <div class="tile">
+            <h3 id="mTitle">Mathematics</h3>
+            <p id="mText">Logic and math as the language of understanding the world.</p>
+          </div>
+          <div class="tile">
+            <h3 id="mindBodyTitle">Mind & body</h3>
+            <p id="mindBodyText">Yoga, breathing, and soft skills to support focus and confidence.</p>
+          </div>
+        </div>
       </div>
 
-      <div class="note" id="note">
-        We’re launching soon. Follow us to catch the opening ✨
+      <div class="section" aria-label="What we offer now">
+        <h2 id="nowTitle">What we run right now</h2>
+
+        <div class="grid" aria-label="Programs preview">
+          <div class="tile">
+            <h3 id="p1Title">Robotics & engineering</h3>
+            <p id="p1Text">Soldering, building, circuits, and how things work inside. Arduino & 3D modeling are coming soon.</p>
+          </div>
+          <div class="tile">
+            <h3 id="p2Title">Kids & teen yoga</h3>
+            <p id="p2Text">Body, breath, and attention — balance between active learning and calm focus.</p>
+          </div>
+          <div class="tile">
+            <h3 id="p3Title">“Not-So-Serious Science”</h3>
+            <p id="p3Text">Chemistry, physics, and biology through experiments, play, and real curiosity.</p>
+          </div>
+        </div>
+
+        <div class="note" id="soonNote">
+          Coding (Python / Java / C) is coming soon — step by step, from logic to real projects.
+        </div>
+      </div>
+
+      <div class="section" aria-label="Goal">
+        <h2 id="goalTitle2">Our goal</h2>
+        <p id="goalText2" class="muted">
+          We want students to take part in international exhibitions, competitions, and olympiads in robotics, engineering, and science —
+          and build a strong portfolio through real projects.
+        </p>
+      </div>
+
+      <div class="section" aria-label="Location">
+        <h2 id="whereTitle">Where we are</h2>
+        <div class="address" id="address">
+          📍 R. de Soares dos Reis 101, Loja 24, 4430-999 Vila Nova de Gaia
+        </div>
+        <div class="note" id="branchesNote">
+          More locations are planned (Matosinhos is next).
+        </div>
+      </div>
+
+      <div class="note" id="footerNote">
+        RoboKittens is a place where kids learn to think, create, and not be afraid to try ✨
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <h3 id="modalTitle">In progress</h3>
+      <p id="modalText">This page is being built right now.</p>
+      <div class="actions">
+        <button class="close" type="button" onclick="closeModal()" id="modalClose">Close</button>
+        <a class="go" href="https://t.me/RoboKittens" target="_blank" rel="noopener" id="modalGo">Message us</a>
       </div>
     </div>
   </div>
 
   <script>
     const content = {
-      ru: {
-        title: "🚧 Сайт в разработке",
-        text:
-          "STEAM Space RoboKittens — это больше, чем занятия.<br>" +
-          "Это пространство, где идеи становятся реальностью.<br>" +
-          "Мы создаём STEAM Space как образовательную концепцию, в которой обучение — не про «зубрить», " +
-          "а про пробовать, ошибаться, задавать вопросы и находить собственные решения.",
-        note: "Мы скоро откроемся. Подпишись, чтобы не пропустить старт ✨",
-        htmlLang: "ru"
-      },
       en: {
-        title: "🚧 Website under construction",
+        statusText: "New space in Gaia • Launching soon",
+        kicker: "🧠 Hands-on learning • Robotics • Science • Creativity",
+        title: "STEAM Space where kids build, experiment, and grow",
         text:
-          "RoboKittens STEAM Space is more than just classes.<br>" +
-          "It’s a space where ideas come to life.<br>" +
-          "We’re building an educational concept where learning isn’t memorizing — it’s experimenting, making mistakes, asking questions, and finding your own solutions.",
-        note: "We’re launching soon. Follow us to catch the opening ✨",
+          "RoboKittens is more than classes — it’s a space where ideas become real. " +
+          "We teach through practice: trying, making mistakes, asking questions, and finding your own solutions.",
+        agePill: "Ages 4–16",
+        approachPill: "STEAM approach",
+        goalPill: "Competitions & exhibitions",
+
+        badgePrograms: "In progress",
+        badgeCalendar: "In progress",
+
+        btnTelegram: "Telegram",
+        btnInstagram: "Instagram",
+        btnWhatsapp: "WhatsApp",
+        btnEmail: "Email",
+
+        steamTitle: "The STEAM approach",
+        steamText:
+          "STEAM is a multidisciplinary way of learning where science and creativity support each other. " +
+          "This builds flexible thinking and real-world skills that stay with a child for years.",
+
+        sTitle: "Science",
+        sText: "Physics, chemistry, biology — through experiments and curiosity.",
+        tTitle: "Technology",
+        tText: "Digital skills, tools, and coding logic.",
+        eTitle: "Engineering",
+        eText: "Building, circuits, robotics, and design thinking.",
+        aTitle: "Arts",
+        aText: "Creativity, design, prototyping, and imagination.",
+        mTitle: "Mathematics",
+        mText: "Logic and math as the language of understanding the world.",
+        mindBodyTitle: "Mind & body",
+        mindBodyText: "Yoga, breathing, and soft skills to support focus and confidence.",
+
+        nowTitle: "What we run right now",
+        p1Title: "Robotics & engineering",
+        p1Text: "Soldering, building, circuits, and how things work inside. Arduino & 3D modeling are coming soon.",
+        p2Title: "Kids & teen yoga",
+        p2Text: "Body, breath, and attention — balance between active learning and calm focus.",
+        p3Title: "“Not-So-Serious Science”",
+        p3Text: "Chemistry, physics, and biology through experiments, play, and real curiosity.",
+        soonNote: "Coding (Python / Java / C) is coming soon — step by step, from logic to real projects.",
+
+        goalTitle2: "Our goal",
+        goalText2:
+          "We want students to take part in international exhibitions, competitions, and olympiads in robotics, engineering, and science — " +
+          "and build a strong portfolio through real projects.",
+
+        whereTitle: "Where we are",
+        address: "📍 R. de Soares dos Reis 101, Loja 24, 4430-999 Vila Nova de Gaia",
+        branchesNote: "More locations are planned (Matosinhos is next).",
+        footerNote: "RoboKittens is a place where kids learn to think, create, and not be afraid to try ✨",
+
+        modalClose: "Close",
+        modalGo: "Message us",
+        modal: {
+          programs: {
+            title: "Programs page — in progress",
+            text: "We’re building a dedicated Programs page with formats, age groups, and outcomes. For now, message us — we’ll help you choose the best option."
+          },
+          calendar: {
+            title: "Calendar — in progress",
+            text: "Soon you’ll be able to choose a branch (Gaia first, Matosinhos next), see schedule and available spots, and book directly on the site."
+          }
+        },
+
         htmlLang: "en"
       },
+
       pt: {
-        title: "🚧 Site em desenvolvimento",
+        statusText: "Novo espaço em Gaia • A abrir em breve",
+        kicker: "🧠 Aprendizagem prática • Robótica • Ciência • Criatividade",
+        title: "STEAM Space onde as crianças constroem, experimentam e crescem",
         text:
-          "O STEAM Space RoboKittens é mais do que apenas aulas.<br>" +
-          "É um espaço onde as ideias ganham vida.<br>" +
-          "Estamos a criar um conceito educativo em que aprender não é memorizar — é experimentar, errar, fazer perguntas e encontrar as suas próprias soluções.",
-        note: "Vamos abrir em breve. Segue-nos para não perderes o lançamento ✨",
+          "O RoboKittens é mais do que aulas — é um espaço onde as ideias ganham vida. " +
+          "Aprendemos na prática: experimentar, errar, fazer perguntas e encontrar as suas próprias soluções.",
+        agePill: "Idades 4–16",
+        approachPill: "Abordagem STEAM",
+        goalPill: "Concursos e exposições",
+
+        badgePrograms: "Em desenvolvimento",
+        badgeCalendar: "Em desenvolvimento",
+
+        btnTelegram: "Telegram",
+        btnInstagram: "Instagram",
+        btnWhatsapp: "WhatsApp",
+        btnEmail: "Email",
+
+        steamTitle: "A abordagem STEAM",
+        steamText:
+          "STEAM é uma forma multidisciplinar de aprender, onde ciência e criatividade se complementam. " +
+          "Isso desenvolve pensamento flexível e competências práticas que ficam para a vida.",
+
+        sTitle: "Science (Ciência)",
+        sText: "Física, química, biologia — através de experiências e curiosidade.",
+        tTitle: "Technology (Tecnologia)",
+        tText: "Competências digitais, ferramentas e lógica de programação.",
+        eTitle: "Engineering (Engenharia)",
+        eText: "Construção, circuitos, robótica e design thinking.",
+        aTitle: "Arts (Artes)",
+        aText: "Criatividade, design, prototipagem e imaginação.",
+        mTitle: "Mathematics (Matemática)",
+        mText: "Lógica e matemática como linguagem para compreender o mundo.",
+        mindBodyTitle: "Mente & corpo",
+        mindBodyText: "Yoga, respiração e soft skills para foco e confiança.",
+
+        nowTitle: "O que temos agora",
+        p1Title: "Robótica & engenharia",
+        p1Text: "Soldadura, construção, circuitos e como as coisas funcionam. Arduino e modelação 3D em breve.",
+        p2Title: "Yoga para crianças e adolescentes",
+        p2Text: "Corpo, respiração e atenção — equilíbrio entre energia e foco calmo.",
+        p3Title: "“Ciência sem ser séria”",
+        p3Text: "Química, física e biologia através de experiências, jogo e curiosidade real.",
+        soonNote: "Programação (Python / Java / C) em breve — passo a passo, da lógica a projetos reais.",
+
+        goalTitle2: "O nosso objetivo",
+        goalText2:
+          "Queremos que os alunos participem em exposições, concursos e olimpíadas internacionais de robótica, engenharia e ciência — " +
+          "e construam um portefólio forte com projetos reais.",
+
+        whereTitle: "Onde estamos",
+        address: "📍 R. de Soares dos Reis 101, Loja 24, 4430-999 Vila Nova de Gaia",
+        branchesNote: "Mais localizações estão planeadas (Matosinhos é o próximo).",
+        footerNote: "RoboKittens é um lugar onde as crianças aprendem a pensar, criar e não ter medo de tentar ✨",
+
+        modalClose: "Fechar",
+        modalGo: "Falar connosco",
+        modal: {
+          programs: {
+            title: "Página de Programas — em desenvolvimento",
+            text: "Estamos a criar uma página de Programas com formatos, idades e resultados. Por agora, fala connosco — ajudamos a escolher a melhor opção."
+          },
+          calendar: {
+            title: "Calendário — em desenvolvimento",
+            text: "Em breve vais poder escolher a filial (Gaia primeiro, Matosinhos depois), ver horários e vagas, e fazer a inscrição diretamente no site."
+          }
+        },
+
         htmlLang: "pt"
+      },
+
+      ru: {
+        statusText: "Новый STEAM Space в Гайе • Скоро открытие",
+        kicker: "🧠 Практика руками • Робототехника • Наука • Творчество",
+        title: "STEAM Space, где дети создают, экспериментируют и растут",
+        text:
+          "RoboKittens — это больше, чем занятия. Это пространство, где идеи становятся реальностью. " +
+          "Мы учим через практику: пробовать, ошибаться, задавать вопросы и находить собственные решения.",
+        agePill: "Возраст 4–16",
+        approachPill: "Подход STEAM",
+        goalPill: "Конкурсы и выставки",
+
+        badgePrograms: "В разработке",
+        badgeCalendar: "В разработке",
+
+        btnTelegram: "Telegram",
+        btnInstagram: "Instagram",
+        btnWhatsapp: "WhatsApp",
+        btnEmail: "Email",
+
+        steamTitle: "Подход STEAM",
+        steamText:
+          "STEAM — междисциплинарный подход, где наука и творчество не разделены, а дополняют друг друга. " +
+          "Так формируется гибкое мышление и практические навыки, которые остаются с ребёнком надолго.",
+
+        sTitle: "Science — Наука",
+        sText: "Физика, химия, биология — через эксперименты и живой интерес.",
+        tTitle: "Technology — Технологии",
+        tText: "Цифровые навыки, инструменты и логика программирования.",
+        eTitle: "Engineering — Инженерия",
+        eText: "Конструирование, схемы, робототехника и проектное мышление.",
+        aTitle: "Arts — Творчество",
+        aText: "Дизайн, прототипирование, искусство и воображение.",
+        mTitle: "Mathematics — Математика",
+        mText: "Логика и математика как язык понимания мира.",
+        mindBodyTitle: "Личность и тело",
+        mindBodyText: "Йога, дыхание и soft skills для концентрации и уверенности.",
+
+        nowTitle: "Что есть сейчас",
+        p1Title: "Робототехника и инженерия",
+        p1Text: "Пайка, конструирование, схемы и понимание «как всё работает». Arduino и 3D-моделирование — совсем скоро.",
+        p2Title: "Детская и подростковая йога",
+        p2Text: "Тело, дыхание и внимание — баланс между активным обучением и внутренним спокойствием.",
+        p3Title: "«Несерьёзная наука»",
+        p3Text: "Химия, физика и биология через опыты, эксперименты и живой интерес.",
+        soonNote: "Программирование (Python / Java / C) — совсем скоро: шаг за шагом, от логики к реальным проектам.",
+
+        goalTitle2: "Наша цель",
+        goalText2:
+          "Мы хотим, чтобы ученики участвовали в международных выставках, конкурсах и олимпиадах по робототехнике, инженерии и науке — " +
+          "и собирали сильное портфолио через реальные проекты.",
+
+        whereTitle: "Где мы находимся",
+        address: "📍R. de Soares dos Reis 101, Loja 24, 4430-999 Vila Nova de Gaia",
+        branchesNote: "Планируем новые локации (следующая — Matosinhos).",
+        footerNote: "RoboKittens — место, где дети учатся думать, создавать и не бояться пробовать ✨",
+
+        modalClose: "Закрыть",
+        modalGo: "Написать нам",
+        modal: {
+          programs: {
+            title: "Страница Programs — в разработке",
+            text: "Мы делаем отдельную страницу с форматами, возрастами и результатами. Пока напишите нам — поможем подобрать лучший вариант."
+          },
+          calendar: {
+            title: "Календарь — в разработке",
+            text: "Скоро можно будет выбрать филиал (сначала Gaia, потом Matosinhos), посмотреть расписание и свободные места и записаться прямо на сайте."
+          }
+        },
+
+        htmlLang: "ru"
       }
     };
 
     function highlightActive(lang){
-      ["ru","en","pt"].forEach(l=>{
+      ["en","pt","ru"].forEach(l=>{
         const btn = document.getElementById("btn-" + l);
         if(!btn) return;
         btn.classList.toggle("active", l === lang);
       });
     }
 
+    function setText(id, value){
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.innerHTML = value;
+    }
+
+    function setPlain(id, value){
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.innerText = value;
+    }
+
     function setLang(lang) {
       const c = content[lang] || content.en;
       document.documentElement.lang = c.htmlLang || lang;
-      document.getElementById("title").innerText = c.title;
-      document.getElementById("text").innerHTML = c.text;
-      document.getElementById("note").innerText = c.note;
+
+      setPlain("statusText", c.statusText);
+      setPlain("btnTelegram", c.btnTelegram);
+      setPlain("btnInstagram", c.btnInstagram);
+      setPlain("btnWhatsapp", c.btnWhatsapp);
+      setPlain("btnEmail", c.btnEmail);
+
+      setText("kicker", c.kicker);
+      setPlain("title", c.title);
+      setText("text", c.text);
+
+      setPlain("agePill", c.agePill);
+      setPlain("approachPill", c.approachPill);
+      setPlain("goalPill", c.goalPill);
+
+      setPlain("badgePrograms", c.badgePrograms);
+      setPlain("badgeCalendar", c.badgeCalendar);
+
+      setPlain("steamTitle", c.steamTitle);
+      setText("steamText", c.steamText);
+
+      setPlain("sTitle", c.sTitle); setText("sText", c.sText);
+      setPlain("tTitle", c.tTitle); setText("tText", c.tText);
+      setPlain("eTitle", c.eTitle); setText("eText", c.eText);
+      setPlain("aTitle", c.aTitle); setText("aText", c.aText);
+      setPlain("mTitle", c.mTitle); setText("mText", c.mText);
+      setPlain("mindBodyTitle", c.mindBodyTitle); setText("mindBodyText", c.mindBodyText);
+
+      setPlain("nowTitle", c.nowTitle);
+      setPlain("p1Title", c.p1Title); setText("p1Text", c.p1Text);
+      setPlain("p2Title", c.p2Title); setText("p2Text", c.p2Text);
+      setPlain("p3Title", c.p3Title); setText("p3Text", c.p3Text);
+      setPlain("soonNote", c.soonNote);
+
+      setPlain("goalTitle2", c.goalTitle2);
+      setText("goalText2", c.goalText2);
+
+      setPlain("whereTitle", c.whereTitle);
+      setPlain("address", c.address);
+      setPlain("branchesNote", c.branchesNote);
+      setPlain("footerNote", c.footerNote);
+
+      // modal strings
+      setPlain("modalClose", c.modalClose);
+      setPlain("modalGo", c.modalGo);
+
       localStorage.setItem("rk_lang", lang);
       highlightActive(lang);
     }
@@ -257,6 +837,34 @@
       if(nav.startsWith("pt")) return "pt";
       return "en";
     }
+
+    function openModal(type){
+      const lang = localStorage.getItem("rk_lang") || detectDefaultLang();
+      const c = content[lang] || content.en;
+
+      const data = (c.modal && c.modal[type]) ? c.modal[type] : { title: "In progress", text: "This page is being built right now." };
+
+      document.getElementById("modalTitle").innerText = data.title;
+      document.getElementById("modalText").innerText = data.text;
+
+      document.getElementById("modalBackdrop").style.display = "flex";
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal(){
+      document.getElementById("modalBackdrop").style.display = "none";
+      document.body.style.overflow = "";
+    }
+
+    // close modal on backdrop click
+    document.getElementById("modalBackdrop").addEventListener("click", (e)=>{
+      if(e.target.id === "modalBackdrop") closeModal();
+    });
+
+    // close modal on ESC
+    document.addEventListener("keydown", (e)=>{
+      if(e.key === "Escape") closeModal();
+    });
 
     setLang(detectDefaultLang());
   </script>
