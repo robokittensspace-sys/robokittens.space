@@ -35,7 +35,7 @@
       justify-content:center;
     }
 
-    .wrap{ width:100%; max-width: 1080px; }
+    .wrap{ width:100%; max-width: 1240px; }
 
     .top{
       display:flex;
@@ -173,7 +173,7 @@
 
     .grid{
       display:grid;
-      grid-template-columns: 1.2fr 0.8fr;
+      grid-template-columns: 1.55fr 0.55fr;
       gap: 14px;
       margin-top: 14px;
     }
@@ -208,7 +208,7 @@
 
     /* day cell — clearer */
     .day{
-      aspect-ratio: 3 / 5;    /* <-- вот это фиксит пропорцию */
+      aspect-ratio: 4 / 3;   /* шире и выше, комфортнее для текста *//* <-- вот это фиксит пропорцию */
       overflow: hidden;        /* <-- чтобы список занятий не ломал размер */
       border-radius: 14px;
       background: rgba(255,255,255,0.82);
@@ -259,17 +259,14 @@
       align-items:center;
       gap: 6px;
       border-radius: 10px;
-      padding: 6px 8px;
+      padding: 7px 9px;
       background: rgba(30,41,59,0.06);
       border: 1px solid rgba(15,23,42,0.08);
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 900;
       color: rgba(30,41,59,0.95);
     }
-    .chip .t{
-      flex: 0 0 auto;
-      opacity: 0.95;
-    }
+    .chip .t{ width: 46px; }
     .chip .n{
       flex: 1 1 auto;
       min-width: 0;
