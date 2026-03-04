@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RoboKittens — Calendar</title>
+  <meta name="description" content="RoboKittens schedule and booking (preview)." />
+  <link rel="icon" href="favicon.ico" />
+
+  <style>
+    :root{
+      --bg1:#faf6ed;
+      --bg2:#f3efe4;
+      --text:#0f172a;
+      --muted:#334155;
+      --card: rgba(255,255,255,0.72);
+      --border: rgba(15,23,42,0.12);
+      --btn1:#1e293b;
+      --btn2:#334155;
+      --shadow: 0 18px 60px rgba(0,0,0,0.10);
+      --shadow2: 0 12px 28px rgba(30,41,59,0.22);
+      --radius: 18px;
+      --pill: rgba(30,41,59,0.06);
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, var(--bg1), var(--bg2));
+      color: var(--text);
+      min-height:100vh;
+      padding: 24px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+    }
+
+    .wrap{ width:100%; max-width: 1080px; }
+
+    .top{
+      display:flex;
+      justify-content: space-between;
+      align-items:center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .back a{
+      text-decoration:none;
+      color: var(--text);
+      font-weight: 800;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(15,23,42,0.10);
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      transition: box-shadow .2s ease, transform .06s ease;
+    }
+    .back a:hover{ box-shadow: 0 14px 28px rgba(0,0,0,0.09); }
+    .back a:active{ transform: scale(0.99); }
+
+    .lang{ display:flex; gap:8px; }
+    .lang button{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,0.55);
+      color: var(--muted);
+      padding: 8px 10px;
+      border-radius: 10px;
+      cursor:pointer;
+      font-weight: 700;
+      transition: transform .06s ease, box-shadow .2s ease, background .2s ease;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .lang button:hover{ box-shadow: 0 8px 22px rgba(0,0,0,0.08); }
+    .lang button:active{ transform: scale(0.98); }
+    .lang button.active{
+      background: rgba(30,41,59,0.08);
+      border-color: rgba(30,41,59,0.22);
+      color: var(--text);
+    }
+
+    .card{
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .header{
+      display:flex;
+      flex-wrap: wrap;
+      align-items:flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    h1{
+      margin: 0;
+      font-size: clamp(22px, 3.4vw, 34px);
+      letter-spacing:-0.02em;
+      line-height: 1.1;
+    }
+    .subtitle{
+      margin-top: 6px;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 14px;
+      max-width: 720px;
+    }
+
+    .controls{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items:center;
+      justify-content:flex-end;
+    }
+
+    .select{
+      display:flex;
+      align-items:center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(15,23,42,0.10);
+      color: var(--text);
+      font-weight: 700;
+    }
+    select{
+      border: 0;
+      background: transparent;
+      outline: none;
+      font-weight: 700;
+      color: var(--text);
+      cursor: pointer;
+    }
+    option[disabled]{ color: #94a3b8; }
+
+    .month-nav{
+      display:flex;
+      gap: 8px;
+      align-items:center;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(15,23,42,0.10);
+    }
+    .icon-btn{
+      border: 1px solid rgba(15,23,42,0.10);
+      background: rgba(255,255,255,0.70);
+      border-radius: 10px;
+      padding: 8px 10px;
+      cursor:pointer;
+      font-weight: 900;
+      transition: transform .06s ease, box-shadow .2s ease;
+    }
+    .icon-btn:hover{ box-shadow: 0 10px 22px rgba(0,0,0,0.09); }
+    .icon-btn:active{ transform: scale(0.98); }
+    .month-title{
+      min-width: 160px;
+      text-align:center;
+      font-weight: 900;
+      letter-spacing:-0.01em;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    @media (max-width: 980px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .calendar{
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(15,23,42,0.10);
+      border-radius: 16px;
+      padding: 12px;
+    }
+
+    .dow{
+      display:grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      margin-bottom: 8px;
+      color: rgba(51,65,85,0.95);
+      font-weight: 800;
+      font-size: 12px;
+      text-align:center;
+    }
+
+    .days{
+      display:grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+    }
+
+    .day{
+      min-height: 92px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.65);
+      border: 1px solid rgba(15,23,42,0.08);
+      padding: 10px;
+      text-align:left;
+      cursor:pointer;
+      transition: box-shadow .2s ease, transform .06s ease;
+      position: relative;
+    }
+    .day:hover{ box-shadow: 0 14px 28px rgba(0,0,0,0.08); }
+    .day:active{ transform: scale(0.995); }
+
+    .day.muted{
+      opacity: 0.45;
+      cursor: default;
+    }
+    .day.muted:hover{ box-shadow: none; }
+    .day.muted:active{ transform:none; }
+
+    .day.selected{
+      outline: 3px solid rgba(30,41,59,0.18);
+    }
+
+    .daynum{
+      font-weight: 900;
+      font-size: 12px;
+      color: rgba(15,23,42,0.95);
+    }
+
+    .mini{
+      margin-top: 8px;
+      display:flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .chip{
+      display:flex;
+      justify-content: space-between;
+      gap: 6px;
+      align-items:center;
+      border-radius: 10px;
+      padding: 6px 8px;
+      background: rgba(30,41,59,0.06);
+      border: 1px solid rgba(15,23,42,0.08);
+      font-size: 11px;
+      color: rgba(30,41,59,0.95);
+      font-weight: 800;
+    }
+
+    .chip small{
+      font-weight: 900;
+      color: rgba(51,65,85,0.95);
+      opacity: .95;
+      white-space: nowrap;
+    }
+
+    .side{
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(15,23,42,0.10);
+      border-radius: 16px;
+      padding: 12px;
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .panel-title{
+      font-weight: 900;
+      letter-spacing:-0.01em;
+      margin: 2px 0 2px;
+    }
+    .panel-sub{
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+      margin-top: -2px;
+    }
+
+    .event{
+      border-radius: 16px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(15,23,42,0.10);
+      padding: 12px;
+    }
+
+    .event-head{
+      display:flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items:flex-start;
+    }
+
+    .event-name{
+      font-weight: 900;
+      letter-spacing:-0.01em;
+      line-height: 1.2;
+      margin: 0;
+      font-size: 14px;
+    }
+    .event-time{
+      color: rgba(51,65,85,0.95);
+      font-weight: 900;
+      font-size: 12px;
+      white-space: nowrap;
+      background: rgba(30,41,59,0.06);
+      border: 1px solid rgba(15,23,42,0.08);
+      padding: 6px 8px;
+      border-radius: 999px;
+    }
+    .event-desc{
+      margin: 8px 0 10px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .event-meta{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items:center;
+      color: rgba(51,65,85,0.95);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tag{
+      padding: 6px 8px;
+      border-radius: 999px;
+      background: rgba(30,41,59,0.06);
+      border: 1px solid rgba(15,23,42,0.08);
+    }
+
+    .actions{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      text-decoration:none;
+      cursor:pointer;
+      border: 1px solid rgba(255,255,255,0.12);
+      font-weight: 900;
+      transition: transform .06s ease, box-shadow .2s ease;
+      user-select:none;
+    }
+    .btn.primary{
+      color:#fff;
+      background: linear-gradient(135deg, var(--btn1), var(--btn2));
+      box-shadow: var(--shadow2);
+    }
+    .btn.secondary{
+      color: var(--text);
+      background: rgba(255,255,255,0.7);
+      border: 1px solid rgba(15,23,42,0.12);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+    }
+    .btn:hover{ box-shadow: 0 18px 40px rgba(30,41,59,0.22); }
+    .btn:active{ transform: scale(0.99); }
+
+    .btn[disabled]{
+      opacity: .55;
+      cursor:not-allowed;
+      box-shadow:none;
+    }
+
+    .hint{
+      font-size: 12px;
+      color: rgba(51,65,85,0.9);
+      margin-top: 2px;
+    }
+
+    /* modal */
+    .modal-backdrop{
+      position: fixed;
+      inset: 0;
+      background: rgba(2,6,23,0.45);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+      z-index: 50;
+    }
+    .modal{
+      width: 100%;
+      max-width: 560px;
+      background: rgba(255,255,255,0.94);
+      border: 1px solid rgba(15,23,42,0.14);
+      border-radius: 18px;
+      box-shadow: 0 22px 80px rgba(0,0,0,0.22);
+      padding: 16px;
+      text-align:left;
+    }
+    .modal h3{ margin: 0 0 8px; }
+    .modal p{ margin: 0 0 12px; color: var(--muted); line-height: 1.5; }
+
+    .modal .row{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    @media (max-width: 560px){
+      .modal .row{ grid-template-columns: 1fr; }
+    }
+
+    label{
+      display:block;
+      font-size: 12px;
+      font-weight: 900;
+      color: rgba(51,65,85,0.95);
+      margin-bottom: 6px;
+    }
+    input, textarea{
+      width:100%;
+      border-radius: 12px;
+      border: 1px solid rgba(15,23,42,0.12);
+      padding: 10px 12px;
+      outline: none;
+      font-size: 14px;
+      background: rgba(255,255,255,0.80);
+    }
+    textarea{ min-height: 90px; resize: vertical; }
+
+    .modal .actions{
+      display:flex;
+      gap: 10px;
+      justify-content:flex-end;
+      margin-top: 12px;
+    }
+    .close{
+      background: rgba(255,255,255,0.7);
+      border: 1px solid rgba(15,23,42,0.12);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 12px;
+      cursor:pointer;
+      font-weight: 900;
+    }
+    .go{
+      text-decoration:none;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-weight: 900;
+      color:#fff;
+      background: linear-gradient(135deg, var(--btn1), var(--btn2));
+      border: 1px solid rgba(255,255,255,0.12);
+      cursor:pointer;
+    }
+
+    .photo{
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid rgba(15,23,42,0.10);
+      overflow:hidden;
+      margin-top: 10px;
+      background: rgba(30,41,59,0.05);
+    }
+    .photo img{
+      width:100%;
+      height: auto;
+      display:block;
+    }
+
+    .sr-only{
+      position:absolute; width:1px; height:1px;
+      padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0);
+      white-space:nowrap; border:0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div class="back">
+        <a href="index.html" id="backLink">← Back</a>
+      </div>
+
+      <div class="lang" aria-label="Language switcher">
+        <button id="btn-en" onclick="setLang('en')" type="button">EN</button>
+        <button id="btn-pt" onclick="setLang('pt')" type="button">PT</button>
+        <button id="btn-ru" onclick="setLang('ru')" type="button">RU</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="header">
+        <div>
+          <h1 id="pageTitle">Calendar</h1>
+          <div class="subtitle" id="pageSubtitle">
+            Choose a branch and a day. See classes, available spots, and request a booking.
+          </div>
+        </div>
+
+        <div class="controls" aria-label="Controls">
+          <div class="select">
+            <span id="branchLabel">Branch:</span>
+            <select id="branchSelect" aria-label="Branch select">
+              <option value="gaia">Gaia</option>
+              <option value="matosinhos" disabled>Matosinhos (soon)</option>
+            </select>
+          </div>
+
+          <div class="month-nav" aria-label="Month navigation">
+            <button class="icon-btn" type="button" onclick="prevMonth()" aria-label="Previous month">‹</button>
+            <div class="month-title" id="monthTitle">Month</div>
+            <button class="icon-btn" type="button" onclick="nextMonth()" aria-label="Next month">›</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="calendar" aria-label="Calendar">
+          <div class="dow" id="dowRow"></div>
+          <div class="days" id="daysGrid"></div>
+          <div class="hint" id="hintText">
+            Tip: click a day to see classes on the right.
+          </div>
+        </div>
+
+        <div class="side" aria-label="Day details">
+          <div>
+            <div class="panel-title" id="panelTitle">Selected day</div>
+            <div class="panel-sub" id="panelSub">Pick a date on the calendar.</div>
+          </div>
+
+          <div id="eventsList"></div>
+
+          <div class="hint" id="sideHint">
+            Booking is a preview for now — we’ll confirm via WhatsApp or Email.
+          </div>
+
+          <div class="actions">
+            <a class="btn primary" href="https://wa.me/351912510486" target="_blank" rel="noopener" id="contactBtn">WhatsApp</a>
+            <a class="btn secondary" href="mailto:robokittens.space@gmail.com" id="emailBtn">Email</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Details Modal -->
+  <div class="modal-backdrop" id="detailsBackdrop" role="dialog" aria-modal="true" aria-labelledby="detailsTitle">
+    <div class="modal">
+      <h3 id="detailsTitle">Class details</h3>
+      <p id="detailsText">…</p>
+      <div class="photo" id="detailsPhotoWrap">
+        <img id="detailsPhoto" src="class-photo.jpg" alt="Class photo" onerror="this.style.display='none'; document.getElementById('detailsPhotoWrap').style.display='none';">
+      </div>
+      <div class="actions">
+        <button class="close" type="button" onclick="closeDetails()" id="detailsClose">Close</button>
+        <button class="go" type="button" onclick="openBookingFromDetails()" id="detailsBook">Book</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking Modal -->
+  <div class="modal-backdrop" id="bookingBackdrop" role="dialog" aria-modal="true" aria-labelledby="bookingTitle">
+    <div class="modal">
+      <h3 id="bookingTitle">Booking request</h3>
+      <p id="bookingText">
+        Leave your contacts and we’ll confirm the spot.
+      </p>
+
+      <div class="row">
+        <div>
+          <label id="lblParent">Parent name</label>
+          <input id="inpParent" type="text" placeholder="Your name" />
+        </div>
+        <div>
+          <label id="lblChildAge">Child age</label>
+          <input id="inpAge" type="text" placeholder="e.g., 8" />
+        </div>
+        <div>
+          <label id="lblPhone">Phone / WhatsApp</label>
+          <input id="inpPhone" type="text" placeholder="+351…" />
+        </div>
+        <div>
+          <label id="lblEmail">Email</label>
+          <input id="inpEmail" type="email" placeholder="you@example.com" />
+        </div>
+      </div>
+
+      <div style="margin-top:10px;">
+        <label id="lblNotes">Notes</label>
+        <textarea id="inpNotes" placeholder="Any details: preferred time, language, etc."></textarea>
+      </div>
+
+      <div class="hint" id="bookingHint">
+        This is a lightweight preview. We can later connect it to a real booking system.
+      </div>
+
+      <div class="actions">
+        <button class="close" type="button" onclick="closeBooking()" id="bookingClose">Close</button>
+        <button class="go" type="button" onclick="submitBooking()" id="bookingSend">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // -----------------------------
+    // Content (EN/PT/RU)
+    // -----------------------------
+    const i18n = {
+      en: {
+        back: "← Back",
+        pageTitle: "Calendar",
+        pageSubtitle: "Choose a branch and a day. See classes, available spots, and request a booking.",
+        branchLabel: "Branch:",
+        hint: "Tip: click a day to see classes on the right.",
+        panelTitle: "Selected day",
+        panelSub: "Pick a date on the calendar.",
+        sideHint: "Booking is a preview for now — we’ll confirm via WhatsApp or Email.",
+        contactBtn: "WhatsApp",
+        emailBtn: "Email",
+        dow: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
+        monthNames: ["January","February","March","April","May","June","July","August","September","October","November","December"],
+        labels: {
+          spots: "spots",
+          full: "full",
+          details: "Details",
+          book: "Book"
+        },
+        details: {
+          title: "Class details",
+          close: "Close",
+          book: "Book"
+        },
+        booking: {
+          title: "Booking request",
+          text: "Leave your contacts and we’ll confirm the spot.",
+          parent: "Parent name",
+          childAge: "Child age",
+          phone: "Phone / WhatsApp",
+          email: "Email",
+          notes: "Notes",
+          hint: "This is a lightweight preview. We can later connect it to a real booking system.",
+          close: "Close",
+          send: "Send",
+          placeholders: {
+            parent: "Your name",
+            age: "e.g., 8",
+            phone: "+351…",
+            email: "you@example.com",
+            notes: "Any details: preferred time, language, etc."
+          },
+          sentTitle: "Sent ✅",
+          sentText: "Thanks! We’ll get back to you shortly. For a faster reply, message us on WhatsApp."
+        }
+      },
+
+      pt: {
+        back: "← Voltar",
+        pageTitle: "Calendário",
+        pageSubtitle: "Escolhe a filial e o dia. Vê aulas, vagas disponíveis e pede inscrição.",
+        branchLabel: "Filial:",
+        hint: "Dica: clica num dia para ver as aulas à direita.",
+        panelTitle: "Dia selecionado",
+        panelSub: "Escolhe uma data no calendário.",
+        sideHint: "Inscrição é um preview por enquanto — confirmamos por WhatsApp ou Email.",
+        contactBtn: "WhatsApp",
+        emailBtn: "Email",
+        dow: ["Seg","Ter","Qua","Qui","Sex","Sáb","Dom"],
+        monthNames: ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"],
+        labels: {
+          spots: "vagas",
+          full: "lotado",
+          details: "Detalhes",
+          book: "Inscrever"
+        },
+        details: {
+          title: "Detalhes da aula",
+          close: "Fechar",
+          book: "Inscrever"
+        },
+        booking: {
+          title: "Pedido de inscrição",
+          text: "Deixa os teus contactos e confirmamos a vaga.",
+          parent: "Nome do responsável",
+          childAge: "Idade da criança",
+          phone: "Telefone / WhatsApp",
+          email: "Email",
+          notes: "Notas",
+          hint: "Isto é um preview leve. Depois podemos ligar a um sistema real de inscrições.",
+          close: "Fechar",
+          send: "Enviar",
+          placeholders: {
+            parent: "O teu nome",
+            age: "ex.: 8",
+            phone: "+351…",
+            email: "tu@exemplo.com",
+            notes: "Detalhes: horário, idioma, etc."
+          },
+          sentTitle: "Enviado ✅",
+          sentText: "Obrigado! Vamos responder em breve. Para mais rápido, escreve no WhatsApp."
+        }
+      },
+
+      ru: {
+        back: "← Назад",
+        pageTitle: "Календарь",
+        pageSubtitle: "Выбери филиал и день. Посмотри занятия, свободные места и оставь заявку на запись.",
+        branchLabel: "Филиал:",
+        hint: "Подсказка: нажми на день — справа появятся занятия.",
+        panelTitle: "Выбранный день",
+        panelSub: "Выбери дату в календаре.",
+        sideHint: "Запись пока в формате превью — подтвердим место через WhatsApp или Email.",
+        contactBtn: "WhatsApp",
+        emailBtn: "Email",
+        dow: ["Пн","Вт","Ср","Чт","Пт","Сб","Вс"],
+        monthNames: ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"],
+        labels: {
+          spots: "мест",
+          full: "нет мест",
+          details: "Подробнее",
+          book: "Записаться"
+        },
+        details: {
+          title: "Детали занятия",
+          close: "Закрыть",
+          book: "Записаться"
+        },
+        booking: {
+          title: "Заявка на запись",
+          text: "Оставь контакты — мы подтвердим место.",
+          parent: "Имя родителя",
+          childAge: "Возраст ребёнка",
+          phone: "Телефон / WhatsApp",
+          email: "Email",
+          notes: "Комментарий",
+          hint: "Это лёгкое превью. Позже подключим полноценную систему бронирования.",
+          close: "Закрыть",
+          send: "Отправить",
+          placeholders: {
+            parent: "Ваше имя",
+            age: "например, 8",
+            phone: "+351…",
+            email: "you@example.com",
+            notes: "Детали: удобное время, язык, и т.д."
+          },
+          sentTitle: "Отправлено ✅",
+          sentText: "Спасибо! Мы скоро ответим. Быстрее всего — написать нам в WhatsApp."
+        }
+      }
+    };
+
+    // -----------------------------
+    // Demo schedule data (edit later)
+    // date format: YYYY-MM-DD
+    // branch: gaia / matosinhos
+    // -----------------------------
+    const schedule = [
+      {
+        id: "rk-robotics-1",
+        branch: "gaia",
+        date: "2026-03-06",
+        time: "17:30",
+        durationMin: 60,
+        name: { en: "Robotics & Engineering", pt: "Robótica & Engenharia", ru: "Робототехника и инженерия" },
+        desc: {
+          en: "Soldering + simple circuits. A small robot challenge.",
+          pt: "Soldadura + circuitos simples. Um mini desafio de robô.",
+          ru: "Пайка + простые схемы. Небольшой робот-челлендж."
+        },
+        age: "7–12",
+        capacity: 10,
+        spotsLeft: 4,
+        photo: "class-photo.jpg"
+      },
+      {
+        id: "rk-science-1",
+        branch: "gaia",
+        date: "2026-03-08",
+        time: "11:00",
+        durationMin: 60,
+        name: { en: "Not-So-Serious Science Lab", pt: "Laboratório de Ciência", ru: "Несерьёзная наука" },
+        desc: {
+          en: "Safe experiments: chemistry + physics through curiosity.",
+          pt: "Experiências seguras: química + física com curiosidade.",
+          ru: "Безопасные эксперименты: химия + физика через интерес."
+        },
+        age: "6–12",
+        capacity: 12,
+        spotsLeft: 0,
+        photo: "class-photo.jpg"
+      },
+      {
+        id: "rk-yoga-1",
+        branch: "gaia",
+        date: "2026-03-09",
+        time: "18:00",
+        durationMin: 50,
+        name: { en: "Kids & Teen Yoga", pt: "Yoga (Crianças e Teens)", ru: "Детская и подростковая йога" },
+        desc: {
+          en: "Breath + balance + focus — a calm reset after school.",
+          pt: "Respiração + equilíbrio + foco — um reset calmo.",
+          ru: "Дыхание + баланс + концентрация — спокойная практика."
+        },
+        age: "8–16",
+        capacity: 14,
+        spotsLeft: 7,
+        photo: "class-photo.jpg"
+      }
+    ];
+
+    // -----------------------------
+    // State
+    // -----------------------------
+    let currentLang = "en";
+    let currentBranch = "gaia";
+
+    const today = new Date();
+    let viewYear = today.getFullYear();
+    let viewMonth = today.getMonth(); // 0-11
+
+    let selectedDate = null; // "YYYY-MM-DD"
+    let selectedEventId = null;
+
+    // -----------------------------
+    // Helpers
+    // -----------------------------
+    function pad2(n){ return String(n).padStart(2, "0"); }
+    function fmtDateISO(y, m, d){ return `${y}-${pad2(m+1)}-${pad2(d)}`; }
+
+    function startOfMonth(y, m){
+      return new Date(y, m, 1);
+    }
+    function daysInMonth(y, m){
+      return new Date(y, m+1, 0).getDate();
+    }
+
+    // make Monday=0 .. Sunday=6
+    function weekdayMon0(date){
+      const wd = date.getDay(); // Sun=0..Sat=6
+      return (wd + 6) % 7;
+    }
+
+    function setActiveLangButtons(){
+      ["en","pt","ru"].forEach(l=>{
+        const btn = document.getElementById("btn-" + l);
+        if(btn) btn.classList.toggle("active", l === currentLang);
+      });
+    }
+
+    function detectDefaultLang(){
+      const saved = localStorage.getItem("rk_lang");
+      if(saved && i18n[saved]) return saved;
+
+      const nav = (navigator.language || "en").toLowerCase();
+      if(nav.startsWith("ru")) return "ru";
+      if(nav.startsWith("pt")) return "pt";
+      return "en";
+    }
+
+    function setLang(lang){
+      currentLang = i18n[lang] ? lang : "en";
+      localStorage.setItem("rk_lang", currentLang);
+      document.documentElement.lang = currentLang;
+
+      const t = i18n[currentLang];
+
+      document.getElementById("backLink").innerText = t.back;
+      document.getElementById("pageTitle").innerText = t.pageTitle;
+      document.getElementById("pageSubtitle").innerText = t.pageSubtitle;
+      document.getElementById("branchLabel").innerText = t.branchLabel;
+      document.getElementById("hintText").innerText = t.hint;
+      document.getElementById("panelTitle").innerText = t.panelTitle;
+      document.getElementById("sideHint").innerText = t.sideHint;
+      document.getElementById("contactBtn").innerText = t.contactBtn;
+      document.getElementById("emailBtn").innerText = t.emailBtn;
+
+      // DOW
+      const dow = document.getElementById("dowRow");
+      dow.innerHTML = "";
+      t.dow.forEach(x=>{
+        const d = document.createElement("div");
+        d.innerText = x;
+        dow.appendChild(d);
+      });
+
+      // Modals text
+      document.getElementById("detailsClose").innerText = t.details.close;
+      document.getElementById("detailsBook").innerText = t.details.book;
+
+      document.getElementById("bookingTitle").innerText = t.booking.title;
+      document.getElementById("bookingText").innerText = t.booking.text;
+      document.getElementById("lblParent").innerText = t.booking.parent;
+      document.getElementById("lblChildAge").innerText = t.booking.childAge;
+      document.getElementById("lblPhone").innerText = t.booking.phone;
+      document.getElementById("lblEmail").innerText = t.booking.email;
+      document.getElementById("lblNotes").innerText = t.booking.notes;
+      document.getElementById("bookingHint").innerText = t.booking.hint;
+      document.getElementById("bookingClose").innerText = t.booking.close;
+      document.getElementById("bookingSend").innerText = t.booking.send;
+
+      document.getElementById("inpParent").placeholder = t.booking.placeholders.parent;
+      document.getElementById("inpAge").placeholder = t.booking.placeholders.age;
+      document.getElementById("inpPhone").placeholder = t.booking.placeholders.phone;
+      document.getElementById("inpEmail").placeholder = t.booking.placeholders.email;
+      document.getElementById("inpNotes").placeholder = t.booking.placeholders.notes;
+
+      setActiveLangButtons();
+      renderMonthTitle();
+      renderCalendar();
+      renderSide();
+    }
+
+    function renderMonthTitle(){
+      const t = i18n[currentLang];
+      document.getElementById("monthTitle").innerText = `${t.monthNames[viewMonth]} ${viewYear}`;
+    }
+
+    function eventsForDate(branch, isoDate){
+      return schedule.filter(e => e.branch === branch && e.date === isoDate);
+    }
+
+    function hasEvents(branch, isoDate){
+      return eventsForDate(branch, isoDate).length > 0;
+    }
+
+    function renderCalendar(){
+      const grid = document.getElementById("daysGrid");
+      grid.innerHTML = "";
+
+      const first = startOfMonth(viewYear, viewMonth);
+      const firstWd = weekdayMon0(first);
+      const dim = daysInMonth(viewYear, viewMonth);
+
+      // fill leading blanks
+      for(let i=0;i<firstWd;i++){
+        const blank = document.createElement("div");
+        blank.className = "day muted";
+        blank.innerHTML = `<div class="daynum"> </div>`;
+        grid.appendChild(blank);
+      }
+
+      for(let d=1; d<=dim; d++){
+        const iso = fmtDateISO(viewYear, viewMonth, d);
+
+        const cell = document.createElement("div");
+        cell.className = "day";
+        if(selectedDate === iso) cell.classList.add("selected");
+
+        const minis = eventsForDate(currentBranch, iso).slice(0,2);
+        const miniHtml = minis.map(ev=>{
+          return `<div class="chip">
+                    <span>${ev.time} • ${escapeHtml(ev.name[currentLang] || ev.name.en)}</span>
+                    <small>${ev.spotsLeft > 0 ? ev.spotsLeft + " " + i18n[currentLang].labels.spots : i18n[currentLang].labels.full}</small>
+                  </div>`;
+        }).join("");
+
+        cell.innerHTML = `
+          <div class="daynum">${d}</div>
+          <div class="mini">${miniHtml}</div>
+        `;
+
+        if(hasEvents(currentBranch, iso)){
+          // make it feel clickable even more
+          cell.style.borderColor = "rgba(30,41,59,0.18)";
+        } else {
+          cell.style.opacity = "0.9";
+        }
+
+        cell.addEventListener("click", ()=>{
+          selectedDate = iso;
+          selectedEventId = null;
+          renderCalendar();
+          renderSide();
+        });
+
+        grid.appendChild(cell);
+      }
+    }
+
+    function renderSide(){
+      const t = i18n[currentLang];
+      const list = document.getElementById("eventsList");
+      list.innerHTML = "";
+
+      if(!selectedDate){
+        document.getElementById("panelSub").innerText = t.panelSub;
+        return;
+      }
+
+      const dObj = new Date(selectedDate + "T00:00:00");
+      const nice = dObj.toLocaleDateString(currentLang === "ru" ? "ru-RU" : (currentLang === "pt" ? "pt-PT" : "en-GB"), {
+        weekday: "long", year: "numeric", month: "long", day: "numeric"
+      });
+      document.getElementById("panelSub").innerText = `${nice} • ${currentBranch === "gaia" ? "Gaia" : "Matosinhos"}`;
+
+      const evs = eventsForDate(currentBranch, selectedDate);
+
+      if(evs.length === 0){
+        const empty = document.createElement("div");
+        empty.className = "event";
+        empty.innerHTML = `
+          <div class="event-head">
+            <div>
+              <p class="event-name" style="margin:0;">—</p>
+              <div class="event-desc">${t.hint}</div>
+            </div>
+          </div>
+        `;
+        list.appendChild(empty);
+        return;
+      }
+
+      evs.forEach(ev=>{
+        const card = document.createElement("div");
+        card.className = "event";
+
+        const spotsText = ev.spotsLeft > 0 ? `${ev.spotsLeft} ${t.labels.spots}` : t.labels.full;
+
+        card.innerHTML = `
+          <div class="event-head">
+            <div>
+              <p class="event-name">${escapeHtml(ev.name[currentLang] || ev.name.en)}</p>
+            </div>
+            <div class="event-time">${ev.time}</div>
+          </div>
+
+          <div class="event-desc">${escapeHtml(ev.desc[currentLang] || ev.desc.en)}</div>
+
+          <div class="event-meta">
+            <span class="tag">Age: ${escapeHtml(ev.age)}</span>
+            <span class="tag">${spotsText}</span>
+            <span class="tag">${ev.durationMin} min</span>
+          </div>
+
+          <div class="actions">
+            <button class="btn secondary" type="button" onclick="openDetails('${ev.id}')">${t.labels.details}</button>
+            <button class="btn primary" type="button" onclick="openBooking('${ev.id}')" ${ev.spotsLeft <= 0 ? "disabled" : ""}>${t.labels.book}</button>
+          </div>
+        `;
+
+        list.appendChild(card);
+      });
+    }
+
+    function prevMonth(){
+      viewMonth--;
+      if(viewMonth < 0){ viewMonth = 11; viewYear--; }
+      renderMonthTitle();
+      renderCalendar();
+    }
+
+    function nextMonth(){
+      viewMonth++;
+      if(viewMonth > 11){ viewMonth = 0; viewYear++; }
+      renderMonthTitle();
+      renderCalendar();
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    // -----------------------------
+    // Modals: Details
+    // -----------------------------
+    function openDetails(eventId){
+      selectedEventId = eventId;
+      const ev = schedule.find(x => x.id === eventId);
+      const t = i18n[currentLang];
+
+      document.getElementById("detailsTitle").innerText = t.details.title;
+      document.getElementById("detailsText").innerText =
+        `${ev.time} • ${ev.name[currentLang] || ev.name.en}\n\n${ev.desc[currentLang] || ev.desc.en}\n\nAge: ${ev.age} • ${ev.durationMin} min`;
+
+      // photo
+      const img = document.getElementById("detailsPhoto");
+      const wrap = document.getElementById("detailsPhotoWrap");
+      img.style.display = "block";
+      wrap.style.display = "block";
+      img.src = ev.photo || "class-photo.jpg";
+
+      document.getElementById("detailsBackdrop").style.display = "flex";
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeDetails(){
+      document.getElementById("detailsBackdrop").style.display = "none";
+      document.body.style.overflow = "";
+    }
+
+    function openBookingFromDetails(){
+      closeDetails();
+      if(selectedEventId) openBooking(selectedEventId);
+    }
+
+    // -----------------------------
+    // Modals: Booking
+    // -----------------------------
+    function openBooking(eventId){
+      selectedEventId = eventId;
+      const ev = schedule.find(x => x.id === eventId);
+      const t = i18n[currentLang];
+
+      // prefill message in notes (optional)
+      document.getElementById("inpNotes").value =
+        `${ev.name[currentLang] || ev.name.en} • ${ev.date} ${ev.time} • Branch: ${ev.branch}`;
+
+      document.getElementById("bookingBackdrop").style.display = "flex";
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeBooking(){
+      document.getElementById("bookingBackdrop").style.display = "none";
+      document.body.style.overflow = "";
+    }
+
+    function submitBooking(){
+      const t = i18n[currentLang];
+      const ev = schedule.find(x => x.id === selectedEventId);
+
+      const parent = document.getElementById("inpParent").value.trim();
+      const age = document.getElementById("inpAge").value.trim();
+      const phone = document.getElementById("inpPhone").value.trim();
+      const email = document.getElementById("inpEmail").value.trim();
+      const notes = document.getElementById("inpNotes").value.trim();
+
+      // Very light validation
+      if(!parent || (!phone && !email)){
+        alert(currentLang === "ru"
+          ? "Пожалуйста, укажи имя и телефон/Email."
+          : (currentLang === "pt"
+            ? "Por favor, indica o nome e telefone/Email."
+            : "Please provide name and phone/email."));
+        return;
+      }
+
+      // For now: open a prefilled email (no backend)
+      const subject = encodeURIComponent("RoboKittens booking request");
+      const body =
+        encodeURIComponent(
+          `Booking request\n\n` +
+          `Class: ${ev.name[currentLang] || ev.name.en}\n` +
+          `Date/time: ${ev.date} ${ev.time}\n` +
+          `Branch: ${ev.branch}\n` +
+          `Spots left: ${ev.spotsLeft}\n\n` +
+          `Parent: ${parent}\n` +
+          `Child age: ${age}\n` +
+          `Phone/WhatsApp: ${phone}\n` +
+          `Email: ${email}\n\n` +
+          `Notes:\n${notes}\n`
+        );
+
+      closeBooking();
+
+      // quick confirmation modal using details modal (reuse)
+      document.getElementById("detailsTitle").innerText = t.booking.sentTitle;
+      document.getElementById("detailsText").innerText = t.booking.sentText;
+      document.getElementById("detailsPhotoWrap").style.display = "none";
+      document.getElementById("detailsBackdrop").style.display = "flex";
+      document.body.style.overflow = "hidden";
+
+      // open email client
+      window.location.href = `mailto:robokittens.space@gmail.com?subject=${subject}&body=${body}`;
+    }
+
+    // backdrop click closes
+    document.getElementById("detailsBackdrop").addEventListener("click", (e)=>{
+      if(e.target.id === "detailsBackdrop") closeDetails();
+    });
+    document.getElementById("bookingBackdrop").addEventListener("click", (e)=>{
+      if(e.target.id === "bookingBackdrop") closeBooking();
+    });
+
+    // ESC closes
+    document.addEventListener("keydown", (e)=>{
+      if(e.key === "Escape"){
+        closeDetails();
+        closeBooking();
+      }
+    });
+
+    // Branch select
+    document.getElementById("branchSelect").addEventListener("change", (e)=>{
+      currentBranch = e.target.value;
+      selectedDate = null;
+      selectedEventId = null;
+      renderCalendar();
+      renderSide();
+    });
+
+    // Init
+    currentBranch = "gaia";
+    setLang(detectDefaultLang());
+    renderMonthTitle();
+    renderCalendar();
+    renderSide();
+  </script>
+</body>
+</html>
