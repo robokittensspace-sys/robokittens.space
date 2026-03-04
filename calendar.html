@@ -208,7 +208,8 @@
 
     /* day cell — clearer */
     .day{
-      min-height: 108px;
+      aspect-ratio: 3 / 5;    /* <-- вот это фиксит пропорцию */
+      overflow: hidden;        /* <-- чтобы список занятий не ломал размер */
       border-radius: 14px;
       background: rgba(255,255,255,0.82);
       border: 1.5px solid rgba(15,23,42,0.14);
@@ -243,11 +244,13 @@
       user-select:none;
     }
 
-    .mini{
+   .mini{
       margin-top: 8px;
       display:flex;
       flex-direction: column;
       gap: 6px;
+      max-height: calc(100% - 22px); /* место под номер дня */
+      overflow: hidden;
     }
 
     /* preview chip: time + name (single line) */
@@ -890,8 +893,8 @@
         cell.className = "day";
         if(selectedDate === iso) cell.classList.add("selected");
 
-        const events = eventsForDate(currentBranch, iso);
-        const minis = events.slice(0, 3);
+        const events = eventsForDate(currentBranch, iso).slice().sort((a,b)=>a.time.localeCompare(b.time));
+        const minis = events.slice(0, 5);
 
         const miniHtml = minis.map(ev=>{
           const name = (ev.name[currentLang] || ev.name.en);
@@ -955,7 +958,7 @@
       document.getElementById("panelSub").innerText =
         `${nice} • ${currentBranch === "gaia" ? "Gaia" : "Matosinhos"}`;
 
-      const evs = eventsForDate(currentBranch, selectedDate);
+      const evs = eventsForDate(currentBranch, selectedDate).slice().sort((a,b)=>a.time.localeCompare(b.time));
 
       if(evs.length === 0){
         const empty = document.createElement("div");
