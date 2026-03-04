@@ -129,6 +129,7 @@
     }
     .buttons a:hover{ box-shadow: 0 18px 40px rgba(30,41,59,0.30); }
     .buttons a:active{ transform: scale(0.99); }
+    .buttons a{ flex: 0 1 170px; }
 
     .note{
       margin-top: 18px;
@@ -140,6 +141,20 @@
       position:absolute; width:1px; height:1px;
       padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0);
       white-space:nowrap; border:0;
+    }
+    
+    .contact{
+      margin-top: 14px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .contact a{
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px dashed rgba(15,23,42,0.25);
+    }
+    .contact a:hover{
+      border-bottom-color: rgba(15,23,42,0.45);
     }
   </style>
 </head>
@@ -165,14 +180,16 @@
       <div class="buttons">
         <a href="https://t.me/RoboKittens" target="_blank" rel="noopener">Telegram</a>
         <a href="https://www.instagram.com/robokittens.space?igsh=MTIz" target="_blank" rel="noopener">Instagram</a>
-        <!-- Optional -->
-        <a href="mailto:robokittens.space@gmail.com?subject=RoboKittens%20classes&body=Hello%20RoboKittens!">
+      
+        <a href="mailto:robokittens.space@gmail.com?subject=RoboKittens%20classes&body=Hello%20RoboKittens!" rel="noopener">
           Email
         </a>
-        <p style="margin-top:20px; font-size:14px;">
-          Contact: robokittens.space@gmail.com
-        </p>
-        <a href="https://wa.me/+351912510486" target="_blank">WhatsApp</a>
+      
+        <a href="https://wa.me/351912510486" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+      
+      <div class="contact">
+        Contact: <a href="mailto:robokittens.space@gmail.com">robokittens.space@gmail.com</a>
       </div>
 
       <div class="note" id="note">
