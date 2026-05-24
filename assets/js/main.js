@@ -1,258 +1,437 @@
-const content = {
-  en: {
-    statusText: "STEAM Space in Gaia",
-    kicker: "🧠 STEAM education • Robotics • Science • Creativity • Focus",
-    title: "STEAM education space for kids in Gaia",
-    text:
-      "RoboKittens brings robotics, science, coding, creativity, and movement into one learning system. " +
-      "Children build, experiment, ask questions, and grow through real hands-on practice.",
+/**
+ * RoboKittens — main.js
+ *
+ * Loads data from:
+ *   /data/i18n.json     — all UI text in EN / PT / RU
+ *   /data/site.json     — contacts, locations, program list
+ *   /data/schedule.json — classes, special events
+ *
+ * Then renders the page and wires up interactions.
+ */
 
-    btnMain: "Book a trial",
-    btnExplore: "Explore directions",
+// ─── State ────────────────────────────────────────────────
+let lang = localStorage.getItem('rk_lang') || 'en';
+let i18n = {};
+let site = {};
+let schedule = {};
 
-    agePill: "Ages 4–16",
-    approachPill: "STEAM approach",
-    goalPill: "Real projects & exhibitions",
-    contactLabel: "Contact:",
+// ─── Boot ─────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadData();
+  render();
+  wireCalendar();
+});
 
-    steamTitle: "Why STEAM matters",
-    steamText:
-      "STEAM is a multidisciplinary approach where science and creativity support each other. " +
-      "Children do not just memorize — they build, test, observe, think, and create.",
-
-    sTitle: "Science",
-    sText: "Experiments, curiosity, and understanding how the world works.",
-    tTitle: "Technology",
-    tText: "Digital skills, tools, and the logic behind modern systems.",
-    eTitle: "Engineering",
-    eText: "Building, circuits, robotics, and project thinking.",
-    aTitle: "Arts",
-    aText: "Creativity, design, imagination, and visual thinking.",
-    mTitle: "Mathematics",
-    mText: "Logic, patterns, and structure behind real-world problem solving.",
-    mindBodyTitle: "Mind & body",
-    mindBodyText: "Focus, confidence, breathing, and emotional balance through movement.",
-
-    directionsTitle: "Our directions",
-    directionsText: "Explore the main areas of learning at RoboKittens.",
-
-    cardRoboticsTitle: "Robotics & Engineering",
-    cardRoboticsText: "Build, test, solder, and understand how things work.",
-    cardScienceTitle: "Science Lab",
-    cardScienceText: "Physics, chemistry, and biology through curiosity and safe experiments.",
-    cardCodingTitle: "Coding",
-    cardCodingText: "From logic and algorithms to real digital projects.",
-    cardYogaTitle: "Yoga & Focus",
-    cardYogaText: "Movement, breathing, balance, and calm attention.",
-    cardMore: "Open page →",
-
-    goalTitle2: "Our goal",
-    goalText2:
-      "We want children to create real projects, grow in confidence, and prepare for exhibitions, " +
-      "competitions, and future technical learning through meaningful practice.",
-
-    whereTitle: "Where we are",
-    address: "📍 R. de Soares dos Reis 101, Loja 24, 4430-999 Vila Nova de Gaia",
-    branchesNote: "More locations are planned later.",
-    footerNote: "RoboKittens is a place where kids learn to think, create, and not be afraid to try ✨"
-  },
-
-  pt: {
-    statusText: "STEAM Space em Gaia",
-    kicker: "🧠 Educação STEAM • Robótica • Ciência • Criatividade • Foco",
-    title: "Espaço de educação STEAM para crianças em Gaia",
-    text:
-      "O RoboKittens junta robótica, ciência, programação, criatividade e movimento num só sistema de aprendizagem. " +
-      "As crianças constroem, experimentam, fazem perguntas e crescem através da prática real.",
-
-    btnMain: "Marcar aula experimental",
-    btnExplore: "Ver direções",
-
-    agePill: "Idades 4–16",
-    approachPill: "Abordagem STEAM",
-    goalPill: "Projetos reais e exposições",
-    contactLabel: "Contacto:",
-
-    steamTitle: "Porque é que STEAM importa",
-    steamText:
-      "STEAM é uma abordagem multidisciplinar onde ciência e criatividade se apoiam mutuamente. " +
-      "As crianças não apenas memorizam — constroem, testam, observam, pensam e criam.",
-
-    sTitle: "Science (Ciência)",
-    sText: "Experiências, curiosidade e compreensão do mundo à nossa volta.",
-    tTitle: "Technology (Tecnologia)",
-    tText: "Competências digitais, ferramentas e a lógica dos sistemas modernos.",
-    eTitle: "Engineering (Engenharia)",
-    eText: "Construção, circuitos, robótica e pensamento de projeto.",
-    aTitle: "Arts (Artes)",
-    aText: "Criatividade, design, imaginação e pensamento visual.",
-    mTitle: "Mathematics (Matemática)",
-    mText: "Lógica, padrões e estrutura para resolver problemas reais.",
-    mindBodyTitle: "Mente & corpo",
-    mindBodyText: "Foco, confiança, respiração e equilíbrio emocional através do movimento.",
-
-    directionsTitle: "As nossas direções",
-    directionsText: "Explora as principais áreas de aprendizagem no RoboKittens.",
-
-    cardRoboticsTitle: "Robótica & Engenharia",
-    cardRoboticsText: "Construir, testar, soldar e perceber como as coisas funcionam.",
-    cardScienceTitle: "Laboratório de Ciência",
-    cardScienceText: "Física, química e biologia através de curiosidade e experiências seguras.",
-    cardCodingTitle: "Programação",
-    cardCodingText: "Da lógica e algoritmos até projetos digitais reais.",
-    cardYogaTitle: "Yoga & Foco",
-    cardYogaText: "Movimento, respiração, equilíbrio e atenção tranquila.",
-    cardMore: "Abrir página →",
-
-    goalTitle2: "O nosso objetivo",
-    goalText2:
-      "Queremos que as crianças criem projetos reais, ganhem confiança e se preparem para exposições, " +
-      "concursos e futuro percurso técnico através de prática com sentido.",
-
-    whereTitle: "Onde estamos",
-    address: "📍 R. de Soares dos Reis 101, Loja 24, 4430-999 Vila Nova de Gaia",
-    branchesNote: "Mais localizações poderão surgir mais tarde.",
-    footerNote: "RoboKittens é um lugar onde as crianças aprendem a pensar, criar e não ter medo de tentar ✨"
-  },
-
-  ru: {
-    statusText: "STEAM Space в Гайе",
-    kicker: "🧠 STEAM-образование • Робототехника • Наука • Творчество • Фокус",
-    title: "STEAM-пространство для детей в Гайе",
-    text:
-      "RoboKittens объединяет робототехнику, науку, программирование, творчество и движение в единую систему обучения. " +
-      "Дети создают, экспериментируют, задают вопросы и растут через реальную практику.",
-
-    btnMain: "Записаться на пробное",
-    btnExplore: "Посмотреть направления",
-
-    agePill: "Возраст 4–16",
-    approachPill: "Подход STEAM",
-    goalPill: "Реальные проекты и выставки",
-    contactLabel: "Контакт:",
-
-    steamTitle: "Почему STEAM важен",
-    steamText:
-      "STEAM — это междисциплинарный подход, где наука и творчество усиливают друг друга. " +
-      "Ребёнок не просто запоминает — он собирает, проверяет, наблюдает, думает и создаёт.",
-
-    sTitle: "Science — Наука",
-    sText: "Эксперименты, любопытство и понимание того, как устроен мир.",
-    tTitle: "Technology — Технологии",
-    tText: "Цифровые навыки, инструменты и логика современных систем.",
-    eTitle: "Engineering — Инженерия",
-    eText: "Конструирование, схемы, робототехника и проектное мышление.",
-    aTitle: "Arts — Творчество",
-    aText: "Креативность, дизайн, воображение и визуальное мышление.",
-    mTitle: "Mathematics — Математика",
-    mText: "Логика, закономерности и структура для решения реальных задач.",
-    mindBodyTitle: "Личность и тело",
-    mindBodyText: "Фокус, уверенность, дыхание и эмоциональный баланс через движение.",
-
-    directionsTitle: "Наши направления",
-    directionsText: "Посмотри основные направления обучения в RoboKittens.",
-
-    cardRoboticsTitle: "Робототехника и инженерия",
-    cardRoboticsText: "Собирать, тестировать, паять и понимать, как всё устроено.",
-    cardScienceTitle: "Научная лаборатория",
-    cardScienceText: "Физика, химия и биология через любопытство и безопасные эксперименты.",
-    cardCodingTitle: "Программирование",
-    cardCodingText: "От логики и алгоритмов к реальным цифровым проектам.",
-    cardYogaTitle: "Йога и фокус",
-    cardYogaText: "Движение, дыхание, баланс и спокойная концентрация.",
-    cardMore: "Открыть страницу →",
-
-    goalTitle2: "Наша цель",
-    goalText2:
-      "Мы хотим, чтобы дети создавали реальные проекты, росли в уверенности и готовились к выставкам, " +
-      "конкурсам и будущему техническому обучению через осмысленную практику.",
-
-    whereTitle: "Где мы находимся",
-    address: "📍 R. de Soares dos Reis 101, Loja 24, 4430-999 Vila Nova de Gaia",
-    branchesNote: "Позже возможны и другие локации.",
-    footerNote: "RoboKittens — место, где дети учатся думать, создавать и не бояться пробовать ✨"
-  }
-};
-
-function setText(id, value){
-  const el = document.getElementById(id);
-  if(el) el.textContent = value;
+async function loadData() {
+  const [i18nRaw, siteRaw, scheduleRaw] = await Promise.all([
+    fetch('/data/i18n.json').then(r => r.json()),
+    fetch('/data/site.json').then(r => r.json()),
+    fetch('/data/schedule.json').then(r => r.json()),
+  ]);
+  i18n     = i18nRaw;
+  site     = siteRaw;
+  schedule = scheduleRaw;
 }
 
-function highlightActive(lang){
-  ["en","pt","ru"].forEach(l=>{
-    const btn = document.getElementById("btn-" + l);
-    if(btn) btn.classList.toggle("active", l === lang);
+// ─── Language switch ──────────────────────────────────────
+function setLang(code) {
+  if (!site.supportedLangs.includes(code)) return;
+  lang = code;
+  localStorage.setItem('rk_lang', code);
+  render();
+}
+window.setLang = setLang; // expose for inline onclick
+
+function t(path) {
+  // dot-path accessor: t('hero.title') → i18n[lang].hero.title
+  return path.split('.').reduce((obj, key) => obj?.[key], i18n[lang]) ?? '';
+}
+
+// ─── Render ───────────────────────────────────────────────
+function render() {
+  updateMeta();
+  renderNav();
+  renderHero();
+  renderSteam();
+  renderPrograms();
+  renderFormats();
+  renderLocations();
+  renderScheduleSection();
+  renderCta();
+  renderFooter();
+  highlightLang();
+}
+
+function updateMeta() {
+  document.title = t('meta.title');
+  document.querySelector('meta[name="description"]')
+    ?.setAttribute('content', t('meta.description'));
+}
+
+function renderNav() {
+  setText('nav-programs',  t('nav.programs'));
+  setText('nav-schedule',  t('nav.schedule'));
+  setText('nav-locations', t('nav.locations'));
+  setText('nav-book',      t('nav.bookTrial'));
+}
+
+function renderHero() {
+  setText('hero-badge',    t('hero.badge'));
+  setHTML('hero-title',    t('hero.title'));
+  setText('hero-subtitle', t('hero.subtitle'));
+  setText('hero-btn-main', t('hero.btnMain'));
+  setText('hero-btn-exp',  t('hero.btnExplore'));
+
+  const s = i18n[lang].hero.stats;
+  setText('stat-ages-num',       s.ages);
+  setText('stat-ages-label',     s.agesLabel);
+  setText('stat-dir-num',        s.directions);
+  setText('stat-dir-label',      s.directionsLabel);
+  setText('stat-loc-num',        s.locations);
+  setText('stat-loc-label',      s.locationsLabel);
+}
+
+function renderSteam() {
+  setText('steam-tag',      t('steam.tag'));
+  setText('steam-title',    t('steam.title'));
+  setText('steam-subtitle', t('steam.subtitle'));
+
+  const grid = document.getElementById('steam-grid');
+  if (!grid) return;
+  const items = i18n[lang].steam.items;
+  grid.innerHTML = items.map(item => `
+    <div class="steam-item">
+      <div class="icon">${item.icon}</div>
+      <h3>${item.title}</h3>
+      <p>${item.text}</p>
+    </div>
+  `).join('');
+}
+
+function renderPrograms() {
+  setText('programs-tag',      t('programs.tag'));
+  setText('programs-title',    t('programs.title'));
+  setText('programs-subtitle', t('programs.subtitle'));
+
+  const grid = document.getElementById('programs-grid');
+  if (!grid) return;
+  const items = i18n[lang].programs.items;
+  const learnMore = t('programs.learnMore');
+
+  grid.innerHTML = items.map(item => `
+    <a class="program-card c-${item.color}" href="${item.url}">
+      <div class="top">
+        <div class="prog-big-icon ic-${item.color}">${item.icon}</div>
+        <span class="age-tag">${item.ages}</span>
+      </div>
+      <h3>${item.title}</h3>
+      <p>${item.text}</p>
+      <div class="prog-tags">
+        ${item.tags.map(tag => `<span class="prog-tag">${tag}</span>`).join('')}
+      </div>
+      <span class="prog-link">${learnMore}</span>
+    </a>
+  `).join('');
+}
+
+function renderFormats() {
+  setText('formats-tag',      t('formats.tag'));
+  setText('formats-title',    t('formats.title'));
+  setText('formats-subtitle', t('formats.subtitle'));
+
+  const grid = document.getElementById('formats-grid');
+  if (!grid) return;
+  grid.innerHTML = i18n[lang].formats.items.map(item => `
+    <div class="format-card">
+      <div class="format-icon">${item.icon}</div>
+      <h3>${item.title}</h3>
+      <p>${item.text}</p>
+    </div>
+  `).join('');
+}
+
+function renderLocations() {
+  setText('locations-tag',      t('locations.tag'));
+  setText('locations-title',    t('locations.title'));
+  setText('locations-subtitle', t('locations.subtitle'));
+
+  const grid = document.getElementById('locations-grid');
+  if (!grid) return;
+
+  grid.innerHTML = site.locations.map(loc => {
+    if (loc.status === 'open') {
+      return `
+        <div class="loc-card">
+          <span class="loc-badge open">✅ Open now</span>
+          <h3>${loc.name}</h3>
+          <address>${loc.address}<br/>${loc.postcode} ${loc.city}</address>
+          <div class="loc-detail">
+            <span>📞 <a href="tel:${site.contact.phone}">${site.contact.phoneDisplay}</a></span>
+            <span>✉️ <a href="mailto:${site.contact.email}">${site.contact.email}</a></span>
+            <span>🕐 ${loc.hours}</span>
+          </div>
+        </div>`;
+    } else {
+      const notifyBtn = t('locations.notifyBtn');
+      return `
+        <div class="loc-card new-loc">
+          <span class="loc-badge coming">🚀 Opening soon</span>
+          <h3>${loc.name}</h3>
+          <address>${loc.city}</address>
+          <div class="loc-detail">
+            <span>📅 Expected: ${loc.expectedOpening}</span>
+          </div>
+          <a href="${site.contact.whatsapp}" class="btn-secondary" style="margin-top:12px;display:inline-flex;font-size:.85rem;padding:10px 18px">
+            ${notifyBtn}
+          </a>
+        </div>`;
+    }
+  }).join('');
+}
+
+function renderScheduleSection() {
+  setText('schedule-tag',      t('schedule.tag'));
+  setText('schedule-title',    t('schedule.title'));
+  setText('schedule-subtitle', t('schedule.subtitle'));
+  setHTML('schedule-note',
+    `${t('schedule.note')} <a href="/calendar">${t('schedule.calendarLink')}</a>`
+  );
+
+  // Render live schedule grid from schedule.json (Gaia branch, recurring classes)
+  const grid = document.getElementById('schedule-grid');
+  if (!grid) return;
+
+  // dayOfWeek → column index in our display order (Mon=1, Tue=2, Wed=3, Thu=4, Sat=6)
+  const displayDays  = [1, 2, 3, 4, 6]; // JS getDay values
+  const dayNames     = t('schedule.days'); // array from i18n
+  const gaia         = (schedule.classes && schedule.classes.gaia) || [];
+  const colorMap     = { orange: 's-orange', teal: 's-teal', purple: 's-purple', yellow: 's-yellow' };
+
+  grid.innerHTML = displayDays.map((jsDay, i) => {
+    const slots = gaia
+      .filter(c => c.dayOfWeek === jsDay && c.recurring)
+      .sort((a, b) => a.timeStart.localeCompare(b.timeStart));
+
+    const slotsHtml = slots.map(c => {
+      const prog      = schedule.programs[c.program];
+      const colorCls  = colorMap[prog.color] || 's-orange';
+      const progLabel = prog.label[lang] || prog.label.en;
+      return `
+        <div class="slot ${colorCls}">
+          <span class="slot-time">${c.timeStart}</span>
+          <span class="slot-name">${progLabel}</span>
+          <span class="slot-age">${c.ageMin}–${c.ageMax}</span>
+        </div>`;
+    }).join('');
+
+    return `
+      <div class="day-col">
+        <div class="day-header">${dayNames[i] || ''}</div>
+        <div class="day-slots">${slotsHtml}</div>
+      </div>`;
+  }).join('');
+}
+
+function renderCta() {
+  setHTML('cta-title',   t('cta.title'));
+  setText('cta-subtitle', t('cta.subtitle'));
+  setText('cta-wa',       t('cta.whatsapp'));
+  setText('cta-email',    t('cta.email'));
+}
+
+function renderFooter() {
+  setText('footer-tagline',   t('footer.tagline'));
+  setText('footer-prog-title',t('footer.programsTitle'));
+  setText('footer-cont-title',t('footer.contactTitle'));
+  setText('footer-book-link', t('footer.bookLink'));
+  setText('footer-copyright', t('footer.copyright'));
+  setText('footer-slogan',    t('footer.slogan'));
+
+  // render program links in footer
+  const footerPrograms = document.getElementById('footer-programs');
+  if (footerPrograms) {
+    const items = i18n[lang].programs.items;
+    footerPrograms.innerHTML = items.map(p =>
+      `<li><a href="${p.url}">${p.title}</a></li>`
+    ).join('');
+  }
+}
+
+function highlightLang() {
+  document.querySelectorAll('[data-lang-btn]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.langBtn === lang);
   });
 }
 
-function detectDefaultLang(){
-  const saved = localStorage.getItem("rk_lang");
-  if(saved && content[saved]) return saved;
+// ─── Calendar (calendar.html only) ───────────────────────
+function wireCalendar() {
+  if (!document.getElementById('calendar-root')) return;
 
-  const nav = (navigator.language || "en").toLowerCase();
-  if(nav.startsWith("ru")) return "ru";
-  if(nav.startsWith("pt")) return "pt";
-  return "en";
+  let currentBranch = 'gaia';
+  let currentDate   = new Date();
+
+  renderCalendar(currentBranch, currentDate);
+
+  document.querySelectorAll('[data-branch]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentBranch = btn.dataset.branch;
+      renderCalendar(currentBranch, currentDate);
+    });
+  });
+
+  document.getElementById('cal-prev')?.addEventListener('click', () => {
+    currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
+    renderCalendar(currentBranch, currentDate);
+  });
+
+  document.getElementById('cal-next')?.addEventListener('click', () => {
+    currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1);
+    renderCalendar(currentBranch, currentDate);
+  });
 }
 
-function setLang(lang){
-  const c = content[lang] || content.en;
-  document.documentElement.lang = lang;
+function renderCalendar(branch, date) {
+  const monthNames = {
+    en: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+    pt: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+    ru: ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
+  };
 
-  setText("statusText", c.statusText);
-  setText("kicker", c.kicker);
-  setText("title", c.title);
-  setText("text", c.text);
-  setText("btnMain", c.btnMain);
-  setText("btnExplore", c.btnExplore);
-  setText("agePill", c.agePill);
-  setText("approachPill", c.approachPill);
-  setText("goalPill", c.goalPill);
-  setText("contactLabel", c.contactLabel);
+  const year  = date.getFullYear();
+  const month = date.getMonth();
 
-  setText("steamTitle", c.steamTitle);
-  setText("steamText", c.steamText);
+  const monthLabel = document.getElementById('cal-month-label');
+  if (monthLabel) monthLabel.textContent = `${monthNames[lang][month]} ${year}`;
 
-  setText("sTitle", c.sTitle);
-  setText("sText", c.sText);
-  setText("tTitle", c.tTitle);
-  setText("tText", c.tText);
-  setText("eTitle", c.eTitle);
-  setText("eText", c.eText);
-  setText("aTitle", c.aTitle);
-  setText("aText", c.aText);
-  setText("mTitle", c.mTitle);
-  setText("mText", c.mText);
-  setText("mindBodyTitle", c.mindBodyTitle);
-  setText("mindBodyText", c.mindBodyText);
+  const grid = document.getElementById('cal-days-grid');
+  if (!grid) return;
 
-  setText("directionsTitle", c.directionsTitle);
-  setText("directionsText", c.directionsText);
+  const firstDay  = new Date(year, month, 1).getDay(); // 0=Sun
+  const daysCount = new Date(year, month + 1, 0).getDate();
 
-  setText("cardRoboticsTitle", c.cardRoboticsTitle);
-  setText("cardRoboticsText", c.cardRoboticsText);
-  setText("cardScienceTitle", c.cardScienceTitle);
-  setText("cardScienceText", c.cardScienceText);
-  setText("cardCodingTitle", c.cardCodingTitle);
-  setText("cardCodingText", c.cardCodingText);
-  setText("cardYogaTitle", c.cardYogaTitle);
-  setText("cardYogaText", c.cardYogaText);
+  // Days with classes this branch
+  const classesForBranch = schedule.classes[branch] || [];
+  const daysWithClasses  = new Set(classesForBranch.map(c => c.dayOfWeek));
 
-  setText("cardMore1", c.cardMore);
-  setText("cardMore2", c.cardMore);
-  setText("cardMore3", c.cardMore);
-  setText("cardMore4", c.cardMore);
+  // Special events this month
+  const specials = (schedule.specialEvents || []).filter(e => {
+    if (e.branch !== branch) return false;
+    const start = new Date(e.dateStart);
+    return start.getFullYear() === year && start.getMonth() === month;
+  });
+  const specialDays = new Map();
+  specials.forEach(e => {
+    const d = new Date(e.dateStart).getDate();
+    specialDays.set(d, e);
+  });
 
-  setText("goalTitle2", c.goalTitle2);
-  setText("goalText2", c.goalText2);
-  setText("whereTitle", c.whereTitle);
-  setText("address", c.address);
-  setText("branchesNote", c.branchesNote);
-  setText("footerNote", c.footerNote);
+  let html = '';
+  const offset = (firstDay + 6) % 7; // Mon-first
+  for (let i = 0; i < offset; i++) html += '<div class="cal-cell empty"></div>';
 
-  localStorage.setItem("rk_lang", lang);
-  highlightActive(lang);
+  for (let d = 1; d <= daysCount; d++) {
+    const jsDay  = new Date(year, month, d).getDay(); // 0=Sun
+    const hasCls = daysWithClasses.has(jsDay);
+    const hasSpe = specialDays.has(d);
+    const today  = isToday(year, month, d);
+
+    html += `<div class="cal-cell${hasCls ? ' has-classes' : ''}${hasSpe ? ' has-event' : ''}${today ? ' today' : ''}"
+      data-year="${year}" data-month="${month}" data-day="${d}"
+      data-branch="${branch}">
+      <span class="cal-day-num">${d}</span>
+      ${hasSpe ? '<span class="cal-dot event"></span>' : ''}
+      ${hasCls ? '<span class="cal-dot class"></span>' : ''}
+    </div>`;
+  }
+
+  grid.innerHTML = html;
+
+  grid.querySelectorAll('.cal-cell:not(.empty)').forEach(cell => {
+    cell.addEventListener('click', () => showDayPanel(cell));
+  });
 }
 
-setLang(detectDefaultLang());
+function showDayPanel(cell) {
+  const year   = parseInt(cell.dataset.year);
+  const month  = parseInt(cell.dataset.month);
+  const day    = parseInt(cell.dataset.day);
+  const branch = cell.dataset.branch;
+  const jsDay  = new Date(year, month, day).getDay();
+
+  const classes = (schedule.classes[branch] || []).filter(c => c.dayOfWeek === jsDay);
+  const specials = (schedule.specialEvents || []).filter(e => {
+    if (e.branch !== branch) return false;
+    const s = new Date(e.dateStart);
+    return s.getFullYear() === year && s.getMonth() === month && s.getDate() === day;
+  });
+
+  const panel = document.getElementById('day-panel');
+  if (!panel) return;
+
+  const dateStr = new Date(year, month, day).toLocaleDateString(lang === 'ru' ? 'ru-RU' : lang === 'pt' ? 'pt-PT' : 'en-GB', {
+    weekday: 'long', day: 'numeric', month: 'long'
+  });
+
+  let html = `<h3 style="margin-bottom:14px;font-family:'Syne',sans-serif">${dateStr}</h3>`;
+
+  if (classes.length === 0 && specials.length === 0) {
+    html += `<p style="color:var(--muted);font-size:.9rem">No classes scheduled.</p>`;
+  }
+
+  classes.forEach(cls => {
+    const prog = schedule.programs[cls.program];
+    const spotsLeft = cls.spotsTotal - cls.spotsTaken;
+    const label = prog.label[lang] || prog.label.en;
+    html += `
+      <div class="day-class-card color-${prog.color}" data-classid="${cls.id}">
+        <div class="class-time">${cls.timeStart} – ${cls.timeEnd}</div>
+        <div class="class-name">${label}</div>
+        <div class="class-meta">Ages ${cls.ageMin}–${cls.ageMax} · ${cls.instructor} · ${spotsLeft} spot${spotsLeft !== 1 ? 's' : ''} left</div>
+        <button class="btn-book" onclick="openBooking('${cls.id}','${dateStr}')">Book →</button>
+      </div>`;
+  });
+
+  specials.forEach(e => {
+    const title = e.title[lang] || e.title.en;
+    html += `<div class="day-class-card color-teal">
+      <div class="class-name">🌟 ${title}</div>
+      <div class="class-meta">Special event</div>
+    </div>`;
+  });
+
+  panel.innerHTML = html;
+  panel.style.display = 'block';
+}
+
+function openBooking(classId, dateStr) {
+  const modal = document.getElementById('booking-modal');
+  if (!modal) return;
+  document.getElementById('booking-class-label').textContent = `${classId} · ${dateStr}`;
+  modal.style.display = 'flex';
+}
+window.openBooking = openBooking;
+
+function closeBooking() {
+  const modal = document.getElementById('booking-modal');
+  if (modal) modal.style.display = 'none';
+}
+window.closeBooking = closeBooking;
+
+// ─── Helpers ──────────────────────────────────────────────
+function setText(id, text) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = text;
+}
+
+function setHTML(id, html) {
+  const el = document.getElementById(id);
+  if (el) el.innerHTML = html;
+}
+
+function isToday(year, month, day) {
+  const now = new Date();
+  return now.getFullYear() === year && now.getMonth() === month && now.getDate() === day;
+}
+
+// ─── Expose for nav buttons ───────────────────────────────
+window.setLang = setLang;
