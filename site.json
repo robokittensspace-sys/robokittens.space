@@ -1,0 +1,44 @@
+{
+  "contact": {
+    "phone": "+351912510486",
+    "phoneDisplay": "+351 912 510 486",
+    "whatsapp": "https://wa.me/351912510486",
+    "email": "robokittens.space@gmail.com",
+    "instagram": "https://www.instagram.com/robokittens.space",
+    "telegram": "https://t.me/RoboKittens"
+  },
+
+  "locations": [
+    {
+      "id": "gaia",
+      "status": "open",
+      "name": "Gaia",
+      "address": "R. de Soares dos Reis 101, Loja 24",
+      "postcode": "4430-999",
+      "city": "Vila Nova de Gaia",
+      "hours": "Mon–Sat · 09:00–19:00",
+      "mapsUrl": "https://maps.google.com/?q=R.+de+Soares+dos+Reis+101+Vila+Nova+de+Gaia"
+    },
+    {
+      "id": "matosinhos",
+      "status": "coming_soon",
+      "name": "Matosinhos",
+      "address": null,
+      "postcode": null,
+      "city": "Matosinhos",
+      "hours": null,
+      "expectedOpening": "2025",
+      "mapsUrl": null
+    }
+  ],
+
+  "programs": [
+    { "id": "robotics", "url": "/programs/robotics.html", "icon": "🤖", "color": "orange" },
+    { "id": "science",  "url": "/programs/science.html",  "icon": "🔬", "color": "teal"   },
+    { "id": "coding",   "url": "/programs/coding.html",   "icon": "💻", "color": "purple" },
+    { "id": "yoga",     "url": "/programs/yoga.html",     "icon": "🧘", "color": "yellow" }
+  ],
+
+  "defaultLang": "en",
+  "supportedLangs": ["en", "pt", "ru"]
+}

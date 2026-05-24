@@ -1,0 +1,391 @@
+{
+  "en": {
+    "meta": {
+      "title": "RoboKittens — STEAM Space in Gaia & Matosinhos",
+      "description": "RoboKittens STEAM Space — robotics, science, coding, creativity, and yoga for kids aged 4–16 in Vila Nova de Gaia and Matosinhos."
+    },
+    "nav": {
+      "programs": "Programs",
+      "schedule": "Schedule",
+      "locations": "Locations",
+      "bookTrial": "Book a trial →"
+    },
+    "hero": {
+      "badge": "⚡ STEAM · Robotics · Science · Coding · Yoga",
+      "title": "Where kids build, <em>experiment,</em> and discover",
+      "subtitle": "RoboKittens is a STEAM learning space for children aged 4–16 in Gaia and Matosinhos. Real projects, hands-on practice, exhibitions — not just theory.",
+      "btnMain": "🐾 Book a free trial",
+      "btnExplore": "Explore programs ↓",
+      "stats": {
+        "ages": "4–16",
+        "agesLabel": "Age range",
+        "directions": "6+",
+        "directionsLabel": "Directions",
+        "locations": "2",
+        "locationsLabel": "Locations"
+      }
+    },
+    "steam": {
+      "tag": "Why it works",
+      "title": "STEAM is a mindset, not a subject",
+      "subtitle": "Children don't just memorize — they build, test, observe, and create. Every session connects subjects to real-world problems.",
+      "items": [
+        { "icon": "🔭", "title": "Science",      "text": "Experiments, curiosity, and understanding how the world actually works — not just on paper." },
+        { "icon": "⚙️", "title": "Technology",   "text": "Digital skills, tools, and the logic behind the systems shaping our everyday life." },
+        { "icon": "🛠️", "title": "Engineering",  "text": "Circuits, robotics, prototypes. Kids learn by building — and by fixing what breaks." },
+        { "icon": "🎨", "title": "Arts",          "text": "Creativity, design, and imagination woven into every project — not a separate class." },
+        { "icon": "📐", "title": "Mathematics",   "text": "Logic, patterns, and structure — understood through real problem solving, not drills." },
+        { "icon": "🌿", "title": "Mind & Body",   "text": "Focus, confidence, breathing, and emotional balance through movement and yoga." }
+      ]
+    },
+    "programs": {
+      "tag": "What we offer",
+      "title": "Learning directions",
+      "subtitle": "Each program is hands-on, age-adapted, and builds toward real projects and exhibitions.",
+      "learnMore": "Learn more →",
+      "items": [
+        {
+          "id": "robotics",
+          "icon": "🤖",
+          "color": "orange",
+          "ages": "Ages 6–16",
+          "title": "Robotics & Engineering",
+          "text": "Children build and program real robots, learn to solder, work with circuits, and think in systems. Projects progress from simple mechanisms to autonomous devices presented at exhibitions.",
+          "tags": ["Arduino", "LEGO Technic", "Electronics", "3D thinking"],
+          "url": "/programs/robotics.html"
+        },
+        {
+          "id": "science",
+          "icon": "🔬",
+          "color": "teal",
+          "ages": "Ages 4–14",
+          "title": "Science Lab",
+          "text": "Physics, chemistry, and biology through safe and exciting experiments. Children form hypotheses, run tests, and record results — the full scientific method from the very first session.",
+          "tags": ["Chemistry", "Physics", "Biology", "Experiments"],
+          "url": "/programs/science.html"
+        },
+        {
+          "id": "coding",
+          "icon": "💻",
+          "color": "purple",
+          "ages": "Ages 5–16",
+          "title": "Coding",
+          "text": "From visual block coding (Scratch) to text-based programming. Kids create games, animations, and web projects. Algorithmic thinking is the foundation — built step by step.",
+          "tags": ["Scratch", "Python", "Game Dev", "Web basics"],
+          "url": "/programs/coding.html"
+        },
+        {
+          "id": "yoga",
+          "icon": "🧘",
+          "color": "yellow",
+          "ages": "Ages 4–12",
+          "title": "Yoga & Focus",
+          "text": "Movement, breathing, and calm attention — adapted for children. Not a fitness class, but a toolkit for self-regulation that supports everything else they learn at RoboKittens.",
+          "tags": ["Breathing", "Balance", "Focus", "Mindfulness"],
+          "url": "/programs/yoga.html"
+        }
+      ]
+    },
+    "formats": {
+      "tag": "How classes work",
+      "title": "Flexible formats",
+      "subtitle": "Choose what fits your family — from regular weekly sessions to holiday camps and one-time workshops.",
+      "items": [
+        { "icon": "📅", "title": "Weekly sessions",          "text": "Regular classes 1–2× per week, 60–90 min. Consistent progress, a stable group, ongoing projects." },
+        { "icon": "☀️", "title": "Holiday camps",            "text": "Intensive programmes during school holidays. Full days of experiments, building, and exploration." },
+        { "icon": "🎉", "title": "Birthday parties",         "text": "Science-themed or robotics parties — a unique experience that kids actually talk about." },
+        { "icon": "🏫", "title": "School visits",            "text": "We bring workshops to schools and kindergartens. Hands-on STEAM for whole classes." },
+        { "icon": "🏆", "title": "Exhibitions & competitions","text": "Kids present their projects publicly — building confidence alongside technical skills." },
+        { "icon": "🎯", "title": "Free trial lesson",        "text": "Come and try before committing. One session, no obligation — just see if it's the right fit." }
+      ]
+    },
+    "locations": {
+      "tag": "Find us",
+      "title": "Two locations",
+      "subtitle": "RoboKittens is growing across the Porto metro area — choose the branch that's closest to you.",
+      "notifyBtn": "Notify me when open →"
+    },
+    "schedule": {
+      "tag": "Example timetable · Gaia",
+      "title": "Weekly schedule",
+      "subtitle": "Sample classes — exact times vary by group and age. Book a trial and we'll find the perfect slot.",
+      "note": "📅 This is an example timetable.",
+      "calendarLink": "See the live calendar →",
+      "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Saturday"]
+    },
+    "cta": {
+      "title": "Ready to try?<br/>First lesson is free.",
+      "subtitle": "Book a trial class — no commitment, no paperwork. Just bring your curiosity.",
+      "whatsapp": "💬 WhatsApp us",
+      "email": "✉️ Send an email"
+    },
+    "footer": {
+      "tagline": "STEAM education space for children aged 4–16. Robotics, science, coding, yoga, and more — in Gaia and Matosinhos.",
+      "programsTitle": "Programs",
+      "contactTitle": "Contacts",
+      "bookLink": "Book a class →",
+      "copyright": "© 2025 RoboKittens · Vila Nova de Gaia & Matosinhos",
+      "slogan": "🐾 Where kids build, experiment, and discover"
+    }
+  },
+
+  "pt": {
+    "meta": {
+      "title": "RoboKittens — Espaço STEAM em Gaia e Matosinhos",
+      "description": "RoboKittens — robótica, ciência, programação, criatividade e yoga para crianças dos 4 aos 16 anos em Vila Nova de Gaia e Matosinhos."
+    },
+    "nav": {
+      "programs": "Programas",
+      "schedule": "Horário",
+      "locations": "Localizações",
+      "bookTrial": "Aula experimental →"
+    },
+    "hero": {
+      "badge": "⚡ STEAM · Robótica · Ciência · Programação · Yoga",
+      "title": "Onde as crianças constroem, <em>experimentam</em> e descobrem",
+      "subtitle": "RoboKittens é um espaço de aprendizagem STEAM para crianças dos 4 aos 16 anos em Gaia e Matosinhos. Projetos reais, prática hands-on, exposições — não apenas teoria.",
+      "btnMain": "🐾 Aula experimental gratuita",
+      "btnExplore": "Ver programas ↓",
+      "stats": {
+        "ages": "4–16",
+        "agesLabel": "Idades",
+        "directions": "6+",
+        "directionsLabel": "Áreas",
+        "locations": "2",
+        "locationsLabel": "Espaços"
+      }
+    },
+    "steam": {
+      "tag": "Por que funciona",
+      "title": "STEAM é uma mentalidade, não uma disciplina",
+      "subtitle": "As crianças não apenas memorizam — constroem, testam, observam e criam. Cada sessão liga as matérias a problemas do mundo real.",
+      "items": [
+        { "icon": "🔭", "title": "Ciência",       "text": "Experiências, curiosidade e compreensão de como o mundo realmente funciona — não apenas no papel." },
+        { "icon": "⚙️", "title": "Tecnologia",    "text": "Competências digitais, ferramentas e a lógica por detrás dos sistemas que moldam o nosso dia a dia." },
+        { "icon": "🛠️", "title": "Engenharia",   "text": "Circuitos, robótica, protótipos. As crianças aprendem construindo — e corrigindo o que falha." },
+        { "icon": "🎨", "title": "Artes",          "text": "Criatividade, design e imaginação em cada projeto — não como disciplina separada." },
+        { "icon": "📐", "title": "Matemática",     "text": "Lógica, padrões e estrutura — compreendidos através da resolução de problemas reais." },
+        { "icon": "🌿", "title": "Mente & Corpo", "text": "Foco, confiança, respiração e equilíbrio emocional através do movimento e do yoga." }
+      ]
+    },
+    "programs": {
+      "tag": "O que oferecemos",
+      "title": "Áreas de aprendizagem",
+      "subtitle": "Cada programa é prático, adaptado à idade e orientado para projetos reais e exposições.",
+      "learnMore": "Saber mais →",
+      "items": [
+        {
+          "id": "robotics",
+          "icon": "🤖",
+          "color": "orange",
+          "ages": "Idades 6–16",
+          "title": "Robótica & Engenharia",
+          "text": "As crianças constroem e programam robôs reais, aprendem a soldar, trabalham com circuitos e pensam em sistemas. Os projetos evoluem de mecanismos simples a dispositivos autónomos apresentados em exposições.",
+          "tags": ["Arduino", "LEGO Technic", "Eletrónica", "Pensamento 3D"],
+          "url": "/programs/robotics.html"
+        },
+        {
+          "id": "science",
+          "icon": "🔬",
+          "color": "teal",
+          "ages": "Idades 4–14",
+          "title": "Laboratório de Ciência",
+          "text": "Física, química e biologia através de experiências seguras e emocionantes. As crianças formulam hipóteses, realizam testes e registam resultados — o método científico completo desde a primeira sessão.",
+          "tags": ["Química", "Física", "Biologia", "Experiências"],
+          "url": "/programs/science.html"
+        },
+        {
+          "id": "coding",
+          "icon": "💻",
+          "color": "purple",
+          "ages": "Idades 5–16",
+          "title": "Programação",
+          "text": "Do código visual por blocos (Scratch) à programação em texto. As crianças criam jogos, animações e projetos web. O pensamento algorítmico é a base — construída passo a passo.",
+          "tags": ["Scratch", "Python", "Game Dev", "Web básico"],
+          "url": "/programs/coding.html"
+        },
+        {
+          "id": "yoga",
+          "icon": "🧘",
+          "color": "yellow",
+          "ages": "Idades 4–12",
+          "title": "Yoga & Foco",
+          "text": "Movimento, respiração e atenção calma — adaptados para crianças. Não é uma aula de fitness, mas um conjunto de ferramentas de autorregulação que apoia tudo o que aprendem no RoboKittens.",
+          "tags": ["Respiração", "Equilíbrio", "Foco", "Mindfulness"],
+          "url": "/programs/yoga.html"
+        }
+      ]
+    },
+    "formats": {
+      "tag": "Como funcionam as aulas",
+      "title": "Formatos flexíveis",
+      "subtitle": "Escolha o que melhor se adapta à sua família — desde sessões semanais regulares a campos de férias e workshops pontuais.",
+      "items": [
+        { "icon": "📅", "title": "Sessões semanais",         "text": "Aulas regulares 1–2× por semana, 60–90 min. Progresso consistente, grupo estável, projetos contínuos." },
+        { "icon": "☀️", "title": "Campos de férias",         "text": "Programas intensivos durante as férias escolares. Dias completos de experiências, construção e exploração." },
+        { "icon": "🎉", "title": "Festas de aniversário",    "text": "Festas temáticas de ciência ou robótica — uma experiência única de que as crianças falam muito tempo depois." },
+        { "icon": "🏫", "title": "Visitas a escolas",        "text": "Levamos workshops a escolas e jardins de infância. STEAM prático para turmas inteiras." },
+        { "icon": "🏆", "title": "Exposições & concursos",  "text": "As crianças apresentam os seus projetos publicamente — desenvolvendo confiança a par das competências técnicas." },
+        { "icon": "🎯", "title": "Aula experimental gratuita","text": "Venha experimentar antes de se comprometer. Uma sessão, sem obrigação — só para ver se é o espaço certo." }
+      ]
+    },
+    "locations": {
+      "tag": "Encontre-nos",
+      "title": "Dois espaços",
+      "subtitle": "RoboKittens está a crescer na área metropolitana do Porto — escolha o espaço mais próximo de si.",
+      "notifyBtn": "Avisar-me quando abrir →"
+    },
+    "schedule": {
+      "tag": "Exemplo de horário · Gaia",
+      "title": "Horário semanal",
+      "subtitle": "Aulas de exemplo — os horários exatos variam consoante o grupo e a idade. Reserve uma aula experimental e encontramos o melhor horário.",
+      "note": "📅 Este é um horário de exemplo.",
+      "calendarLink": "Ver o calendário atualizado →",
+      "days": ["Segunda", "Terça", "Quarta", "Quinta", "Sábado"]
+    },
+    "cta": {
+      "title": "Pronto para experimentar?<br/>A primeira aula é gratuita.",
+      "subtitle": "Marque uma aula experimental — sem compromisso, sem papelada. Traga apenas a curiosidade.",
+      "whatsapp": "💬 WhatsApp",
+      "email": "✉️ Enviar email"
+    },
+    "footer": {
+      "tagline": "Espaço de aprendizagem STEAM para crianças dos 4 aos 16 anos. Robótica, ciência, programação, yoga e mais — em Gaia e Matosinhos.",
+      "programsTitle": "Programas",
+      "contactTitle": "Contactos",
+      "bookLink": "Marcar aula →",
+      "copyright": "© 2025 RoboKittens · Vila Nova de Gaia & Matosinhos",
+      "slogan": "🐾 Onde as crianças constroem, experimentam e descobrem"
+    }
+  },
+
+  "ru": {
+    "meta": {
+      "title": "RoboKittens — STEAM-пространство в Гайе и Матозиньюше",
+      "description": "RoboKittens — робототехника, наука, программирование, творчество и йога для детей 4–16 лет в Вила-Нова-де-Гайя и Матозиньюше."
+    },
+    "nav": {
+      "programs": "Программы",
+      "schedule": "Расписание",
+      "locations": "Адреса",
+      "bookTrial": "Записаться →"
+    },
+    "hero": {
+      "badge": "⚡ STEAM · Робототехника · Наука · Программирование · Йога",
+      "title": "Место, где дети строят, <em>экспериментируют</em> и открывают мир",
+      "subtitle": "RoboKittens — STEAM-пространство для детей 4–16 лет в Гайе и Матозиньюше. Реальные проекты, практика, выставки — не просто теория.",
+      "btnMain": "🐾 Бесплатное пробное занятие",
+      "btnExplore": "Смотреть программы ↓",
+      "stats": {
+        "ages": "4–16",
+        "agesLabel": "Возраст",
+        "directions": "6+",
+        "directionsLabel": "Направлений",
+        "locations": "2",
+        "locationsLabel": "Локации"
+      }
+    },
+    "steam": {
+      "tag": "Почему это работает",
+      "title": "STEAM — это мышление, а не предмет",
+      "subtitle": "Дети не просто запоминают — они строят, тестируют, наблюдают и создают. Каждое занятие связывает предметы с реальными задачами.",
+      "items": [
+        { "icon": "🔭", "title": "Наука",          "text": "Опыты, любопытство и понимание того, как устроен мир — не на бумаге, а в действии." },
+        { "icon": "⚙️", "title": "Технологии",    "text": "Цифровые навыки, инструменты и логика систем, которые формируют нашу жизнь." },
+        { "icon": "🛠️", "title": "Инженерия",    "text": "Схемы, робототехника, прототипы. Дети учатся, создавая — и исправляя то, что ломается." },
+        { "icon": "🎨", "title": "Искусство",      "text": "Творчество, дизайн и воображение встроены в каждый проект — не как отдельный урок." },
+        { "icon": "📐", "title": "Математика",     "text": "Логика, паттерны и структура — через решение реальных задач, а не заучивание." },
+        { "icon": "🌿", "title": "Тело и разум",  "text": "Фокус, уверенность, дыхание и эмоциональный баланс через движение и йогу." }
+      ]
+    },
+    "programs": {
+      "tag": "Что мы предлагаем",
+      "title": "Направления",
+      "subtitle": "Каждая программа практична, адаптирована по возрасту и ведёт к реальным проектам и выставкам.",
+      "learnMore": "Подробнее →",
+      "items": [
+        {
+          "id": "robotics",
+          "icon": "🤖",
+          "color": "orange",
+          "ages": "Возраст 6–16",
+          "title": "Робототехника и инженерия",
+          "text": "Дети собирают и программируют настоящих роботов, учатся паять, работают со схемами. Проекты развиваются от простых механизмов до автономных устройств, которые представляют на выставках.",
+          "tags": ["Arduino", "LEGO Technic", "Электроника", "3D-мышление"],
+          "url": "/programs/robotics.html"
+        },
+        {
+          "id": "science",
+          "icon": "🔬",
+          "color": "teal",
+          "ages": "Возраст 4–14",
+          "title": "Научная лаборатория",
+          "text": "Физика, химия и биология через безопасные и захватывающие эксперименты. Дети строят гипотезы, проводят опыты и фиксируют результаты — научный метод с первого занятия.",
+          "tags": ["Химия", "Физика", "Биология", "Эксперименты"],
+          "url": "/programs/science.html"
+        },
+        {
+          "id": "coding",
+          "icon": "💻",
+          "color": "purple",
+          "ages": "Возраст 5–16",
+          "title": "Программирование",
+          "text": "От визуального блочного кодинга (Scratch) до текстового программирования. Дети создают игры, анимации и веб-проекты. Алгоритмическое мышление — основа, которую строят шаг за шагом.",
+          "tags": ["Scratch", "Python", "Разработка игр", "Основы веба"],
+          "url": "/programs/coding.html"
+        },
+        {
+          "id": "yoga",
+          "icon": "🧘",
+          "color": "yellow",
+          "ages": "Возраст 4–12",
+          "title": "Йога и фокус",
+          "text": "Движение, дыхание и спокойное внимание — адаптированные для детей. Не фитнес, а инструменты саморегуляции, которые поддерживают всё остальное в RoboKittens.",
+          "tags": ["Дыхание", "Баланс", "Концентрация", "Майндфулнес"],
+          "url": "/programs/yoga.html"
+        }
+      ]
+    },
+    "formats": {
+      "tag": "Как проходят занятия",
+      "title": "Гибкие форматы",
+      "subtitle": "Выберите то, что подходит вашей семье — от регулярных занятий до каникулярных лагерей и разовых мастер-классов.",
+      "items": [
+        { "icon": "📅", "title": "Еженедельные занятия",      "text": "Регулярные классы 1–2 раза в неделю, 60–90 минут. Стабильный прогресс, постоянная группа, сквозные проекты." },
+        { "icon": "☀️", "title": "Каникулярные лагеря",       "text": "Интенсивные программы во время школьных каникул. Полные дни экспериментов, строительства и исследований." },
+        { "icon": "🎉", "title": "Дни рождения",               "text": "Научные или робото-вечеринки — необычный опыт, о котором дети рассказывают ещё долго." },
+        { "icon": "🏫", "title": "Выезды в школы",            "text": "Привозим мастер-классы в школы и детские сады. STEAM на практике для целых классов." },
+        { "icon": "🏆", "title": "Выставки и конкурсы",       "text": "Дети представляют свои проекты публично — одновременно строя уверенность и технические навыки." },
+        { "icon": "🎯", "title": "Бесплатное пробное занятие","text": "Приходите попробовать без обязательств. Одно занятие, без давления — просто посмотрите, подходит ли это вашему ребёнку." }
+      ]
+    },
+    "locations": {
+      "tag": "Где мы находимся",
+      "title": "Две локации",
+      "subtitle": "RoboKittens растёт в Porto metro area — выберите ближайшую к вам.",
+      "notifyBtn": "Уведомить об открытии →"
+    },
+    "schedule": {
+      "tag": "Пример расписания · Гайя",
+      "title": "Недельное расписание",
+      "subtitle": "Примерные классы — точное время зависит от группы и возраста. Запишитесь на пробное занятие, и мы подберём удобный слот.",
+      "note": "📅 Это примерное расписание.",
+      "calendarLink": "Смотреть актуальный календарь →",
+      "days": ["Понедельник", "Вторник", "Среда", "Четверг", "Суббота"]
+    },
+    "cta": {
+      "title": "Готовы попробовать?<br/>Первое занятие бесплатно.",
+      "subtitle": "Запишитесь на пробное занятие — без обязательств и бумаг. Просто приходите с любопытством.",
+      "whatsapp": "💬 WhatsApp",
+      "email": "✉️ Написать на email"
+    },
+    "footer": {
+      "tagline": "STEAM-пространство для детей 4–16 лет. Робототехника, наука, программирование, йога и многое другое — в Гайе и Матозиньюше.",
+      "programsTitle": "Программы",
+      "contactTitle": "Контакты",
+      "bookLink": "Записаться →",
+      "copyright": "© 2025 RoboKittens · Вила-Нова-де-Гайя & Матозиньюш",
+      "slogan": "🐾 Место, где дети строят, экспериментируют и открывают мир"
+    }
+  }
+}
