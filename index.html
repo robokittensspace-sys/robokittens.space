@@ -3,329 +3,264 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RoboKittens — STEAM Space in Gaia & Matosinhos</title>
-  <meta name="description" content="RoboKittens STEAM Space — robotics, science, coding, and yoga for kids aged 4–16 in Vila Nova de Gaia and Matosinhos." />
+  <title>RoboKittens — STEAM Space in Gaia &amp; Matosinhos</title>
+  <meta name="description" content="Robotics, science, coding, and yoga for kids aged 4–16 in Vila Nova de Gaia and Matosinhos." />
   <link rel="icon" href="logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --ink:    #0f1117;
-      --cream:  #f5f2ec;
-      --orange: #f4631e;
-      --teal:   #00b4a0;
-      --yellow: #f7c948;
-      --purple: #7c5cbf;
-      --light:  #faf9f6;
-      --muted:  #6b6b6b;
-      --r:      14px;
-      --max:    1180px;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--light); color: var(--ink); font-size: 17px; line-height: 1.65; overflow-x: hidden; }
-
-    /* NAV */
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 68px; background: rgba(245,242,236,.93); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(0,0,0,.06); }
-    .nav-inner { max-width: var(--max); margin: 0 auto; padding: 0 40px; height: 100%; display: flex; align-items: center; justify-content: space-between; }
-    .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem; letter-spacing: -.02em; color: var(--ink); text-decoration: none; }
-    .nav-logo span { color: var(--orange); }
-    .nav-center { display: flex; align-items: center; gap: 28px; list-style: none; }
-    .nav-center a { text-decoration: none; color: var(--ink); font-size: .9rem; font-weight: 500; opacity: .72; transition: opacity .2s; }
-    .nav-center a:hover { opacity: 1; }
-    .btn-nav { background: var(--orange) !important; color: #fff !important; padding: 8px 18px; border-radius: 30px; font-weight: 600; font-size: .88rem; opacity: 1 !important; }
-    .btn-nav:hover { box-shadow: 0 4px 16px rgba(244,99,30,.4); }
-    .nav-lang { display: flex; gap: 6px; }
-    .nav-lang button { font-size: .78rem; font-weight: 600; padding: 3px 9px; border-radius: 20px; border: none; background: transparent; color: var(--muted); cursor: pointer; font-family: inherit; transition: background .2s, color .2s; }
-    .nav-lang button:hover, .nav-lang button.active { background: var(--ink); color: #fff; }
-
-    /* HERO */
-    .hero { min-height: 100svh; padding-top: 68px; display: flex; align-items: center; position: relative; overflow: hidden; }
-    .hero::before { content: ''; position: absolute; top: -60px; right: 0; width: 480px; height: 480px; background: radial-gradient(circle, rgba(244,99,30,.12) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
-    .hero::after  { content: ''; position: absolute; bottom: 0; left: 40%; width: 340px; height: 340px; background: radial-gradient(circle, rgba(0,180,160,.08) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
-    .hero-inner { max-width: var(--max); margin: 0 auto; padding: 60px 40px; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
-    .hero-badge { display: inline-flex; align-items: center; background: rgba(244,99,30,.1); border: 1px solid rgba(244,99,30,.25); color: var(--orange); font-size: .8rem; font-weight: 600; padding: 5px 13px; border-radius: 30px; margin-bottom: 22px; letter-spacing: .03em; }
-    .hero h1 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(2rem, 3.2vw, 3.2rem); line-height: 1.1; letter-spacing: -.03em; margin-bottom: 22px; }
-    .hero h1 em { font-style: normal; color: var(--orange); }
-    .hero-sub { font-size: 1rem; color: var(--muted); max-width: 460px; margin-bottom: 36px; line-height: 1.7; }
-    .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 48px; }
-    .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--orange); color: #fff; padding: 14px 28px; border-radius: 50px; font-weight: 600; font-size: 1rem; text-decoration: none; transition: transform .2s, box-shadow .2s; box-shadow: 0 4px 24px rgba(244,99,30,.3); }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(244,99,30,.4); }
-    .btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: transparent; border: 2px solid rgba(15,17,23,.18); color: var(--ink); padding: 13px 24px; border-radius: 50px; font-weight: 500; font-size: .95rem; text-decoration: none; transition: border-color .2s, background .2s; }
-    .btn-secondary:hover { border-color: var(--ink); background: rgba(15,17,23,.04); }
-    .hero-stats { display: flex; gap: 32px; flex-wrap: wrap; }
-    .stat { display: flex; flex-direction: column; }
-    .stat-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.7rem; line-height: 1; }
-    .stat-label { font-size: .78rem; color: var(--muted); font-weight: 500; margin-top: 3px; }
-
-    /* HERO CARDS */
-    .card-stack { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .prog-card { background: #fff; border-radius: var(--r); padding: 22px 20px; border: 1px solid rgba(0,0,0,.06); box-shadow: 0 2px 16px rgba(0,0,0,.05); transition: transform .25s, box-shadow .25s; text-decoration: none; color: var(--ink); display: block; }
-    .prog-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(0,0,0,.1); }
-    .prog-card.wide { grid-column: 1/-1; display: flex; align-items: center; gap: 16px; }
-    .prog-icon { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; margin-bottom: 10px; }
-    .prog-card.wide .prog-icon { margin-bottom: 0; }
-    .prog-card h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .95rem; margin-bottom: 4px; }
-    .prog-card p  { font-size: .8rem; color: var(--muted); line-height: 1.5; }
-    .ic-orange { background: rgba(244,99,30,.12); }
-    .ic-teal   { background: rgba(0,180,160,.12); }
-    .ic-purple { background: rgba(124,92,191,.12); }
-    .ic-yellow { background: rgba(247,201,72,.15); }
-
-    /* SECTIONS */
-    .sec { padding: 80px 0; }
-    .sec-in { max-width: var(--max); margin: 0 auto; padding: 0 40px; }
-    .sec-tag { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); margin-bottom: 12px; }
-    h2 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(1.8rem, 2.4vw, 2.4rem); letter-spacing: -.025em; line-height: 1.15; margin-bottom: 16px; }
-    .sec-sub { color: var(--muted); font-size: 1rem; max-width: 540px; line-height: 1.7; }
-
-    /* STEAM */
-    .steam-wrap { background: var(--ink); border-radius: 24px; margin: 0 40px; }
-    .steam-wrap .sec-in { padding: 70px 60px; }
-    .steam-wrap .sec-tag { color: var(--yellow); }
-    .steam-wrap h2 { color: #fff; }
-    .steam-wrap .sec-sub { color: rgba(255,255,255,.6); }
-    .steam-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; margin-top: 48px; border-radius: 12px; overflow: hidden; }
-    .steam-item { background: rgba(255,255,255,.04); padding: 28px 24px; border: 1px solid rgba(255,255,255,.06); transition: background .2s; }
-    .steam-item:hover { background: rgba(255,255,255,.08); }
-    .steam-item .icon { font-size: 1.8rem; margin-bottom: 14px; }
-    .steam-item h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 8px; color: #fff; }
-    .steam-item p  { font-size: .85rem; color: rgba(255,255,255,.55); line-height: 1.6; }
-
-    /* PROGRAMS */
-    .programs-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; margin-top: 48px; }
-    .program-card { background: #fff; border-radius: 18px; padding: 32px 28px; border: 1px solid rgba(0,0,0,.06); box-shadow: 0 2px 20px rgba(0,0,0,.05); text-decoration: none; color: var(--ink); display: flex; flex-direction: column; gap: 16px; transition: transform .25s, box-shadow .25s; position: relative; overflow: hidden; }
-    .program-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
-    .program-card.c-orange::before { background: var(--orange); }
-    .program-card.c-teal::before   { background: var(--teal); }
-    .program-card.c-purple::before { background: var(--purple); }
-    .program-card.c-yellow::before { background: var(--yellow); }
-    .program-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,.1); }
-    .p-top { display: flex; align-items: flex-start; justify-content: space-between; }
-    .p-icon { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; }
-    .age-tag { font-size: .75rem; font-weight: 600; padding: 4px 10px; border-radius: 20px; background: rgba(0,0,0,.05); color: var(--muted); }
-    .program-card h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.15rem; }
-    .program-card p  { font-size: .9rem; color: var(--muted); line-height: 1.65; }
-    .prog-tags { display: flex; flex-wrap: wrap; gap: 7px; }
-    .prog-tag { font-size: .75rem; font-weight: 500; padding: 4px 11px; border-radius: 20px; background: rgba(0,0,0,.05); }
-    .prog-link { font-size: .85rem; font-weight: 600; color: var(--orange); margin-top: auto; }
-
-    /* FORMATS */
-    .formats-bg { background: var(--cream); }
-    .formats-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 44px; }
-    .format-card { background: #fff; border-radius: var(--r); padding: 26px 22px; border: 1px solid rgba(0,0,0,.06); }
-    .format-card .fi { font-size: 1.6rem; }
-    .format-card h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; margin: 10px 0 8px; }
-    .format-card p  { font-size: .85rem; color: var(--muted); line-height: 1.6; }
-
-    /* LOCATIONS */
-    .locations-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 44px; }
-    .loc-card { background: #fff; border-radius: 18px; padding: 32px 28px; border: 1px solid rgba(0,0,0,.06); box-shadow: 0 2px 20px rgba(0,0,0,.05); }
-    .loc-card.new-loc { border: 2px dashed rgba(0,180,160,.3); background: rgba(0,180,160,.02); }
-    .loc-badge { display: inline-flex; align-items: center; gap: 6px; font-size: .75rem; font-weight: 700; padding: 4px 12px; border-radius: 20px; margin-bottom: 16px; }
-    .loc-badge.open   { background: rgba(0,180,160,.12); color: var(--teal); }
-    .loc-badge.coming { background: rgba(124,92,191,.12); color: var(--purple); }
-    .loc-card h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.2rem; margin-bottom: 8px; }
-    .loc-card address { font-style: normal; font-size: .88rem; color: var(--muted); margin-bottom: 16px; line-height: 1.5; }
-    .loc-detail { font-size: .85rem; color: var(--muted); display: flex; flex-direction: column; gap: 6px; }
-    .loc-detail a { color: inherit; }
-
-    /* SCHEDULE */
-    .sched-bg { background: var(--ink); color: #fff; }
-    .sched-bg .sec-tag { color: var(--teal); }
-    .sched-bg h2  { color: #fff; }
-    .sched-bg .sec-sub { color: rgba(255,255,255,.6); }
-    .schedule-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 10px; margin-top: 44px; }
-    .day-col { background: rgba(255,255,255,.04); border-radius: 12px; overflow: hidden; }
-    .day-header { background: rgba(255,255,255,.06); padding: 10px; text-align: center; font-family: 'Syne', sans-serif; font-weight: 700; font-size: .76rem; letter-spacing: .06em; text-transform: uppercase; color: rgba(255,255,255,.65); }
-    .day-slots { display: flex; flex-direction: column; gap: 6px; padding: 10px; }
-    .slot { border-radius: 8px; padding: 9px 10px; font-size: .75rem; line-height: 1.4; }
-    .slot-time { font-weight: 700; opacity: .6; font-size: .68rem; display: block; margin-bottom: 2px; }
-    .slot-name { font-weight: 600; display: block; }
-    .slot-age  { opacity: .55; font-size: .68rem; display: block; }
-    .s-orange { background: rgba(244,99,30,.18); color: #f4a57a; }
-    .s-teal   { background: rgba(0,180,160,.18); color: #5de3d7; }
-    .s-purple { background: rgba(124,92,191,.18); color: #b8a0ef; }
-    .s-yellow { background: rgba(247,201,72,.18); color: #f7d97a; }
-    .sched-note { margin-top: 24px; font-size: .85rem; color: rgba(255,255,255,.45); text-align: center; }
-    .sched-note a { color: var(--teal); }
-
-    /* CTA */
-    .cta-wrap { background: var(--orange); border-radius: 24px; margin: 80px 40px; }
-    .cta-inner { max-width: var(--max); margin: 0 auto; padding: 60px; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 40px; }
-    .cta-wrap h2 { color: #fff; font-size: clamp(1.5rem, 2vw, 2rem); margin-bottom: 10px; }
-    .cta-wrap p  { color: rgba(255,255,255,.8); }
-    .cta-btns { display: flex; flex-direction: column; gap: 12px; align-items: flex-end; }
-    .btn-white { display: inline-flex; align-items: center; gap: 8px; background: #fff; color: var(--orange); padding: 14px 28px; border-radius: 50px; font-weight: 700; font-size: .95rem; text-decoration: none; white-space: nowrap; transition: transform .2s, box-shadow .2s; box-shadow: 0 4px 20px rgba(0,0,0,.15); }
-    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,.2); }
-    .btn-white.ghost { background: rgba(255,255,255,.15); color: #fff; box-shadow: none; }
-
-    /* FOOTER */
-    footer { background: var(--ink); color: rgba(255,255,255,.5); padding: 56px 0 32px; }
-    .footer-in { max-width: var(--max); margin: 0 auto; padding: 0 40px; }
-    .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
-    .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; color: #fff; margin-bottom: 12px; display: block; }
-    .footer-logo span { color: var(--orange); }
-    .f-desc { font-size: .85rem; line-height: 1.65; }
-    .footer-col h4 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .82rem; color: #fff; margin-bottom: 14px; letter-spacing: .05em; text-transform: uppercase; }
-    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 9px; }
-    .footer-links a { color: rgba(255,255,255,.5); text-decoration: none; font-size: .88rem; transition: color .2s; }
-    .footer-links a:hover { color: #fff; }
-    .footer-bottom { border-top: 1px solid rgba(255,255,255,.08); padding-top: 24px; display: flex; align-items: center; justify-content: space-between; font-size: .8rem; }
-    .social-links { display: flex; gap: 12px; margin-top: 16px; }
-    .social-link { display: inline-flex; align-items: center; gap: 6px; color: rgba(255,255,255,.5); text-decoration: none; font-size: .82rem; padding: 6px 14px; border: 1px solid rgba(255,255,255,.12); border-radius: 30px; transition: border-color .2s, color .2s; }
-    .social-link:hover { color: #fff; border-color: rgba(255,255,255,.35); }
-
-    /* ANIMATIONS */
-    @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
-    .hero-text > * { animation: fadeUp .7s ease both; }
-    .hero-text > *:nth-child(1) { animation-delay: .05s; }
-    .hero-text > *:nth-child(2) { animation-delay: .15s; }
-    .hero-text > *:nth-child(3) { animation-delay: .25s; }
-    .hero-text > *:nth-child(4) { animation-delay: .35s; }
-    .hero-text > *:nth-child(5) { animation-delay: .45s; }
-
-    /* RESPONSIVE */
-    @media (max-width: 960px) {
-      .hero-inner { grid-template-columns: 1fr; }
-      .hero-visual { display: none; }
-      .steam-grid { grid-template-columns: repeat(2,1fr); }
-      .programs-grid { grid-template-columns: 1fr; }
-      .formats-grid { grid-template-columns: 1fr 1fr; }
-      .locations-grid { grid-template-columns: 1fr; }
-      .schedule-grid { grid-template-columns: repeat(2,1fr); }
-      .cta-inner { grid-template-columns: 1fr; }
-      .cta-btns { align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
-      .footer-top { grid-template-columns: 1fr 1fr; }
-      .steam-wrap { margin: 0 20px; }
-      .cta-wrap { margin: 60px 20px; }
-    }
-    @media (max-width: 600px) {
-      .nav-center { display: none; }
-      .hero-inner, .sec-in, .footer-in, .cta-inner { padding-left: 20px; padding-right: 20px; }
-      .steam-wrap .sec-in { padding: 50px 24px; }
-      .steam-grid { grid-template-columns: 1fr; }
-      .formats-grid { grid-template-columns: 1fr; }
-      .schedule-grid { grid-template-columns: 1fr 1fr; }
-      .footer-top { grid-template-columns: 1fr; }
-      .steam-wrap, .cta-wrap { margin: 0 16px; }
-      .cta-wrap { margin-bottom: 60px; }
-    }
-  </style>
+  <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
 <body>
 
-<!-- NAV -->
+<!-- ═══════════════════════════════════════════════════════
+     NAV
+════════════════════════════════════════════════════════ -->
 <nav>
   <div class="nav-inner">
-    <a class="nav-logo" href="/">Robo<span>Kittens</span></a>
-    <ul class="nav-center">
-      <li><a href="#programs" data-i18n="nav.programs">Programs</a></li>
-      <li><a href="#schedule" data-i18n="nav.schedule">Schedule</a></li>
+
+    <a class="nav-logo" href="/">
+      <img src="logo.png" alt="RoboKittens" />
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#programs"  data-i18n="nav.programs">Programs</a></li>
+      <li><a href="#schedule"  data-i18n="nav.schedule">Schedule</a></li>
       <li><a href="#locations" data-i18n="nav.locations">Locations</a></li>
-      <li><a href="https://wa.me/351912510486" class="btn-nav" data-i18n="nav.book">Book a trial →</a></li>
+      <li><a href="https://wa.me/351912510486" class="btn-cta" data-i18n="nav.book">Book a trial →</a></li>
     </ul>
+
     <div class="nav-lang">
       <button data-lang="en" onclick="setLang('en')" class="active">EN</button>
       <button data-lang="pt" onclick="setLang('pt')">PT</button>
       <button data-lang="ru" onclick="setLang('ru')">RU</button>
     </div>
+
   </div>
 </nav>
 
-<!-- HERO -->
+
+<!-- ═══════════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════════════ -->
 <section class="hero">
   <div class="hero-inner">
+
+    <!-- Left: text -->
     <div class="hero-text">
-      <div class="hero-badge" data-i18n="hero.badge">⚡ STEAM · Robotics · Science · Coding · Yoga</div>
-      <h1 data-i18n-html="hero.title">Where kids build, <em>experiment,</em> and discover</h1>
-      <p class="hero-sub" data-i18n="hero.subtitle">RoboKittens is a STEAM learning space for children aged 4–16 in Gaia and Matosinhos. Real projects, hands-on practice, exhibitions — not just theory.</p>
+      <div class="hero-badge" data-i18n="hero.badge">
+        ⚡ STEAM · Robotics · Science · Coding · Yoga
+      </div>
+
+      <h1 data-i18n-html="hero.title">
+        Where kids build, <em>experiment,</em> and discover
+      </h1>
+
+      <p class="hero-sub" data-i18n="hero.subtitle">
+        RoboKittens is a STEAM learning space for children aged 4–16 in Gaia and Matosinhos.
+        Real projects, hands-on practice, exhibitions — not just theory.
+      </p>
+
       <div class="hero-cta">
         <a href="https://wa.me/351912510486" class="btn-primary" data-i18n="hero.btnMain">🐾 Book a free trial</a>
         <a href="#programs" class="btn-secondary" data-i18n="hero.btnExplore">Explore programs ↓</a>
       </div>
+
       <div class="hero-stats">
-        <div class="stat"><span class="stat-num">4–16</span><span class="stat-label" data-i18n="hero.statsAges">Age range</span></div>
-        <div class="stat"><span class="stat-num">6+</span><span class="stat-label" data-i18n="hero.statsDirs">Directions</span></div>
-        <div class="stat"><span class="stat-num">2</span><span class="stat-label" data-i18n="hero.statsLocs">Locations</span></div>
+        <div class="stat">
+          <span class="stat-num">4–16</span>
+          <span class="stat-label" data-i18n="hero.statsAges">Age range</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">6+</span>
+          <span class="stat-label" data-i18n="hero.statsDirs">Directions</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">2</span>
+          <span class="stat-label" data-i18n="hero.statsLocs">Locations</span>
+        </div>
       </div>
     </div>
+
+    <!-- Right: decorative cards -->
     <div class="hero-visual">
       <div class="card-stack">
-        <a href="#programs" class="prog-card"><div class="prog-icon ic-orange">🤖</div><h3>Robotics</h3><p>Build, solder, test — real hardware projects</p></a>
-        <a href="#programs" class="prog-card"><div class="prog-icon ic-teal">🔬</div><h3>Science Lab</h3><p>Chemistry, physics &amp; biology experiments</p></a>
-        <a href="#programs" class="prog-card"><div class="prog-icon ic-purple">💻</div><h3>Coding</h3><p>From Scratch to real digital projects</p></a>
-        <a href="#programs" class="prog-card"><div class="prog-icon ic-yellow">🧘</div><h3>Yoga &amp; Focus</h3><p>Movement, breath &amp; calm attention</p></a>
-        <div class="prog-card wide"><div class="prog-icon ic-orange" style="margin-bottom:0">📍</div><div><h3>Gaia &amp; Matosinhos</h3><p>Two locations across Porto metro area</p></div></div>
+        <a href="#programs" class="prog-card">
+          <div class="prog-icon ic-orange">🤖</div>
+          <h3>Robotics</h3>
+          <p>Build, solder, test — real hardware projects</p>
+        </a>
+        <a href="#programs" class="prog-card">
+          <div class="prog-icon ic-teal">🔬</div>
+          <h3>Science Lab</h3>
+          <p>Chemistry, physics &amp; biology experiments</p>
+        </a>
+        <a href="#programs" class="prog-card">
+          <div class="prog-icon ic-purple">💻</div>
+          <h3>Coding</h3>
+          <p>From Scratch to real digital projects</p>
+        </a>
+        <a href="#programs" class="prog-card">
+          <div class="prog-icon ic-green">🧘</div>
+          <h3>Yoga &amp; Focus</h3>
+          <p>Movement, breath &amp; calm attention</p>
+        </a>
+        <div class="prog-card wide">
+          <div class="prog-icon ic-teal" style="margin-bottom:0">📍</div>
+          <div>
+            <h3>Gaia &amp; Matosinhos</h3>
+            <p>Two locations across Porto metro area</p>
+          </div>
+        </div>
       </div>
     </div>
+
   </div>
 </section>
 
-<!-- STEAM -->
-<div style="padding: 80px 0;">
+
+<!-- ═══════════════════════════════════════════════════════
+     STEAM
+════════════════════════════════════════════════════════ -->
+<div class="steam-outer">
   <div class="steam-wrap">
-    <div class="sec-in">
-      <p class="sec-tag" data-i18n="steam.tag">Why it works</p>
-      <h2 data-i18n="steam.title">STEAM is a mindset, not a subject</h2>
-      <p class="sec-sub" data-i18n="steam.subtitle">Children don't just memorize — they build, test, observe, and create. Every session connects subjects to real-world problems.</p>
+    <div class="steam-inner">
+      <p class="sec-tag"   data-i18n="steam.tag">Why it works</p>
+      <h2 class="sec-title" data-i18n="steam.title">STEAM is a mindset, not a subject</h2>
+      <p class="sec-sub"   data-i18n="steam.subtitle">
+        Children don't just memorize — they build, test, observe, and create.
+        Every session connects subjects to real-world problems.
+      </p>
+
       <div class="steam-grid">
-        <div class="steam-item"><div class="icon">🔭</div><h3 data-i18n="steam.science">Science</h3><p data-i18n="steam.scienceText">Experiments, curiosity, and understanding how the world actually works — not just on paper.</p></div>
-        <div class="steam-item"><div class="icon">⚙️</div><h3 data-i18n="steam.tech">Technology</h3><p data-i18n="steam.techText">Digital skills, tools, and the logic behind the systems shaping our everyday life.</p></div>
-        <div class="steam-item"><div class="icon">🛠️</div><h3 data-i18n="steam.eng">Engineering</h3><p data-i18n="steam.engText">Circuits, robotics, prototypes. Kids learn by building — and by fixing what breaks.</p></div>
-        <div class="steam-item"><div class="icon">🎨</div><h3 data-i18n="steam.arts">Arts</h3><p data-i18n="steam.artsText">Creativity, design, and imagination woven into every project — not a separate class.</p></div>
-        <div class="steam-item"><div class="icon">📐</div><h3 data-i18n="steam.math">Mathematics</h3><p data-i18n="steam.mathText">Logic, patterns, and structure — understood through real problem solving, not drills.</p></div>
-        <div class="steam-item"><div class="icon">🌿</div><h3 data-i18n="steam.mind">Mind &amp; Body</h3><p data-i18n="steam.mindText">Focus, confidence, breathing, and emotional balance through movement and yoga.</p></div>
+        <div class="steam-item">
+          <div class="s-icon">🔭</div>
+          <h3 data-i18n="steam.science">Science</h3>
+          <p data-i18n="steam.sciTxt">Experiments, curiosity, and understanding how the world actually works — not just on paper.</p>
+        </div>
+        <div class="steam-item">
+          <div class="s-icon">⚙️</div>
+          <h3 data-i18n="steam.tech">Technology</h3>
+          <p data-i18n="steam.techTxt">Digital skills, tools, and the logic behind the systems shaping our everyday life.</p>
+        </div>
+        <div class="steam-item">
+          <div class="s-icon">🛠️</div>
+          <h3 data-i18n="steam.eng">Engineering</h3>
+          <p data-i18n="steam.engTxt">Circuits, robotics, prototypes. Kids learn by building — and by fixing what breaks.</p>
+        </div>
+        <div class="steam-item">
+          <div class="s-icon">🎨</div>
+          <h3 data-i18n="steam.arts">Arts</h3>
+          <p data-i18n="steam.artsTxt">Creativity, design, and imagination woven into every project — not a separate class.</p>
+        </div>
+        <div class="steam-item">
+          <div class="s-icon">📐</div>
+          <h3 data-i18n="steam.math">Mathematics</h3>
+          <p data-i18n="steam.mathTxt">Logic, patterns, and structure — understood through real problem solving, not drills.</p>
+        </div>
+        <div class="steam-item">
+          <div class="s-icon">🌿</div>
+          <h3 data-i18n="steam.mind">Mind &amp; Body</h3>
+          <p data-i18n="steam.mindTxt">Focus, confidence, breathing, and emotional balance through movement and yoga.</p>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- PROGRAMS -->
+
+<!-- ═══════════════════════════════════════════════════════
+     PROGRAMS
+════════════════════════════════════════════════════════ -->
 <section class="sec" id="programs">
-  <div class="sec-in">
-    <p class="sec-tag" data-i18n="programs.tag">What we offer</p>
-    <h2 data-i18n="programs.title">Learning directions</h2>
-    <p class="sec-sub" data-i18n="programs.subtitle">Each program is hands-on, age-adapted, and builds toward real projects and exhibitions.</p>
+  <div class="wrap">
+    <p class="sec-tag"    data-i18n="programs.tag">What we offer</p>
+    <h2 class="sec-title" data-i18n="programs.title">Learning directions</h2>
+    <p class="sec-sub"    data-i18n="programs.subtitle">
+      Each program is hands-on, age-adapted, and builds toward real projects and exhibitions.
+    </p>
+
     <div class="programs-grid">
+
       <a class="program-card c-orange" href="/programs/robotics.html">
-        <div class="p-top"><div class="p-icon ic-orange">🤖</div><span class="age-tag" data-i18n="programs.roboticsAge">Ages 6–16</span></div>
-        <h3 data-i18n="programs.roboticsTitle">Robotics &amp; Engineering</h3>
-        <p data-i18n="programs.roboticsText">Children build and program real robots, learn to solder, work with circuits, and think in systems. Projects progress to autonomous devices presented at exhibitions.</p>
-        <div class="prog-tags"><span class="prog-tag">Arduino</span><span class="prog-tag">LEGO Technic</span><span class="prog-tag">Electronics</span><span class="prog-tag">3D thinking</span></div>
+        <div class="p-top">
+          <div class="p-icon ic-orange">🤖</div>
+          <span class="age-tag" data-i18n="programs.robAge">Ages 6–16</span>
+        </div>
+        <h3 data-i18n="programs.robTitle">Robotics &amp; Engineering</h3>
+        <p data-i18n="programs.robText">Children build and program real robots, learn to solder, work with circuits, and think in systems. Projects progress to autonomous devices presented at exhibitions.</p>
+        <div class="prog-tags">
+          <span class="prog-tag">Arduino</span>
+          <span class="prog-tag">LEGO Technic</span>
+          <span class="prog-tag">Electronics</span>
+          <span class="prog-tag">3D thinking</span>
+        </div>
         <span class="prog-link" data-i18n="programs.learnMore">Learn more →</span>
       </a>
+
       <a class="program-card c-teal" href="/programs/science.html">
-        <div class="p-top"><div class="p-icon ic-teal">🔬</div><span class="age-tag" data-i18n="programs.scienceAge">Ages 4–14</span></div>
-        <h3 data-i18n="programs.scienceTitle">Science Lab</h3>
-        <p data-i18n="programs.scienceText">Physics, chemistry, and biology through safe and exciting experiments. Children form hypotheses, run tests, and record results — the full scientific method from the first session.</p>
-        <div class="prog-tags"><span class="prog-tag">Chemistry</span><span class="prog-tag">Physics</span><span class="prog-tag">Biology</span><span class="prog-tag">Experiments</span></div>
+        <div class="p-top">
+          <div class="p-icon ic-teal">🔬</div>
+          <span class="age-tag" data-i18n="programs.sciAge">Ages 4–14</span>
+        </div>
+        <h3 data-i18n="programs.sciTitle">Science Lab</h3>
+        <p data-i18n="programs.sciText">Physics, chemistry, and biology through safe and exciting experiments. Children form hypotheses, run tests, and record results — the full scientific method from the first session.</p>
+        <div class="prog-tags">
+          <span class="prog-tag">Chemistry</span>
+          <span class="prog-tag">Physics</span>
+          <span class="prog-tag">Biology</span>
+          <span class="prog-tag">Experiments</span>
+        </div>
         <span class="prog-link" data-i18n="programs.learnMore">Learn more →</span>
       </a>
+
       <a class="program-card c-purple" href="/programs/coding.html">
-        <div class="p-top"><div class="p-icon ic-purple">💻</div><span class="age-tag" data-i18n="programs.codingAge">Ages 5–16</span></div>
-        <h3 data-i18n="programs.codingTitle">Coding</h3>
-        <p data-i18n="programs.codingText">From visual block coding (Scratch) to text-based programming. Kids create games, animations, and web projects. Algorithmic thinking built step by step.</p>
-        <div class="prog-tags"><span class="prog-tag">Scratch</span><span class="prog-tag">Python</span><span class="prog-tag">Game Dev</span><span class="prog-tag">Web basics</span></div>
+        <div class="p-top">
+          <div class="p-icon ic-purple">💻</div>
+          <span class="age-tag" data-i18n="programs.codAge">Ages 5–16</span>
+        </div>
+        <h3 data-i18n="programs.codTitle">Coding</h3>
+        <p data-i18n="programs.codText">From visual block coding (Scratch) to text-based programming. Kids create games, animations, and web projects. Algorithmic thinking built step by step.</p>
+        <div class="prog-tags">
+          <span class="prog-tag">Scratch</span>
+          <span class="prog-tag">Python</span>
+          <span class="prog-tag">Game Dev</span>
+          <span class="prog-tag">Web basics</span>
+        </div>
         <span class="prog-link" data-i18n="programs.learnMore">Learn more →</span>
       </a>
-      <a class="program-card c-yellow" href="/programs/yoga.html">
-        <div class="p-top"><div class="p-icon ic-yellow">🧘</div><span class="age-tag" data-i18n="programs.yogaAge">Ages 4–12</span></div>
-        <h3 data-i18n="programs.yogaTitle">Yoga &amp; Focus</h3>
-        <p data-i18n="programs.yogaText">Movement, breathing, and calm attention — adapted for children. A toolkit for self-regulation that supports everything else they learn at RoboKittens.</p>
-        <div class="prog-tags"><span class="prog-tag">Breathing</span><span class="prog-tag">Balance</span><span class="prog-tag">Focus</span><span class="prog-tag">Mindfulness</span></div>
+
+      <a class="program-card c-green" href="/programs/yoga.html">
+        <div class="p-top">
+          <div class="p-icon ic-green">🧘</div>
+          <span class="age-tag" data-i18n="programs.yogAge">Ages 4–12</span>
+        </div>
+        <h3 data-i18n="programs.yogTitle">Yoga &amp; Focus</h3>
+        <p data-i18n="programs.yogText">Movement, breathing, and calm attention — adapted for children. A toolkit for self-regulation that supports everything else they learn at RoboKittens.</p>
+        <div class="prog-tags">
+          <span class="prog-tag">Breathing</span>
+          <span class="prog-tag">Balance</span>
+          <span class="prog-tag">Focus</span>
+          <span class="prog-tag">Mindfulness</span>
+        </div>
         <span class="prog-link" data-i18n="programs.learnMore">Learn more →</span>
       </a>
+
     </div>
   </div>
 </section>
 
-<!-- FORMATS -->
+
+<!-- ═══════════════════════════════════════════════════════
+     FORMATS
+════════════════════════════════════════════════════════ -->
 <section class="sec formats-bg" id="formats">
-  <div class="sec-in">
-    <p class="sec-tag" data-i18n="formats.tag">How classes work</p>
-    <h2 data-i18n="formats.title">Flexible formats</h2>
-    <p class="sec-sub" data-i18n="formats.subtitle">Choose what fits your family — from regular weekly sessions to holiday camps and one-time workshops.</p>
+  <div class="wrap">
+    <p class="sec-tag"    data-i18n="formats.tag">How classes work</p>
+    <h2 class="sec-title" data-i18n="formats.title">Flexible formats</h2>
+    <p class="sec-sub"    data-i18n="formats.subtitle">
+      Choose what fits your family — from regular weekly sessions to holiday camps and one-time workshops.
+    </p>
+
     <div class="formats-grid">
       <div class="format-card"><div class="fi">📅</div><h3 data-i18n="formats.weeklyTitle">Weekly sessions</h3><p data-i18n="formats.weeklyText">Regular classes 1–2× per week, 60–90 min. Consistent progress, a stable group, ongoing projects.</p></div>
       <div class="format-card"><div class="fi">☀️</div><h3 data-i18n="formats.campsTitle">Holiday camps</h3><p data-i18n="formats.campsText">Intensive programmes during school holidays. Full days of experiments, building, and exploration.</p></div>
@@ -337,13 +272,20 @@
   </div>
 </section>
 
-<!-- LOCATIONS -->
+
+<!-- ═══════════════════════════════════════════════════════
+     LOCATIONS
+════════════════════════════════════════════════════════ -->
 <section class="sec" id="locations">
-  <div class="sec-in">
-    <p class="sec-tag" data-i18n="locations.tag">Find us</p>
-    <h2 data-i18n="locations.title">Two locations</h2>
-    <p class="sec-sub" data-i18n="locations.subtitle">RoboKittens is growing across the Porto metro area — choose the branch closest to you.</p>
+  <div class="wrap">
+    <p class="sec-tag"    data-i18n="locations.tag">Find us</p>
+    <h2 class="sec-title" data-i18n="locations.title">Two locations</h2>
+    <p class="sec-sub"    data-i18n="locations.subtitle">
+      RoboKittens is growing across the Porto metro area — choose the branch closest to you.
+    </p>
+
     <div class="locations-grid">
+
       <div class="loc-card">
         <span class="loc-badge open" data-i18n="locations.openBadge">✅ Open now</span>
         <h3>Gaia</h3>
@@ -354,52 +296,84 @@
           <span>🕐 <span data-i18n="locations.hours">Mon–Sat · 09:00–19:00</span></span>
         </div>
       </div>
+
       <div class="loc-card new-loc">
         <span class="loc-badge coming" data-i18n="locations.comingBadge">🚀 Opening soon</span>
         <h3>Matosinhos</h3>
         <address data-i18n="locations.matAddr">Exact address — coming soon, Matosinhos</address>
-        <div class="loc-detail"><span>📅 <span data-i18n="locations.matEta">Expected opening — 2025</span></span></div>
+        <div class="loc-detail">
+          <span>📅 <span data-i18n="locations.matEta">Expected opening — 2025</span></span>
+        </div>
         <br/>
-        <a href="https://wa.me/351912510486" class="btn-secondary" style="font-size:.85rem;padding:10px 18px;margin-top:8px;display:inline-flex" data-i18n="locations.notify">Notify me when open →</a>
+        <a href="https://wa.me/351912510486" class="btn-secondary"
+           style="margin-top:8px;font-size:.85rem;padding:10px 18px"
+           data-i18n="locations.notify">Notify me when open →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SCHEDULE
+════════════════════════════════════════════════════════ -->
+<section class="sec sched-bg" id="schedule">
+  <div class="wrap">
+    <p class="sec-tag"    data-i18n="schedule.tag">Example timetable · Gaia</p>
+    <h2 class="sec-title" data-i18n="schedule.title">Weekly schedule</h2>
+    <p class="sec-sub"    data-i18n="schedule.subtitle">
+      Sample classes — exact times vary by group and age. Book a trial and we'll find the perfect slot.
+    </p>
+
+    <div class="schedule-grid">
+      <div class="day-col">
+        <div class="day-header" data-i18n="schedule.mon">Monday</div>
+        <div class="day-slots">
+          <div class="slot s-orange"><span class="slot-time">15:30</span><span class="slot-name" data-i18n="schedule.robotics">Robotics</span><span class="slot-age">8–12</span></div>
+          <div class="slot s-green"> <span class="slot-time">17:30</span><span class="slot-name" data-i18n="schedule.yoga">Yoga &amp; Focus</span><span class="slot-age">4–7</span></div>
+        </div>
+      </div>
+      <div class="day-col">
+        <div class="day-header" data-i18n="schedule.tue">Tuesday</div>
+        <div class="day-slots">
+          <div class="slot s-teal">  <span class="slot-time">16:00</span><span class="slot-name" data-i18n="schedule.science">Science Lab</span><span class="slot-age">6–10</span></div>
+          <div class="slot s-purple"><span class="slot-time">18:00</span><span class="slot-name" data-i18n="schedule.coding">Coding</span><span class="slot-age">10–16</span></div>
+        </div>
+      </div>
+      <div class="day-col">
+        <div class="day-header" data-i18n="schedule.wed">Wednesday</div>
+        <div class="day-slots">
+          <div class="slot s-orange"><span class="slot-time">15:30</span><span class="slot-name" data-i18n="schedule.robotics">Robotics</span><span class="slot-age">6–9</span></div>
+          <div class="slot s-teal">  <span class="slot-time">17:30</span><span class="slot-name" data-i18n="schedule.science">Science Lab</span><span class="slot-age">8–14</span></div>
+        </div>
+      </div>
+      <div class="day-col">
+        <div class="day-header" data-i18n="schedule.thu">Thursday</div>
+        <div class="day-slots">
+          <div class="slot s-purple"><span class="slot-time">16:00</span><span class="slot-name" data-i18n="schedule.coding">Coding</span><span class="slot-age">7–12</span></div>
+          <div class="slot s-green"> <span class="slot-time">18:00</span><span class="slot-name" data-i18n="schedule.yoga">Yoga &amp; Focus</span><span class="slot-age">4–8</span></div>
+        </div>
+      </div>
+      <div class="day-col">
+        <div class="day-header" data-i18n="schedule.sat">Saturday</div>
+        <div class="day-slots">
+          <div class="slot s-orange"><span class="slot-time">10:00</span><span class="slot-name" data-i18n="schedule.robotics">Robotics</span><span class="slot-age">8–16</span></div>
+          <div class="slot s-teal">  <span class="slot-time">11:30</span><span class="slot-name" data-i18n="schedule.science">Science Lab</span><span class="slot-age">4–8</span></div>
+        </div>
       </div>
     </div>
+
+    <p class="sched-note"
+       data-i18n-html="schedule.note">📅 Example timetable. <a href="/calendar">See the live calendar →</a></p>
   </div>
 </section>
 
-<!-- SCHEDULE -->
-<section class="sec sched-bg" id="schedule">
-  <div class="sec-in">
-    <p class="sec-tag" data-i18n="schedule.tag">Example timetable · Gaia</p>
-    <h2 data-i18n="schedule.title">Weekly schedule</h2>
-    <p class="sec-sub" data-i18n="schedule.subtitle">Sample classes — exact times vary by group and age. Book a trial and we'll find the perfect slot.</p>
-    <div class="schedule-grid">
-      <div class="day-col"><div class="day-header" data-i18n="schedule.mon">Monday</div><div class="day-slots">
-        <div class="slot s-orange"><span class="slot-time">15:30</span><span class="slot-name" data-i18n="schedule.robotics">Robotics</span><span class="slot-age">8–12</span></div>
-        <div class="slot s-yellow"><span class="slot-time">17:30</span><span class="slot-name" data-i18n="schedule.yoga">Yoga &amp; Focus</span><span class="slot-age">4–7</span></div>
-      </div></div>
-      <div class="day-col"><div class="day-header" data-i18n="schedule.tue">Tuesday</div><div class="day-slots">
-        <div class="slot s-teal"><span class="slot-time">16:00</span><span class="slot-name" data-i18n="schedule.science">Science Lab</span><span class="slot-age">6–10</span></div>
-        <div class="slot s-purple"><span class="slot-time">18:00</span><span class="slot-name" data-i18n="schedule.coding">Coding</span><span class="slot-age">10–16</span></div>
-      </div></div>
-      <div class="day-col"><div class="day-header" data-i18n="schedule.wed">Wednesday</div><div class="day-slots">
-        <div class="slot s-orange"><span class="slot-time">15:30</span><span class="slot-name" data-i18n="schedule.robotics">Robotics</span><span class="slot-age">6–9</span></div>
-        <div class="slot s-teal"><span class="slot-time">17:30</span><span class="slot-name" data-i18n="schedule.science">Science Lab</span><span class="slot-age">8–14</span></div>
-      </div></div>
-      <div class="day-col"><div class="day-header" data-i18n="schedule.thu">Thursday</div><div class="day-slots">
-        <div class="slot s-purple"><span class="slot-time">16:00</span><span class="slot-name" data-i18n="schedule.coding">Coding</span><span class="slot-age">7–12</span></div>
-        <div class="slot s-yellow"><span class="slot-time">18:00</span><span class="slot-name" data-i18n="schedule.yoga">Yoga &amp; Focus</span><span class="slot-age">4–8</span></div>
-      </div></div>
-      <div class="day-col"><div class="day-header" data-i18n="schedule.sat">Saturday</div><div class="day-slots">
-        <div class="slot s-orange"><span class="slot-time">10:00</span><span class="slot-name" data-i18n="schedule.robotics">Robotics</span><span class="slot-age">8–16</span></div>
-        <div class="slot s-teal"><span class="slot-time">11:30</span><span class="slot-name" data-i18n="schedule.science">Science Lab</span><span class="slot-age">4–8</span></div>
-      </div></div>
-    </div>
-    <p class="sched-note" data-i18n-html="schedule.note">📅 This is an example timetable. <a href="/calendar">See the live calendar →</a></p>
-  </div>
-</section>
 
-<!-- CTA -->
-<div style="padding: 0;">
+<!-- ═══════════════════════════════════════════════════════
+     CTA
+════════════════════════════════════════════════════════ -->
+<div class="cta-outer">
   <div class="cta-wrap">
     <div class="cta-inner">
       <div>
@@ -414,18 +388,28 @@
   </div>
 </div>
 
-<!-- FOOTER -->
+
+<!-- ═══════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════ -->
 <footer>
-  <div class="footer-in">
+  <div class="footer-inner">
     <div class="footer-top">
+
       <div>
-        <span class="footer-logo">Robo<span>Kittens</span></span>
-        <p class="f-desc" data-i18n="footer.tagline">STEAM education space for children aged 4–16. Robotics, science, coding, yoga — in Gaia and Matosinhos.</p>
+        <div class="footer-logo">
+          <img src="logo.png" alt="RoboKittens" />
+        </div>
+        <p class="f-desc" data-i18n="footer.tagline">
+          STEAM education space for children aged 4–16.
+          Robotics, science, coding, yoga — in Gaia and Matosinhos.
+        </p>
         <div class="social-links">
           <a class="social-link" href="https://www.instagram.com/robokittens.space">📷 Instagram</a>
           <a class="social-link" href="https://t.me/RoboKittens">✈️ Telegram</a>
         </div>
       </div>
+
       <div class="footer-col">
         <h4 data-i18n="footer.programs">Programs</h4>
         <ul class="footer-links">
@@ -435,6 +419,7 @@
           <li><a href="/programs/yoga.html"     data-i18n="footer.yoga">Yoga &amp; Focus</a></li>
         </ul>
       </div>
+
       <div class="footer-col">
         <h4 data-i18n="footer.contacts">Contacts</h4>
         <ul class="footer-links">
@@ -443,7 +428,9 @@
           <li><a href="/calendar" data-i18n="footer.book">Book a class →</a></li>
         </ul>
       </div>
+
     </div>
+
     <div class="footer-bottom">
       <span data-i18n="footer.copyright">© 2025 RoboKittens · Vila Nova de Gaia &amp; Matosinhos</span>
       <span data-i18n="footer.slogan">🐾 Where kids build, experiment, and discover</span>
