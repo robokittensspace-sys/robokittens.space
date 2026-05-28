@@ -1,10 +1,10 @@
 /**
  * RoboKittens — main.js
- * Loads /data/i18n.json and applies translations via data-i18n attributes.
+ * Loads /data/i18n.json, applies translations.
+ * Falls back gracefully — EN text is already in HTML, so page is never blank.
  */
 
 let lang = localStorage.getItem('rk_lang') || detectLang();
-let translations = {};
 
 function detectLang() {
   const nav = (navigator.language || 'en').toLowerCase();
@@ -13,62 +13,56 @@ function detectLang() {
   return 'en';
 }
 
-// ── Boot ──────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
+  // Mark active lang button immediately (text already in HTML)
+  highlightBtn(lang);
+
+  // Load translations
   try {
     const res = await fetch('/data/i18n.json');
-    if (!res.ok) throw new Error('i18n.json not found');
+    if (!res.ok) throw new Error(res.status);
     const all = await res.json();
-    translations = all;
-    applyLang(lang);
-  } catch (err) {
-    console.error('[RoboKittens] Failed to load i18n.json:', err);
+    window._i18n = all;
+    if (lang !== 'en') applyLang(lang); // EN is already in HTML
+  } catch (e) {
+    console.warn('[RoboKittens] i18n.json not loaded:', e.message);
   }
 });
 
-// ── Apply language ────────────────────────────────
 function applyLang(code) {
-  const t = translations[code];
-  if (!t) return;
+  const data = window._i18n;
+  if (!data || !data[code]) return;
 
   lang = code;
   localStorage.setItem('rk_lang', code);
 
-  // Flatten nested keys: t['hero']['title'] → key 'hero.title'
-  const flat = flattenObj(t);
+  const t = data[code];
 
-  // data-i18n → textContent
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
-    if (flat[key] !== undefined) el.textContent = flat[key];
+    const val = getKey(t, key);
+    if (val !== undefined) el.textContent = val;
   });
 
-  // data-i18n-html → innerHTML  (allows <em> etc.)
   document.querySelectorAll('[data-i18n-html]').forEach(el => {
     const key = el.getAttribute('data-i18n-html');
-    if (flat[key] !== undefined) el.innerHTML = flat[key];
+    const val = getKey(t, key);
+    if (val !== undefined) el.innerHTML = val;
   });
 
-  // highlight active lang button
-  document.querySelectorAll('[data-lang]').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.lang === code);
-  });
-
+  highlightBtn(code);
   document.documentElement.lang = code;
 }
 
-// Flatten { hero: { title: 'X' } } → { 'hero.title': 'X' }
-function flattenObj(obj, prefix = '') {
-  return Object.entries(obj).reduce((acc, [k, v]) => {
-    const key = prefix ? `${prefix}.${k}` : k;
-    if (v && typeof v === 'object' && !Array.isArray(v)) {
-      Object.assign(acc, flattenObj(v, key));
-    } else {
-      acc[key] = v;
-    }
-    return acc;
-  }, {});
+// Get value by dot-path: getKey(obj, 'hero.title')
+function getKey(obj, path) {
+  return path.split('.').reduce((o, k) => (o && o[k] !== undefined ? o[k] : undefined), obj);
 }
 
-// Expose for onclick="setLang('ru')" in HTML
+function highlightBtn(code) {
+  document.querySelectorAll('[data-lang]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === code);
+  });
+}
+
 window.setLang = applyLang;
