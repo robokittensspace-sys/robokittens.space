@@ -1,180 +1,39 @@
 {
-  "branches": ["gaia", "matosinhos"],
+  "programs": {
+    "robotics": { "color": "orange", "icon": "🤖" },
+    "science":  { "color": "teal",   "icon": "🔬" },
+    "coding":   { "color": "purple", "icon": "💻" },
+    "yoga":     { "color": "yellow", "icon": "🧘" }
+  },
 
   "classes": {
     "gaia": [
-      {
-        "id": "rob-mon-1",
-        "program": "robotics",
-        "dayOfWeek": 1,
-        "timeStart": "15:30",
-        "timeEnd": "17:00",
-        "ageMin": 8,
-        "ageMax": 12,
-        "spotsTotal": 10,
-        "spotsTaken": 7,
-        "instructor": "Anna",
-        "room": "Main lab",
-        "recurring": true
-      },
-      {
-        "id": "yoga-mon-1",
-        "program": "yoga",
-        "dayOfWeek": 1,
-        "timeStart": "17:30",
-        "timeEnd": "18:30",
-        "ageMin": 4,
-        "ageMax": 7,
-        "spotsTotal": 8,
-        "spotsTaken": 5,
-        "instructor": "Maria",
-        "room": "Studio",
-        "recurring": true
-      },
-      {
-        "id": "sci-tue-1",
-        "program": "science",
-        "dayOfWeek": 2,
-        "timeStart": "16:00",
-        "timeEnd": "17:30",
-        "ageMin": 6,
-        "ageMax": 10,
-        "spotsTotal": 8,
-        "spotsTaken": 6,
-        "instructor": "Dmitri",
-        "room": "Science room",
-        "recurring": true
-      },
-      {
-        "id": "cod-tue-1",
-        "program": "coding",
-        "dayOfWeek": 2,
-        "timeStart": "18:00",
-        "timeEnd": "19:30",
-        "ageMin": 10,
-        "ageMax": 16,
-        "spotsTotal": 8,
-        "spotsTaken": 4,
-        "instructor": "Anna",
-        "room": "Computer lab",
-        "recurring": true
-      },
-      {
-        "id": "rob-wed-1",
-        "program": "robotics",
-        "dayOfWeek": 3,
-        "timeStart": "15:30",
-        "timeEnd": "17:00",
-        "ageMin": 6,
-        "ageMax": 9,
-        "spotsTotal": 10,
-        "spotsTaken": 9,
-        "instructor": "Dmitri",
-        "room": "Main lab",
-        "recurring": true
-      },
-      {
-        "id": "sci-wed-1",
-        "program": "science",
-        "dayOfWeek": 3,
-        "timeStart": "17:30",
-        "timeEnd": "19:00",
-        "ageMin": 8,
-        "ageMax": 14,
-        "spotsTotal": 8,
-        "spotsTaken": 3,
-        "instructor": "Maria",
-        "room": "Science room",
-        "recurring": true
-      },
-      {
-        "id": "cod-thu-1",
-        "program": "coding",
-        "dayOfWeek": 4,
-        "timeStart": "16:00",
-        "timeEnd": "17:30",
-        "ageMin": 7,
-        "ageMax": 12,
-        "spotsTotal": 8,
-        "spotsTaken": 7,
-        "instructor": "Anna",
-        "room": "Computer lab",
-        "recurring": true
-      },
-      {
-        "id": "yoga-thu-1",
-        "program": "yoga",
-        "dayOfWeek": 4,
-        "timeStart": "18:00",
-        "timeEnd": "19:00",
-        "ageMin": 4,
-        "ageMax": 8,
-        "spotsTotal": 8,
-        "spotsTaken": 2,
-        "instructor": "Maria",
-        "room": "Studio",
-        "recurring": true
-      },
-      {
-        "id": "rob-sat-1",
-        "program": "robotics",
-        "dayOfWeek": 6,
-        "timeStart": "10:00",
-        "timeEnd": "11:30",
-        "ageMin": 8,
-        "ageMax": 16,
-        "spotsTotal": 10,
-        "spotsTaken": 6,
-        "instructor": "Dmitri",
-        "room": "Main lab",
-        "recurring": true
-      },
-      {
-        "id": "sci-sat-1",
-        "program": "science",
-        "dayOfWeek": 6,
-        "timeStart": "11:30",
-        "timeEnd": "13:00",
-        "ageMin": 4,
-        "ageMax": 8,
-        "spotsTotal": 8,
-        "spotsTaken": 5,
-        "instructor": "Maria",
-        "room": "Science room",
-        "recurring": true
-      }
+      { "id":"rob-mon", "program":"robotics", "dayOfWeek":1, "timeStart":"15:30", "timeEnd":"17:00", "ageMin":8,  "ageMax":12, "spots":10, "taken":7,  "instructor":"Anna"   },
+      { "id":"yog-mon", "program":"yoga",     "dayOfWeek":1, "timeStart":"17:30", "timeEnd":"18:30", "ageMin":4,  "ageMax":7,  "spots":8,  "taken":5,  "instructor":"Maria"  },
+      { "id":"sci-tue", "program":"science",  "dayOfWeek":2, "timeStart":"16:00", "timeEnd":"17:30", "ageMin":6,  "ageMax":10, "spots":8,  "taken":6,  "instructor":"Dmitri" },
+      { "id":"cod-tue", "program":"coding",   "dayOfWeek":2, "timeStart":"18:00", "timeEnd":"19:30", "ageMin":10, "ageMax":16, "spots":8,  "taken":4,  "instructor":"Anna"   },
+      { "id":"rob-wed", "program":"robotics", "dayOfWeek":3, "timeStart":"15:30", "timeEnd":"17:00", "ageMin":6,  "ageMax":9,  "spots":10, "taken":9,  "instructor":"Dmitri" },
+      { "id":"sci-wed", "program":"science",  "dayOfWeek":3, "timeStart":"17:30", "timeEnd":"19:00", "ageMin":8,  "ageMax":14, "spots":8,  "taken":3,  "instructor":"Maria"  },
+      { "id":"cod-thu", "program":"coding",   "dayOfWeek":4, "timeStart":"16:00", "timeEnd":"17:30", "ageMin":7,  "ageMax":12, "spots":8,  "taken":7,  "instructor":"Anna"   },
+      { "id":"yog-thu", "program":"yoga",     "dayOfWeek":4, "timeStart":"18:00", "timeEnd":"19:00", "ageMin":4,  "ageMax":8,  "spots":8,  "taken":2,  "instructor":"Maria"  },
+      { "id":"rob-sat", "program":"robotics", "dayOfWeek":6, "timeStart":"10:00", "timeEnd":"11:30", "ageMin":8,  "ageMax":16, "spots":10, "taken":6,  "instructor":"Dmitri" },
+      { "id":"sci-sat", "program":"science",  "dayOfWeek":6, "timeStart":"11:30", "timeEnd":"13:00", "ageMin":4,  "ageMax":8,  "spots":8,  "taken":5,  "instructor":"Maria"  }
     ],
     "matosinhos": []
   },
 
-  "programs": {
-    "robotics": { "label": { "en": "Robotics", "pt": "Robótica", "ru": "Робототехника" }, "color": "orange" },
-    "science":  { "label": { "en": "Science Lab", "pt": "Laboratório", "ru": "Лаборатория" }, "color": "teal" },
-    "coding":   { "label": { "en": "Coding", "pt": "Programação", "ru": "Программирование" }, "color": "purple" },
-    "yoga":     { "label": { "en": "Yoga & Focus", "pt": "Yoga & Foco", "ru": "Йога и фокус" }, "color": "yellow" }
-  },
-
   "specialEvents": [
     {
-      "id": "camp-summer-2025",
-      "type": "camp",
-      "branch": "gaia",
-      "title": { "en": "Summer STEAM Camp", "pt": "Campo de Verão STEAM", "ru": "Летний STEAM-лагерь" },
+      "id":        "camp-summer-2025",
+      "type":      "camp",
+      "branch":    "gaia",
+      "title":     { "en":"Summer STEAM Camp", "pt":"Campo de Verão STEAM", "ru":"Летний STEAM-лагерь" },
       "dateStart": "2025-07-07",
-      "dateEnd": "2025-07-11",
-      "ageMin": 6,
-      "ageMax": 14,
-      "spotsTotal": 15,
-      "spotsTaken": 8
-    },
-    {
-      "id": "expo-spring-2025",
-      "type": "exhibition",
-      "branch": "gaia",
-      "title": { "en": "Spring Project Exhibition", "pt": "Exposição de Projetos de Primavera", "ru": "Весенняя выставка проектов" },
-      "dateStart": "2025-05-31",
-      "dateEnd": "2025-05-31",
-      "open": true
+      "dateEnd":   "2025-07-11",
+      "ageMin":    6,
+      "ageMax":    14,
+      "spots":     15,
+      "taken":     8
     }
   ]
 }
