@@ -80,7 +80,7 @@
       "comingBadge": "🚀 Opening soon",
       "hours":       "Mon–Sat · 09:00–19:00",
       "matAddr":     "Exact address — coming soon, Matosinhos",
-      "matEta":      "Expected opening — 2025",
+      "matEta":      "Expected opening — 2026",
       "notify":      "Notify me when open →"
     },
     "schedule": {
@@ -113,7 +113,7 @@
       "yoga":      "Yoga & Focus",
       "contacts":  "Contacts",
       "book":      "Book a class →",
-      "copyright": "© 2025 RoboKittens · Vila Nova de Gaia & Matosinhos",
+      "copyright": "© 2025 RoboKittens · Vila Nova de Gaia & Matosinhos(2026)",
       "slogan":    "🐾 Where kids build, experiment, and discover"
     }
   },
@@ -199,7 +199,7 @@
       "comingBadge": "🚀 Em breve",
       "hours":       "Seg–Sáb · 09:00–19:00",
       "matAddr":     "Endereço exato — em breve, Matosinhos",
-      "matEta":      "Abertura prevista — 2025",
+      "matEta":      "Abertura prevista — 2026",
       "notify":      "Avisar-me quando abrir →"
     },
     "schedule": {
@@ -232,14 +232,14 @@
       "yoga":      "Yoga & Foco",
       "contacts":  "Contactos",
       "book":      "Marcar aula →",
-      "copyright": "© 2025 RoboKittens · Vila Nova de Gaia & Matosinhos",
+      "copyright": "© 2025 RoboKittens · Vila Nova de Gaia & Matosinhos(2026)",
       "slogan":    "🐾 Onde as crianças constroem, experimentam e descobrem"
     }
   },
 
   "ru": {
     "meta": {
-      "title": "RoboKittens — STEAM-пространство в Гайе и Матозиньюше",
+      "title": "RoboKittens — STEAM-пространство в Гайе и Матозиньюше(2026)",
       "description": "Робототехника, наука, программирование и йога для детей 4–16 лет в Вила-Нова-де-Гайя и Матозиньюше."
     },
     "nav": {
@@ -249,9 +249,9 @@
       "book":      "Записаться →"
     },
     "hero": {
-      "badge":      "⚡ STEAM · Робототехника · Наука · Программирование · Йога",
+      "badge":      "⚡ STEAM · Робототехника · Наука · Программирование · Творчество · Движение",
       "title":      "Место, где дети строят, <em>экспериментируют</em> и открывают мир",
-      "subtitle":   "RoboKittens — STEAM-пространство для детей 4–16 лет в Гайе и Матозиньюше. Реальные проекты, практика, выставки — не просто теория.",
+      "subtitle":   "RoboKittens — STEAM-пространство для детей 4–16 лет в Гайе и Матозиньюше(2026). Реальные проекты, практика, выставки — не просто теория.",
       "btnMain":    "🐾 Бесплатное пробное занятие",
       "btnExplore": "Смотреть программы ↓",
       "statsAges":  "Возраст",
@@ -318,7 +318,7 @@
       "comingBadge": "🚀 Скоро открытие",
       "hours":       "Пн–Сб · 09:00–19:00",
       "matAddr":     "Точный адрес — скоро, Матозиньюш",
-      "matEta":      "Ожидаемое открытие — 2025",
+      "matEta":      "Ожидаемое открытие — 2026",
       "notify":      "Уведомить об открытии →"
     },
     "schedule": {
@@ -343,7 +343,7 @@
       "email":    "✉️ Написать на email"
     },
     "footer": {
-      "tagline":   "STEAM-пространство для детей 4–16 лет. Робототехника, наука, программирование, йога — в Гайе и Матозиньюше.",
+      "tagline":   "STEAM-пространство для детей 4–16 лет. Робототехника, наука, программирование, йога — в Гайе и Матозиньюше(2026).",
       "programs":  "Программы",
       "robotics":  "Робототехника и инженерия",
       "science":   "Научная лаборатория",
@@ -351,7 +351,7 @@
       "yoga":      "Йога и фокус",
       "contacts":  "Контакты",
       "book":      "Записаться →",
-      "copyright": "© 2025 RoboKittens · Вила-Нова-де-Гайя & Матозиньюш",
+      "copyright": "© 2025 RoboKittens · Вила-Нова-де-Гайя & Матозиньюш(2026)",
       "slogan":    "🐾 Место, где дети строят, экспериментируют и открывают мир"
     }
   }
