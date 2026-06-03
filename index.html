@@ -440,5 +440,59 @@
 </footer>
 
 <script src="assets/js/main.js"></script>
+  <!-- ☀️ ЛЕТНИЙ ЛАГЕРЬ — floating button -->
+<!-- Вставить прямо перед закрывающим тегом </body> в index.html -->
+<style>
+  .summer-fab {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, #FFB800, #FF8C00);
+    color: #1C1C2E;
+    font-family: 'Unbounded', 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 0.85rem;
+    padding: 0.75rem 1.4rem;
+    border-radius: 3rem;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(255, 184, 0, 0.45);
+    animation: fab-pulse 3s ease-in-out infinite;
+    transition: transform .15s, box-shadow .15s;
+    letter-spacing: 0.04em;
+  }
+  .summer-fab:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 8px 32px rgba(255, 184, 0, 0.6);
+    animation: none;
+  }
+  .summer-fab .fab-sun {
+    font-size: 1.2rem;
+    animation: fab-spin 8s linear infinite;
+    display: inline-block;
+  }
+  @keyframes fab-pulse {
+    0%, 100% { box-shadow: 0 4px 20px rgba(255,184,0,0.45); }
+    50% { box-shadow: 0 6px 28px rgba(255,184,0,0.75); }
+  }
+  @keyframes fab-spin {
+    to { transform: rotate(360deg); }
+  }
+  @media (max-width: 480px) {
+    .summer-fab { bottom: 1.25rem; right: 1.25rem; font-size: 0.78rem; padding: 0.65rem 1.1rem; }
+  }
+</style>
+ 
+<a class="summer-fab" href="/summer.html">
+  <span class="fab-sun">☀️</span>
+  ЛЕТО
+</a>
+<!-- /летний лагерь -->
+ 
 </body>
 </html>
