@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Летний лагерь — RoboKittens</title>
+  <meta name="description" content="Дневной STEAM-лагерь для детей 5–14 лет в Гайе и Матозиньюше. Роботы, наука, код — каждый день приключение." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --sun: #FFB800;
+      --sun-light: #FFD966;
+      --sky: #1A6FBF;
+      --sky-dark: #0F4A82;
+      --grass: #2ECC71;
+      --coral: #FF6B4A;
+      --cream: #FFF8EC;
+      --text: #1C1C2E;
+      --muted: #6B6B8A;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,248,236,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 2px solid var(--sun-light);
+      padding: 0.8rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    nav a.logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      font-family: 'Unbounded', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+    }
+    nav a.logo img { height: 32px; }
+    nav .back {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--sky);
+      text-decoration: none;
+      border: 2px solid var(--sky);
+      border-radius: 2rem;
+      padding: 0.35rem 1rem;
+      transition: all .2s;
+    }
+    nav .back:hover { background: var(--sky); color: #fff; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(160deg, var(--sky-dark) 0%, var(--sky) 60%, #2980B9 100%);
+      color: #fff;
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 70% 20%, rgba(255,184,0,0.25) 0%, transparent 60%);
+    }
+    .hero-sun {
+      font-size: 5rem;
+      display: block;
+      animation: spin 20s linear infinite;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .hero h1 {
+      font-family: 'Unbounded', sans-serif;
+      font-size: clamp(2rem, 6vw, 4rem);
+      font-weight: 900;
+      line-height: 1.1;
+      position: relative;
+      z-index: 1;
+    }
+    .hero h1 span { color: var(--sun); }
+    .hero .sub {
+      margin-top: 1rem;
+      font-size: 1.15rem;
+      opacity: 0.9;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-top: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-tags span {
+      background: rgba(255,255,255,0.15);
+      border: 1.5px solid rgba(255,255,255,0.35);
+      border-radius: 2rem;
+      padding: 0.3rem 0.9rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+    .hero-cta {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+    .btn-primary {
+      background: var(--sun);
+      color: var(--text);
+      font-family: 'Unbounded', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 0.85rem 2rem;
+      border-radius: 3rem;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform .15s, box-shadow .15s;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.25); }
+    .btn-outline {
+      background: transparent;
+      color: #fff;
+      border: 2px solid rgba(255,255,255,0.6);
+      font-family: 'Unbounded', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 0.85rem 2rem;
+      border-radius: 3rem;
+      text-decoration: none;
+      transition: background .2s;
+    }
+    .btn-outline:hover { background: rgba(255,255,255,0.15); }
+
+    /* wave */
+    .wave { display: block; background: var(--sky); margin-bottom: -2px; }
+
+    /* ── SECTION ── */
+    section { padding: 4rem 2rem; max-width: 1000px; margin: 0 auto; }
+    h2 {
+      font-family: 'Unbounded', sans-serif;
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      font-weight: 900;
+      margin-bottom: 2rem;
+    }
+    h2 .accent { color: var(--sky); }
+
+    /* ── CARDS ── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.25rem;
+    }
+    .card {
+      background: #fff;
+      border-radius: 1.25rem;
+      padding: 1.5rem 1.25rem;
+      border: 2px solid #EEE;
+      transition: transform .2s, border-color .2s, box-shadow .2s;
+    }
+    .card:hover { transform: translateY(-4px); border-color: var(--sun); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+    .card .icon { font-size: 2.2rem; margin-bottom: 0.75rem; display: block; }
+    .card h3 { font-family: 'Unbounded', sans-serif; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .card p { font-size: 0.88rem; color: var(--muted); line-height: 1.5; }
+
+    /* ── SCHEDULE ── */
+    .sched-wrap { background: #fff; border-radius: 1.5rem; overflow: hidden; border: 2px solid #EEE; }
+    .sched-head {
+      background: var(--sky);
+      color: #fff;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      font-family: 'Unbounded', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.9rem 1.5rem;
+    }
+    .sched-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      padding: 0.85rem 1.5rem;
+      border-bottom: 1px solid #F0F0F0;
+      font-size: 0.9rem;
+      align-items: center;
+      transition: background .15s;
+    }
+    .sched-row:last-child { border-bottom: none; }
+    .sched-row:hover { background: #FFFBF0; }
+    .sched-row .time { font-weight: 700; color: var(--sky); font-family: 'Unbounded', sans-serif; font-size: 0.8rem; }
+    .tag {
+      display: inline-block;
+      border-radius: 1rem;
+      padding: 0.2rem 0.7rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .tag.robot { background: #E8F0FE; color: var(--sky-dark); }
+    .tag.science { background: #E8F8EF; color: #1A7A40; }
+    .tag.code { background: #FFF0E8; color: #B84000; }
+    .tag.yoga { background: #F3E8FF; color: #6B00B8; }
+    .tag.free { background: #FFF8E0; color: #7A5A00; }
+
+    /* ── AGES ── */
+    .age-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+    }
+    .age-card {
+      border-radius: 1.25rem;
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .age-card.young { background: linear-gradient(135deg, #FFF0E8, #FFD6C8); border: 2px solid #FFB89A; }
+    .age-card.mid { background: linear-gradient(135deg, #E8F0FE, #C8D8FF); border: 2px solid #9AB4FF; }
+    .age-card.teen { background: linear-gradient(135deg, #E8F8EF, #C8F0D8); border: 2px solid #7ADBA6; }
+    .age-card .age-label {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 900;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    .age-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .age-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+
+    /* ── PRICING ── */
+    .price-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+    }
+    .price-card {
+      background: #fff;
+      border-radius: 1.5rem;
+      padding: 2rem 1.5rem;
+      border: 2px solid #EEE;
+      text-align: center;
+      position: relative;
+    }
+    .price-card.featured { border-color: var(--sun); background: linear-gradient(160deg, #FFFBF0, #fff); }
+    .price-card.featured::before {
+      content: '⭐ Популярное';
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--sun);
+      color: var(--text);
+      font-family: 'Unbounded', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.25rem 1rem;
+      border-radius: 1rem;
+      white-space: nowrap;
+    }
+    .price-card .period { font-size: 0.85rem; color: var(--muted); font-weight: 700; margin-bottom: 0.5rem; }
+    .price-card .amount { font-family: 'Unbounded', sans-serif; font-size: 2.5rem; font-weight: 900; line-height: 1; }
+    .price-card .amount sup { font-size: 1rem; vertical-align: top; margin-top: 0.4rem; display: inline-block; }
+    .price-card ul { list-style: none; margin: 1.25rem 0; text-align: left; display: flex; flex-direction: column; gap: 0.5rem; }
+    .price-card ul li { font-size: 0.88rem; display: flex; gap: 0.5rem; align-items: flex-start; }
+    .price-card ul li::before { content: '✓'; color: var(--grass); font-weight: 900; flex-shrink: 0; }
+
+    /* ── CTA BANNER ── */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--sky-dark), var(--sky));
+      color: #fff;
+      border-radius: 2rem;
+      padding: 3rem 2.5rem;
+      text-align: center;
+      margin: 0 2rem 4rem;
+    }
+    .cta-banner h2 { color: #fff; margin-bottom: 0.75rem; }
+    .cta-banner p { opacity: 0.85; margin-bottom: 2rem; max-width: 480px; margin-left: auto; margin-right: auto; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--text);
+      color: rgba(255,255,255,0.6);
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.85rem;
+    }
+    footer a { color: var(--sun-light); text-decoration: none; }
+
+    /* ── DIVIDER ── */
+    .divider { border: none; border-top: 2px dashed #E8E0D0; margin: 0 2rem; }
+
+    @media (max-width: 600px) {
+      .sched-head, .sched-row { grid-template-columns: 80px 1fr 1fr; font-size: 0.8rem; padding: 0.75rem 1rem; }
+      .hero { padding: 3.5rem 1.25rem 3rem; }
+      section { padding: 3rem 1.25rem; }
+      .cta-banner { margin: 0 1rem 3rem; padding: 2.5rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="logo" href="https://robokittens.space/">
+      <img src="https://robokittens.space/logo.png" alt="RoboKittens" />
+      RoboKittens
+    </a>
+    <a class="back" href="https://robokittens.space/">← На главную</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <span class="hero-sun">☀️</span>
+    <h1>Летний <span>STEAM</span>-лагерь</h1>
+    <p class="sub">Дневной лагерь для детей 5–14 лет. Роботы, эксперименты, код и йога — каждый день новое открытие.</p>
+    <div class="hero-tags">
+      <span>📍 Гайя</span>
+      <span>🕘 09:00–17:00</span>
+      <span>👧 5–14 лет</span>
+      <span>🇷🇺 🇵🇹 🇬🇧</span>
+    </div>
+    <div class="hero-cta">
+      <a class="btn-primary" href="https://wa.me/351912510486?text=Привет!%20Хочу%20записать%20ребёнка%20в%20летний%20лагерь%20RoboKittens">💬 Записаться в лагерь</a>
+      <a class="btn-outline" href="#schedule">Смотреть расписание ↓</a>
+    </div>
+  </div>
+
+  <svg class="wave" viewBox="0 0 1440 60" preserveAspectRatio="none" height="60"><path d="M0,40 C360,70 1080,0 1440,40 L1440,60 L0,60 Z" fill="#FFF8EC"/></svg>
+
+  <!-- ЧТО БУДЕТ -->
+  <section>
+    <h2>Что делают дети <span class="accent">каждый день</span></h2>
+    <div class="cards">
+      <div class="card">
+        <span class="icon">🤖</span>
+        <h3>Роботика</h3>
+        <p>Собирают и программируют роботов, учатся паять и работать с электроникой.</p>
+      </div>
+      <div class="card">
+        <span class="icon">🔬</span>
+        <h3>Наука</h3>
+        <p>Химические опыты, физические эксперименты — настоящая лаборатория.</p>
+      </div>
+      <div class="card">
+        <span class="icon">💻</span>
+        <h3>Программирование</h3>
+        <p>От Scratch до Python. Создают игры, анимации и мини-сайты.</p>
+      </div>
+      <div class="card">
+        <span class="icon">🧘</span>
+        <h3>Йога и движение</h3>
+        <p>Утренняя разминка, дыхание, концентрация — заряд на весь день.</p>
+      </div>
+      <div class="card">
+        <span class="icon">🎨</span>
+        <h3>Творческие проекты</h3>
+        <p>Дизайн, конструирование, командные задания — финальный проект недели.</p>
+      </div>
+      <div class="card">
+        <span class="icon">🍎</span>
+        <h3>Обед и отдых</h3>
+        <p>Свободное время, настольные игры и перекус в середине дня.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- РАСПИСАНИЕ ДНЯ -->
+  <section id="schedule">
+    <h2>Расписание <span class="accent">дня</span></h2>
+    <div class="sched-wrap">
+      <div class="sched-head">
+        <span>Время</span>
+        <span>Активность</span>
+        <span>Направление</span>
+      </div>
+      <div class="sched-row">
+        <span class="time">09:00–09:30</span>
+        <span>Встреча, йога, разминка</span>
+        <span><span class="tag yoga">Йога</span></span>
+      </div>
+      <div class="sched-row">
+        <span class="time">09:30–11:00</span>
+        <span>Блок 1 — основной проект</span>
+        <span><span class="tag robot">Роботика</span></span>
+      </div>
+      <div class="sched-row">
+        <span class="time">11:00–11:15</span>
+        <span>Перерыв, снэк</span>
+        <span><span class="tag free">Отдых</span></span>
+      </div>
+      <div class="sched-row">
+        <span class="time">11:15–12:45</span>
+        <span>Блок 2 — наука или код</span>
+        <span><span class="tag science">Наука</span> / <span class="tag code">Код</span></span>
+      </div>
+      <div class="sched-row">
+        <span class="time">12:45–13:30</span>
+        <span>Обед и свободное время</span>
+        <span><span class="tag free">Отдых</span></span>
+      </div>
+      <div class="sched-row">
+        <span class="time">13:30–15:00</span>
+        <span>Блок 3 — творчество и инженерия</span>
+        <span><span class="tag code">Творчество</span></span>
+      </div>
+      <div class="sched-row">
+        <span class="time">15:00–15:15</span>
+        <span>Перерыв</span>
+        <span><span class="tag free">Отдых</span></span>
+      </div>
+      <div class="sched-row">
+        <span class="time">15:15–16:30</span>
+        <span>Командный проект дня</span>
+        <span><span class="tag robot">Инженерия</span></span>
+      </div>
+      <div class="sched-row">
+        <span class="time">16:30–17:00</span>
+        <span>Презентация, итоги дня</span>
+        <span><span class="tag free">Итоги</span></span>
+      </div>
+    </div>
+    <p style="margin-top:1rem; font-size:0.85rem; color:var(--muted);">* Расписание примерное. Конкретные темы и проекты зависят от группы и недели.</p>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- НЕДЕЛИ -->
+  <section>
+    <h2>Смены <span class="accent">лета 2025</span></h2>
+    <div class="cards">
+      <div class="card">
+        <span class="icon">🚀</span>
+        <h3>Смена 1: Роботы и космос</h3>
+        <p>7–11 июля · Роботы, Arduino, запуск ракеты из бутылки, планетарий-своими руками.</p>
+      </div>
+      <div class="card">
+        <span class="icon">⚗️</span>
+        <h3>Смена 2: Секретная лаборатория</h3>
+        <p>14–18 июля · Химия, криминалистика, биология и мини-эксперименты каждый день.</p>
+      </div>
+      <div class="card">
+        <span class="icon">🎮</span>
+        <h3>Смена 3: Создай свою игру</h3>
+        <p>21–25 июля · Game design, Scratch, Pygame — дети уходят домой с готовой игрой.</p>
+      </div>
+      <div class="card">
+        <span class="icon">🌿</span>
+        <h3>Смена 4: Природа и технологии</h3>
+        <p>28 июля–1 авг. · Экология, датчики окружающей среды, Arduino в полевых условиях.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ДЛЯ КОГО -->
+  <section>
+    <h2>По <span class="accent">возрастным группам</span></h2>
+    <div class="age-grid">
+      <div class="age-card young">
+        <span class="age-label">5–7</span>
+        <h3>Маленькие исследователи</h3>
+        <p>Простые эксперименты, Scratch Jr., сенсорная робототехника, движение и йога.</p>
+      </div>
+      <div class="age-card mid">
+        <span class="age-label">8–11</span>
+        <h3>Инженеры и учёные</h3>
+        <p>Arduino, химические опыты, Scratch, командные проекты, стартовые навыки кода.</p>
+      </div>
+      <div class="age-card teen">
+        <span class="age-label">12–14</span>
+        <h3>Продвинутые мейкеры</h3>
+        <p>Python, сложные роботы, пайка, продуктовое мышление, публичная презентация проекта.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- СТОИМОСТЬ -->
+  <section>
+    <h2>Стоимость <span class="accent">участия</span></h2>
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="period">1 день</div>
+        <div class="amount"><sup>€</sup>35</div>
+        <ul>
+          <li>Полный день 09:00–17:00</li>
+          <li>Все материалы включены</li>
+          <li>Перекус включён</li>
+        </ul>
+        <a class="btn-primary" href="https://wa.me/351912510486" style="display:block; text-align:center;">Написать нам</a>
+      </div>
+      <div class="price-card featured">
+        <div class="period">1 неделя (5 дней)</div>
+        <div class="amount"><sup>€</sup>160</div>
+        <ul>
+          <li>Полный день 09:00–17:00</li>
+          <li>Все материалы включены</li>
+          <li>Перекус включён</li>
+          <li>Финальный проект недели</li>
+          <li>Скидка vs поштучно</li>
+        </ul>
+        <a class="btn-primary" href="https://wa.me/351912510486" style="display:block; text-align:center;">Записаться</a>
+      </div>
+      <div class="price-card">
+        <div class="period">2 недели</div>
+        <div class="amount"><sup>€</sup>300</div>
+        <ul>
+          <li>Любые 2 смены на выбор</li>
+          <li>Всё включено</li>
+          <li>Максимальная скидка</li>
+          <li>Приоритетный выбор группы</li>
+        </ul>
+        <a class="btn-primary" href="https://wa.me/351912510486" style="display:block; text-align:center;">Написать нам</a>
+      </div>
+    </div>
+    <p style="margin-top:1.25rem; font-size:0.85rem; color:var(--muted);">* Цены ориентировочные. Уточняйте актуальные условия у нас в WhatsApp — мы ответим быстро 🙂</p>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-banner">
+    <h2>Готовы провести лето с пользой?</h2>
+    <p>Напишите нам в WhatsApp — подберём смену и группу под вашего ребёнка.</p>
+    <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+      <a class="btn-primary" href="https://wa.me/351912510486?text=Привет!%20Хочу%20записать%20ребёнка%20в%20летний%20лагерь%20RoboKittens">💬 WhatsApp</a>
+      <a class="btn-outline" href="mailto:robokittens.space@gmail.com">✉️ Email</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 RoboKittens · <a href="https://robokittens.space/">robokittens.space</a> · Vila Nova de Gaia &amp; Matosinhos 🐾</p>
+  </footer>
+
+</body>
+</html>
