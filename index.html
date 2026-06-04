@@ -440,59 +440,109 @@
 </footer>
 
 <script src="assets/js/main.js"></script>
-  <!-- ☀️ ЛЕТНИЙ ЛАГЕРЬ — floating button -->
+<!-- ☀️ ЛЕТНИЕ КНОПКИ — два floating button'а -->
 <!-- Вставить прямо перед закрывающим тегом </body> в index.html -->
 <style>
-  .summer-fab {
+  .fab-group {
     position: fixed;
-    bottom: 2rem;
-    right: 2rem;
+    bottom: 1.75rem;
+    right: 1.75rem;
     z-index: 9999;
     display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.6rem;
+  }
+
+  /* Кнопка ЛЕТО */
+  .fab-summer {
+    display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.45rem;
     background: linear-gradient(135deg, #FFB800, #FF8C00);
     color: #1C1C2E;
     font-family: 'Unbounded', 'Inter', sans-serif;
     font-weight: 800;
-    font-size: 0.85rem;
-    padding: 0.75rem 1.4rem;
+    font-size: 0.82rem;
+    padding: 0.7rem 1.3rem;
     border-radius: 3rem;
     border: none;
     cursor: pointer;
     text-decoration: none;
-    box-shadow: 0 4px 20px rgba(255, 184, 0, 0.45);
-    animation: fab-pulse 3s ease-in-out infinite;
+    box-shadow: 0 4px 18px rgba(255, 184, 0, 0.5);
+    animation: fab-pulse-sun 3s ease-in-out infinite;
     transition: transform .15s, box-shadow .15s;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
   }
-  .summer-fab:hover {
+  .fab-summer:hover {
     transform: translateY(-3px) scale(1.04);
-    box-shadow: 0 8px 32px rgba(255, 184, 0, 0.6);
+    box-shadow: 0 8px 28px rgba(255, 184, 0, 0.65);
     animation: none;
   }
-  .summer-fab .fab-sun {
-    font-size: 1.2rem;
-    animation: fab-spin 8s linear infinite;
+  .fab-summer .fab-icon {
+    font-size: 1.15rem;
+    animation: fab-spin 10s linear infinite;
     display: inline-block;
   }
-  @keyframes fab-pulse {
-    0%, 100% { box-shadow: 0 4px 20px rgba(255,184,0,0.45); }
-    50% { box-shadow: 0 6px 28px rgba(255,184,0,0.75); }
+
+  /* Кнопка ПОДРОСТКОВЫЙ КЛУБ */
+  .fab-teen {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: linear-gradient(135deg, #FF2D78, #B8005A);
+    color: #fff;
+    font-family: 'Unbounded', 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 0.75rem;
+    padding: 0.7rem 1.3rem;
+    border-radius: 3rem;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 4px 18px rgba(255, 45, 120, 0.45);
+    animation: fab-pulse-teen 3s ease-in-out infinite 1.5s;
+    transition: transform .15s, box-shadow .15s;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
   }
-  @keyframes fab-spin {
-    to { transform: rotate(360deg); }
+  .fab-teen:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 8px 28px rgba(255, 45, 120, 0.65);
+    animation: none;
   }
+  .fab-teen .fab-icon {
+    font-size: 1.1rem;
+  }
+
+  @keyframes fab-spin { to { transform: rotate(360deg); } }
+  @keyframes fab-pulse-sun {
+    0%, 100% { box-shadow: 0 4px 18px rgba(255,184,0,0.5); }
+    50% { box-shadow: 0 6px 26px rgba(255,184,0,0.8); }
+  }
+  @keyframes fab-pulse-teen {
+    0%, 100% { box-shadow: 0 4px 18px rgba(255,45,120,0.45); }
+    50% { box-shadow: 0 6px 26px rgba(255,45,120,0.7); }
+  }
+
   @media (max-width: 480px) {
-    .summer-fab { bottom: 1.25rem; right: 1.25rem; font-size: 0.78rem; padding: 0.65rem 1.1rem; }
+    .fab-group { bottom: 1rem; right: 1rem; gap: 0.5rem; }
+    .fab-summer, .fab-teen { font-size: 0.72rem; padding: 0.6rem 1rem; }
   }
 </style>
- 
-<a class="summer-fab" href="/summer.html">
-  <span class="fab-sun">☀️</span>
-  ЛЕТО
-</a>
-<!-- /летний лагерь -->
+
+<div class="fab-group">
+  <a class="fab-teen" href="/teen-club.html">
+    <span class="fab-icon">🔥</span>
+    TEEN CLUB 12+
+  </a>
+  <a class="fab-summer" href="/summer.html">
+    <span class="fab-icon">☀️</span>
+    SUMMER CAMP
+  </a>
+</div>
+<!-- /летние кнопки -->
  
 </body>
 </html>
