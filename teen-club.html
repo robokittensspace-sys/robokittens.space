@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teen Club 12+ — RoboKittens Summer 2026</title>
+  <meta name="description" content="Teen Club 12+: robotics, science, board games, art, English, beach walks — summer 2026 in Gaia." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Black+Han+Sans&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --pink: #FF2D78;
+      --yellow: #FFD600;
+      --cyan: #00C8FF;
+      --purple: #7B2FBE;
+      --dark: #111118;
+      --cream: #F5F0E8;
+      --paper: #EDE8DC;
+      --ink: #1A1A2E;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Nunito',sans-serif; background:var(--dark); color:var(--ink); overflow-x:hidden; }
+
+    /* torn paper texture via pseudo */
+    .torn { position:relative; }
+    .torn::after {
+      content:'';
+      position:absolute;
+      bottom:-18px; left:0; right:0;
+      height:20px;
+      background:var(--cream);
+      clip-path: polygon(0 100%, 2% 0, 5% 80%, 8% 10%, 12% 90%, 16% 5%, 20% 85%, 24% 15%, 28% 95%, 32% 5%, 36% 80%, 40% 10%, 44% 90%, 48% 5%, 52% 85%, 56% 15%, 60% 95%, 64% 5%, 68% 80%, 72% 10%, 76% 90%, 80% 5%, 84% 85%, 88% 15%, 92% 95%, 96% 5%, 100% 80%, 100% 100%);
+      z-index:5;
+    }
+
+    /* NAV */
+    nav {
+      position:sticky; top:0; z-index:100;
+      background:var(--dark);
+      border-bottom:3px solid var(--pink);
+      padding:0.7rem 1.5rem;
+      display:flex; align-items:center; justify-content:space-between; gap:1rem;
+    }
+    nav a.logo { display:flex; align-items:center; gap:0.5rem; text-decoration:none; }
+    nav a.logo img { height:30px; }
+    nav a.logo span { font-family:'Permanent Marker',cursive; color:var(--yellow); font-size:1rem; }
+    .nav-right { display:flex; align-items:center; gap:0.6rem; }
+    .lang-btn {
+      background:none; border:2px solid #444; border-radius:0.5rem; padding:0.22rem 0.55rem;
+      font-family:'Nunito',sans-serif; font-size:0.75rem; font-weight:800; cursor:pointer;
+      color:#AAA; transition:all .15s; text-transform:uppercase;
+    }
+    .lang-btn.active { border-color:var(--pink); color:var(--pink); background:rgba(255,45,120,0.1); }
+    .lang-btn:hover { border-color:var(--yellow); color:var(--yellow); }
+    .back {
+      font-size:0.8rem; font-weight:800; color:var(--dark); text-decoration:none;
+      background:var(--yellow); border-radius:0.4rem; padding:0.3rem 0.85rem;
+      transition:all .2s; white-space:nowrap; font-family:'Nunito',sans-serif;
+    }
+    .back:hover { background:var(--pink); color:#fff; }
+
+    /* HERO */
+    .hero {
+      background:var(--paper);
+      padding:3.5rem 1.5rem 4rem;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+      background-image:
+        url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='10' y='40' font-size='12' fill='%23ccc' opacity='0.3' font-family='serif'%3EThe Times%3C/text%3E%3Ctext x='30' y='70' font-size='10' fill='%23ccc' opacity='0.2'%3Elorem ipsum dolor sit amet%3C/text%3E%3Ctext x='5' y='100' font-size='9' fill='%23ccc' opacity='0.2'%3Econsectetur adipiscing elit%3C/text%3E%3Ctext x='50' y='130' font-size='11' fill='%23ccc' opacity='0.25'%3ENEWS%3C/text%3E%3C/svg%3E");
+    }
+    .hero::before {
+      content:'';
+      position:absolute; inset:0;
+      background:
+        linear-gradient(135deg, rgba(255,214,0,0.12) 0%, transparent 50%),
+        linear-gradient(225deg, rgba(255,45,120,0.1) 0%, transparent 50%);
+      pointer-events:none;
+    }
+
+    /* sticker decorations */
+    .deco { position:absolute; font-size:2.5rem; pointer-events:none; }
+    .deco-1 { top:15px; left:20px; transform:rotate(-15deg); opacity:0.7; }
+    .deco-2 { top:20px; right:30px; transform:rotate(10deg); opacity:0.8; }
+    .deco-3 { bottom:40px; left:40px; transform:rotate(5deg); opacity:0.6; }
+    .deco-4 { bottom:30px; right:20px; transform:rotate(-8deg); opacity:0.7; font-size:2rem; }
+
+    .hero-badge {
+      display:inline-block;
+      background:var(--dark);
+      color:var(--yellow);
+      font-family:'Permanent Marker',cursive;
+      font-size:clamp(0.9rem,2.5vw,1.1rem);
+      padding:0.4rem 1.5rem;
+      border-radius:0.3rem;
+      margin-bottom:1rem;
+      transform:rotate(-1deg);
+      box-shadow:4px 4px 0 var(--pink);
+      position:relative; z-index:2;
+    }
+    .hero h1 {
+      font-family:'Permanent Marker',cursive;
+      font-size:clamp(2.4rem,8vw,5rem);
+      line-height:1.0;
+      color:var(--dark);
+      position:relative; z-index:2;
+      text-shadow:3px 3px 0 var(--pink);
+    }
+    .hero h1 .plus {
+      color:var(--pink);
+      font-size:clamp(3rem,10vw,6.5rem);
+    }
+    .hero-year {
+      display:inline-block;
+      background:var(--yellow);
+      color:var(--dark);
+      font-family:'Permanent Marker',cursive;
+      font-size:clamp(1.2rem,3vw,1.8rem);
+      padding:0.3rem 1.2rem;
+      border-radius:0.3rem;
+      margin-top:0.5rem;
+      transform:rotate(1.5deg);
+      box-shadow:3px 3px 0 var(--dark);
+      position:relative; z-index:2;
+    }
+    .hero-sub {
+      margin-top:1.25rem;
+      font-size:1rem;
+      font-weight:700;
+      color:#444;
+      max-width:500px;
+      margin-left:auto; margin-right:auto;
+      position:relative; z-index:2;
+    }
+
+    /* SESSION CARDS */
+    .sessions-row {
+      display:flex; flex-wrap:wrap; gap:1rem; justify-content:center;
+      margin-top:2rem;
+      position:relative; z-index:2;
+    }
+    .session-card {
+      background:#fff;
+      border:3px solid var(--dark);
+      border-radius:0.5rem;
+      padding:0.9rem 1.4rem;
+      text-align:left;
+      box-shadow:4px 4px 0 var(--dark);
+      min-width:200px;
+    }
+    .session-card .s-label {
+      font-family:'Permanent Marker',cursive;
+      font-size:0.75rem;
+      color:#fff;
+      background:var(--pink);
+      display:inline-block;
+      padding:0.1rem 0.6rem;
+      border-radius:0.25rem;
+      margin-bottom:0.4rem;
+    }
+    .session-card .s-dates {
+      font-family:'Permanent Marker',cursive;
+      font-size:1.4rem;
+      line-height:1.1;
+      color:var(--dark);
+    }
+    .session-card .s-time {
+      font-weight:800;
+      color:var(--pink);
+      font-size:0.9rem;
+      margin-top:0.2rem;
+    }
+
+    .hero-cta {
+      display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap;
+      margin-top:2rem;
+      position:relative; z-index:2;
+    }
+    .btn-main {
+      background:var(--pink);
+      color:#fff;
+      font-family:'Permanent Marker',cursive;
+      font-size:1rem;
+      padding:0.75rem 1.8rem;
+      border-radius:0.4rem;
+      text-decoration:none;
+      border:3px solid var(--dark);
+      box-shadow:4px 4px 0 var(--dark);
+      transition:transform .1s, box-shadow .1s;
+      display:inline-block;
+    }
+    .btn-main:hover { transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--dark); }
+    .btn-tg {
+      background:var(--cyan);
+      color:var(--dark);
+      font-family:'Permanent Marker',cursive;
+      font-size:1rem;
+      padding:0.75rem 1.8rem;
+      border-radius:0.4rem;
+      text-decoration:none;
+      border:3px solid var(--dark);
+      box-shadow:4px 4px 0 var(--dark);
+      transition:transform .1s, box-shadow .1s;
+      display:inline-block;
+    }
+    .btn-tg:hover { transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--dark); }
+
+    /* BODY SECTIONS on cream */
+    .body-wrap { background:var(--cream); padding-bottom:2rem; position:relative; z-index:1; }
+    section { padding:3.5rem 1.5rem; max-width:1000px; margin:0 auto; }
+
+    .section-label {
+      display:inline-block;
+      background:var(--dark);
+      color:var(--yellow);
+      font-family:'Permanent Marker',cursive;
+      font-size:clamp(1.2rem,4vw,2rem);
+      padding:0.4rem 1.2rem;
+      border-radius:0.35rem;
+      margin-bottom:1.75rem;
+      box-shadow:4px 4px 0 var(--pink);
+      transform:rotate(-1deg);
+    }
+
+    /* ACTIVITIES — colored strips like the poster */
+    .activities-list { display:flex; flex-direction:column; gap:0.6rem; }
+    .act-strip {
+      border-radius:0.5rem;
+      padding:0.85rem 1.4rem;
+      font-weight:800;
+      font-size:clamp(0.88rem,2vw,1rem);
+      display:flex; align-items:center; gap:0.8rem;
+      border:2px solid var(--dark);
+      box-shadow:3px 3px 0 var(--dark);
+      transition:transform .15s;
+    }
+    .act-strip:hover { transform:translateX(4px); }
+    .act-strip .act-icon { font-size:1.4rem; flex-shrink:0; }
+    .act-strip.c1 { background:#7ED957; color:#1A3A00; }
+    .act-strip.c2 { background:#FFB800; color:#3A2000; }
+    .act-strip.c3 { background:#FF6B6B; color:#fff; }
+    .act-strip.c4 { background:#A259FF; color:#fff; }
+    .act-strip.c5 { background:#00C8FF; color:#003A4A; }
+    .act-strip.c6 { background:#FF2D78; color:#fff; }
+    .act-strip.c7 { background:#FFD600; color:#3A2000; }
+
+    /* DAY SCHEDULE */
+    .sched-wrap {
+      background:#fff;
+      border:3px solid var(--dark);
+      border-radius:0.75rem;
+      overflow:hidden;
+      box-shadow:5px 5px 0 var(--dark);
+    }
+    .sched-head {
+      background:var(--dark); color:var(--yellow);
+      display:grid; grid-template-columns:100px 1fr 100px;
+      font-family:'Permanent Marker',cursive; font-size:0.8rem;
+      padding:0.75rem 1.25rem;
+    }
+    .sched-row {
+      display:grid; grid-template-columns:100px 1fr 100px;
+      padding:0.75rem 1.25rem;
+      border-bottom:2px dashed #DDD;
+      font-size:0.88rem; align-items:center;
+      transition:background .15s;
+    }
+    .sched-row:last-child { border-bottom:none; }
+    .sched-row:hover { background:#FFFBEE; }
+    .sched-row .time { font-family:'Permanent Marker',cursive; font-size:0.78rem; color:var(--pink); }
+    .stag {
+      display:inline-block; border-radius:0.25rem;
+      padding:0.15rem 0.55rem; font-size:0.7rem; font-weight:800;
+      border:1.5px solid currentColor;
+    }
+    .stag.robot { background:#E8F0FE; color:#0F4A82; }
+    .stag.science { background:#E8FFE8; color:#1A7A40; }
+    .stag.code { background:#FFF0E8; color:#B84000; }
+    .stag.game { background:#F3E8FF; color:#6B00B8; }
+    .stag.art { background:#FFE8F0; color:#B8004A; }
+    .stag.eng { background:#E0F8FF; color:#006080; }
+    .stag.free { background:#FFFBE0; color:#7A6000; }
+
+    /* PRICING */
+    .price-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:1.25rem; }
+    .price-card {
+      background:#fff;
+      border:3px solid var(--dark);
+      border-radius:0.75rem;
+      padding:1.75rem 1.5rem;
+      text-align:center;
+      box-shadow:5px 5px 0 var(--dark);
+      position:relative;
+    }
+    .price-card.featured {
+      background:var(--dark);
+      color:#fff;
+      box-shadow:5px 5px 0 var(--pink);
+      border-color:var(--pink);
+    }
+    .price-card .badge {
+      position:absolute; top:-16px; left:50%; transform:translateX(-50%);
+      background:var(--pink); color:#fff;
+      font-family:'Permanent Marker',cursive;
+      font-size:0.72rem; padding:0.2rem 0.9rem;
+      border-radius:0.3rem; white-space:nowrap;
+      border:2px solid var(--dark);
+    }
+    .price-card .period {
+      font-family:'Permanent Marker',cursive;
+      font-size:0.85rem; color:inherit; opacity:0.7;
+      margin-bottom:0.5rem;
+    }
+    .price-card .amount {
+      font-family:'Permanent Marker',cursive;
+      font-size:3.5rem; line-height:1; color:var(--pink);
+    }
+    .price-card.featured .amount { color:var(--yellow); }
+    .price-card .amount sup { font-size:1.2rem; vertical-align:top; margin-top:0.5rem; }
+    .price-card ul { list-style:none; margin:1.25rem 0; text-align:left; display:flex; flex-direction:column; gap:0.45rem; }
+    .price-card ul li { font-size:0.85rem; display:flex; gap:0.5rem; }
+    .price-card ul li::before { content:'→'; color:var(--pink); font-weight:900; flex-shrink:0; }
+    .price-card.featured ul li::before { color:var(--yellow); }
+    .price-card .note-small { font-size:0.78rem; opacity:0.6; margin-top:0.5rem; font-style:italic; }
+    .btn-book {
+      display:block; text-align:center;
+      background:var(--pink); color:#fff;
+      font-family:'Permanent Marker',cursive;
+      font-size:0.95rem; padding:0.65rem 1.2rem;
+      border-radius:0.4rem; text-decoration:none;
+      border:2px solid var(--dark); box-shadow:3px 3px 0 var(--dark);
+      transition:transform .1s, box-shadow .1s; margin-top:1rem;
+    }
+    .btn-book:hover { transform:translate(-2px,-2px); box-shadow:5px 5px 0 var(--dark); }
+    .price-card.featured .btn-book { background:var(--yellow); color:var(--dark); }
+
+    /* FOOD / LOCATION */
+    .info-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.25rem; }
+    .info-card {
+      background:#fff;
+      border:3px solid var(--dark);
+      border-radius:0.75rem;
+      padding:1.5rem;
+      box-shadow:4px 4px 0 var(--dark);
+    }
+    .info-card h3 {
+      font-family:'Permanent Marker',cursive;
+      font-size:1.2rem; margin-bottom:1rem;
+      display:flex; align-items:center; gap:0.5rem;
+    }
+    .info-card ul { list-style:none; display:flex; flex-direction:column; gap:0.6rem; }
+    .info-card ul li { font-size:0.9rem; font-weight:700; display:flex; gap:0.5rem; align-items:flex-start; }
+    .info-card ul li .bullet { flex-shrink:0; }
+    .info-card .loc { font-size:0.88rem; font-weight:700; color:#444; margin-top:0.5rem; line-height:1.5; }
+
+    /* CTA BANNER */
+    .cta-banner {
+      background:var(--dark);
+      margin:0 1.5rem 3rem;
+      border-radius:1rem;
+      padding:3rem 2rem;
+      text-align:center;
+      border:3px solid var(--pink);
+      box-shadow:6px 6px 0 var(--pink);
+      position:relative; overflow:hidden;
+    }
+    .cta-banner::before {
+      content:'★ ★ ★';
+      position:absolute; top:1rem; left:0; right:0;
+      text-align:center; color:rgba(255,214,0,0.15); font-size:4rem;
+      pointer-events:none;
+    }
+    .cta-banner h2 {
+      font-family:'Permanent Marker',cursive;
+      font-size:clamp(1.5rem,4vw,2.5rem);
+      color:var(--yellow);
+      margin-bottom:0.75rem;
+      position:relative; z-index:1;
+    }
+    .cta-banner p {
+      color:rgba(255,255,255,0.8);
+      margin-bottom:2rem;
+      font-weight:700;
+      position:relative; z-index:1;
+    }
+    .cta-btns { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; position:relative; z-index:1; }
+
+    footer {
+      background:var(--dark);
+      color:rgba(255,255,255,0.4);
+      text-align:center; padding:1.5rem;
+      font-size:0.82rem;
+    }
+    footer a { color:var(--yellow); text-decoration:none; }
+
+    @media (max-width:600px) {
+      .sched-head, .sched-row { grid-template-columns:85px 1fr 75px; padding:0.65rem 0.9rem; font-size:0.8rem; }
+      section { padding:2.5rem 1rem; }
+      .cta-banner { margin:0 0.75rem 2.5rem; padding:2rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="https://robokittens.space/">
+    <img src="https://robokittens.space/logo.png" alt="RoboKittens" />
+    <span>RoboKittens</span>
+  </a>
+  <div class="nav-right">
+    <button class="lang-btn active" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('pt')">PT</button>
+    <button class="lang-btn" onclick="setLang('ru')">RU</button>
+    <a class="back" href="https://robokittens.space/"><span data-t="nav_back">← Home</span></a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero torn">
+  <span class="deco deco-1">🔥</span>
+  <span class="deco deco-2">⭐</span>
+  <span class="deco deco-3">📸</span>
+  <span class="deco deco-4">🎲</span>
+
+  <div class="hero-badge" data-t="hero_badge">TEEN CLUB</div>
+  <h1>12<span class="plus">+</span></h1>
+  <div class="hero-year" data-t="hero_year">SUMMER 2026</div>
+  <p class="hero-sub" data-t="hero_sub">3 sessions · 12:00–18:00 · Gaia</p>
+
+  <div class="sessions-row">
+    <div class="session-card">
+      <div class="s-label" data-t="w1label">SESSION 1</div>
+      <div class="s-dates" data-t="w1dates">22–26 June</div>
+      <div class="s-time">12:00–18:00</div>
+    </div>
+    <div class="session-card">
+      <div class="s-label" data-t="w2label">SESSION 2</div>
+      <div class="s-dates" data-t="w2dates">15–19 July</div>
+      <div class="s-time">12:00–18:00</div>
+    </div>
+    <div class="session-card">
+      <div class="s-label" data-t="w3label">SESSION 3</div>
+      <div class="s-dates" data-t="w3dates">29 June–3 July</div>
+      <div class="s-time">12:00–18:00</div>
+    </div>
+  </div>
+
+  <div class="hero-cta">
+    <a class="btn-main" href="https://wa.me/351912510486?text=Hi!%20I%20want%20to%20sign%20up%20for%20Teen%20Club%2012%2B">💬 WhatsApp</a>
+    <a class="btn-tg" href="https://t.me/Nara_Salikova">✈️ Telegram</a>
+  </div>
+</div>
+
+<div style="height:22px; background:var(--cream); position:relative; z-index:4;"></div>
+
+<!-- BODY -->
+<div class="body-wrap">
+
+  <!-- WHAT'S HAPPENING -->
+  <section>
+    <div class="section-label" data-t="what_h">WHAT'S ON?</div>
+    <div class="activities-list">
+      <div class="act-strip c1"><span class="act-icon">🤖</span><span data-t="a1">Robotics & Engineering Projects</span></div>
+      <div class="act-strip c2"><span class="act-icon">🎲</span><span data-t="a2">Board Games & Big Game "Mafia"</span></div>
+      <div class="act-strip c3"><span class="act-icon">🔬</span><span data-t="a3">Science Experiments</span></div>
+      <div class="act-strip c4"><span class="act-icon">🎨</span><span data-t="a4">Drawing & Creative Workshops</span></div>
+      <div class="act-strip c5"><span class="act-icon">🏖️</span><span data-t="a5">Beach Trips & Outdoor Activities</span></div>
+      <div class="act-strip c6"><span class="act-icon">🇬🇧</span><span data-t="a6">English — Games, Films, Books & More</span></div>
+      <div class="act-strip c7"><span class="act-icon">🎵</span><span data-t="a7">Music Quiz & Other Fun Activities</span></div>
+    </div>
+  </section>
+
+  <!-- DAY SCHEDULE -->
+  <section id="schedule">
+    <div class="section-label" data-t="sched_h">DAY SCHEDULE</div>
+    <div class="sched-wrap">
+      <div class="sched-head">
+        <span data-t="sh_time">Time</span><span data-t="sh_act">Activity</span><span data-t="sh_dir">Area</span>
+      </div>
+      <div class="sched-row"><span class="time">12:00–12:30</span><span data-t="s1">Welcome & warm-up</span><span><span class="stag free" data-t="st_free">Free</span></span></div>
+      <div class="sched-row"><span class="time">12:30–14:00</span><span data-t="s2">Block 1 — robotics or science</span><span><span class="stag robot" data-t="st_robot">Robotics</span></span></div>
+      <div class="sched-row"><span class="time">14:00–14:30</span><span data-t="s3">Lunch break</span><span><span class="stag free" data-t="st_lunch">Lunch</span></span></div>
+      <div class="sched-row"><span class="time">14:30–15:30</span><span data-t="s4">Board games / Mafia</span><span><span class="stag game" data-t="st_game">Games</span></span></div>
+      <div class="sched-row"><span class="time">15:30–16:30</span><span data-t="s5">English or creative workshop</span><span><span class="stag eng" data-t="st_eng">English</span> / <span class="stag art" data-t="st_art">Art</span></span></div>
+      <div class="sched-row"><span class="time">16:30–17:30</span><span data-t="s6">Outdoor activities / beach</span><span><span class="stag free" data-t="st_out">Outdoor</span></span></div>
+      <div class="sched-row"><span class="time">17:30–18:00</span><span data-t="s7">Quiz / wrap-up & pick-up</span><span><span class="stag game" data-t="st_wrap">Wrap-up</span></span></div>
+    </div>
+    <p style="margin-top:0.85rem; font-size:0.82rem; color:#777; font-weight:700;" data-t="sched_note">* Schedule is approximate and may vary by group and day.</p>
+  </section>
+
+  <!-- PRICING -->
+  <section>
+    <div class="section-label" data-t="price_h">COST</div>
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="period" data-t="p1per">1 day</div>
+        <div class="amount"><sup>€</sup>40</div>
+        <ul>
+          <li data-t="p_hours">12:00–18:00 full afternoon</li>
+          <li data-t="p_mat">All materials included</li>
+          <li data-t="p_snack">Snacks included</li>
+        </ul>
+        <div class="note-small" data-t="p_flex">Can attend all days or individual days</div>
+        <a class="btn-book" href="https://wa.me/351912510486" data-t="btn_book">Sign up →</a>
+      </div>
+      <div class="price-card featured">
+        <div class="badge" data-t="badge_pop">⭐ Popular</div>
+        <div class="period" data-t="p2per">5 days (1 session)</div>
+        <div class="amount"><sup>€</sup>180</div>
+        <ul>
+          <li data-t="p_hours">12:00–18:00 full afternoon</li>
+          <li data-t="p_mat">All materials included</li>
+          <li data-t="p_snack">Snacks included</li>
+          <li data-t="p_early">€180 if paid before 5 June</li>
+        </ul>
+        <a class="btn-book" href="https://wa.me/351912510486" data-t="btn_book">Sign up →</a>
+      </div>
+    </div>
+    <p style="margin-top:1rem; font-size:0.82rem; color:#777; font-weight:700;" data-t="price_note">* Healthy snacks included. Lunch — €8 (optional) or bring your own.</p>
+  </section>
+
+  <!-- FOOD & LOCATION -->
+  <section>
+    <div class="section-label" data-t="info_h">FOOD & LOCATION</div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>🍎 <span data-t="food_h">Food</span></h3>
+        <ul>
+          <li><span class="bullet">💚</span><span data-t="food1">Healthy snacks included in the price</span></li>
+          <li><span class="bullet">🍽️</span><span data-t="food2">Lunch — €8 (optional) or bring from home</span></li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>📍 <span data-t="loc_h">Location</span></h3>
+        <div class="loc">
+          RoboKittens Space<br/>
+          Rua de Soares dos Reis 101, 24<br/>
+          Vila Nova de Gaia
+        </div>
+        <div style="margin-top:0.75rem;">
+          <a href="https://wa.me/351912510486" style="color:var(--pink); font-weight:800; font-size:0.88rem; text-decoration:none;">
+            📲 <span data-t="contact_sign">Sign up: @Nara_Salikova</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-banner">
+    <h2 data-t="cta_h">Ready to join the crew?</h2>
+    <p data-t="cta_p">Message us to sign up or ask any questions — we'll get back to you fast!</p>
+    <div class="cta-btns">
+      <a class="btn-main" href="https://wa.me/351912510486?text=Hi!%20Teen%20Club%2012%2B">💬 WhatsApp</a>
+      <a class="btn-tg" href="https://t.me/Nara_Salikova">✈️ Telegram @Nara_Salikova</a>
+    </div>
+  </div>
+
+</div><!-- /body-wrap -->
+
+<footer>
+  <p>© 2026 RoboKittens · <a href="https://robokittens.space/">robokittens.space</a> · Vila Nova de Gaia 🐾</p>
+</footer>
+
+<script>
+const T = {
+  en: {
+    nav_back:"← Home",
+    hero_badge:"TEEN CLUB", hero_year:"SUMMER 2026",
+    hero_sub:"3 sessions · 12:00–18:00 · Gaia",
+    w1label:"SESSION 1", w1dates:"22–26 June",
+    w2label:"SESSION 2", w2dates:"15–19 July",
+    w3label:"SESSION 3", w3dates:"29 June–3 July",
+    what_h:"WHAT'S ON?",
+    a1:"Robotics & Engineering Projects",
+    a2:"Board Games & Big Game "Mafia"",
+    a3:"Science Experiments",
+    a4:"Drawing & Creative Workshops",
+    a5:"Beach Trips & Outdoor Activities",
+    a6:"English — Games, Films, Books & More",
+    a7:"Music Quiz & Other Fun Activities",
+    sched_h:"DAY SCHEDULE",
+    sh_time:"Time", sh_act:"Activity", sh_dir:"Area",
+    s1:"Welcome & warm-up", s2:"Block 1 — robotics or science",
+    s3:"Lunch break", s4:"Board games / Mafia",
+    s5:"English or creative workshop", s6:"Outdoor activities / beach",
+    s7:"Quiz / wrap-up & pick-up",
+    st_free:"Free", st_robot:"Robotics", st_lunch:"Lunch",
+    st_game:"Games", st_eng:"English", st_art:"Art", st_out:"Outdoor", st_wrap:"Wrap-up",
+    sched_note:"* Schedule is approximate and may vary by group and day.",
+    price_h:"COST",
+    p1per:"1 day", p2per:"5 days (1 session)",
+    p_hours:"12:00–18:00 full afternoon",
+    p_mat:"All materials included", p_snack:"Snacks included",
+    p_flex:"Can attend all days or individual days",
+    p_early:"€180 if paid before 5 June",
+    badge_pop:"⭐ Popular",
+    btn_book:"Sign up →",
+    price_note:"* Healthy snacks included. Lunch — €8 (optional) or bring your own.",
+    info_h:"FOOD & LOCATION",
+    food_h:"Food", food1:"Healthy snacks included in the price",
+    food2:"Lunch — €8 (optional) or bring from home",
+    loc_h:"Location", contact_sign:"Sign up: @Nara_Salikova",
+    cta_h:"Ready to join the crew?",
+    cta_p:"Message us to sign up or ask any questions — we'll get back to you fast!",
+  },
+  ru: {
+    nav_back:"← Главная",
+    hero_badge:"ПОДРОСТКОВЫЙ КЛУБ", hero_year:"ЛЕТО 2026",
+    hero_sub:"3 смены · 12:00–18:00 · Гайя",
+    w1label:"1 НЕДЕЛЯ", w1dates:"22–26 июня",
+    w2label:"2 НЕДЕЛЯ", w2dates:"15–19 июля",
+    w3label:"3 НЕДЕЛЯ", w3dates:"29 июня–3 июля",
+    what_h:"ЧТО БУДЕТ?",
+    a1:"Робототехника и инженерные проекты",
+    a2:"Настольные игры и большая игра «Мафия»",
+    a3:"Научные эксперименты",
+    a4:"Рисование и творческие мастер-классы",
+    a5:"Пляж, прогулки и активности на свежем воздухе",
+    a6:"English — игры, обсуждение фильмов, книг и ТП",
+    a7:"Музыкальный квиз и другие весёлые активности",
+    sched_h:"РАСПИСАНИЕ ДНЯ",
+    sh_time:"Время", sh_act:"Активность", sh_dir:"Направление",
+    s1:"Встреча и разминка", s2:"Блок 1 — роботика или наука",
+    s3:"Обеденный перерыв", s4:"Настольные игры / Мафия",
+    s5:"English или творческий воркшоп", s6:"Активности на улице / пляж",
+    s7:"Квиз / итоги и забор детей",
+    st_free:"Свобода", st_robot:"Роботика", st_lunch:"Обед",
+    st_game:"Игры", st_eng:"English", st_art:"Арт", st_out:"Улица", st_wrap:"Итоги",
+    sched_note:"* Расписание примерное, может меняться по группам и дням.",
+    price_h:"СТОИМОСТЬ",
+    p1per:"1 день", p2per:"5 дней (1 смена)",
+    p_hours:"12:00–18:00 полный день",
+    p_mat:"Все материалы включены", p_snack:"Перекусы включены",
+    p_flex:"Можно посещать как все дни, так и отдельные",
+    p_early:"180 € при оплате до 5 июня",
+    badge_pop:"⭐ Популярное",
+    btn_book:"Записаться →",
+    price_note:"* Полезные перекусы включены. Обед — 8 € (по желанию) или можно взять с собой.",
+    info_h:"ПИТАНИЕ И АДРЕС",
+    food_h:"Питание", food1:"Полезные перекусы включены в стоимость",
+    food2:"Обед — 8 € (по желанию), можно приносить еду с собой",
+    loc_h:"Адрес", contact_sign:"Запись: @Nara_Salikova",
+    cta_h:"Готов(а) к лучшему лету?",
+    cta_p:"Пишите — запишем, ответим на все вопросы быстро!",
+  },
+  pt: {
+    nav_back:"← Início",
+    hero_badge:"CLUBE TEEN", hero_year:"VERÃO 2026",
+    hero_sub:"3 semanas · 12:00–18:00 · Gaia",
+    w1label:"SEMANA 1", w1dates:"22–26 junho",
+    w2label:"SEMANA 2", w2dates:"15–19 julho",
+    w3label:"SEMANA 3", w3dates:"29 jun–3 jul",
+    what_h:"O QUE VAI HAVER?",
+    a1:"Robótica e Projetos de Engenharia",
+    a2:"Jogos de Tabuleiro e Máfia",
+    a3:"Experiências Científicas",
+    a4:"Desenho e Workshops Criativos",
+    a5:"Praia, Passeios e Atividades ao Ar Livre",
+    a6:"Inglês — Jogos, Filmes, Livros e Mais",
+    a7:"Quiz Musical e Outras Atividades Divertidas",
+    sched_h:"HORÁRIO DO DIA",
+    sh_time:"Hora", sh_act:"Atividade", sh_dir:"Área",
+    s1:"Acolhimento e aquecimento", s2:"Bloco 1 — robótica ou ciências",
+    s3:"Pausa para almoço", s4:"Jogos de tabuleiro / Máfia",
+    s5:"Inglês ou workshop criativo", s6:"Atividades ao ar livre / praia",
+    s7:"Quiz / resumo e saída",
+    st_free:"Livre", st_robot:"Robótica", st_lunch:"Almoço",
+    st_game:"Jogos", st_eng:"Inglês", st_art:"Arte", st_out:"Exterior", st_wrap:"Resumo",
+    sched_note:"* Horário indicativo, pode variar por grupo e dia.",
+    price_h:"PREÇOS",
+    p1per:"1 dia", p2per:"5 dias (1 semana)",
+    p_hours:"12:00–18:00 tarde completa",
+    p_mat:"Todos os materiais incluídos", p_snack:"Snacks incluídos",
+    p_flex:"Pode frequentar todos os dias ou dias individuais",
+    p_early:"180 € se pago antes de 5 junho",
+    badge_pop:"⭐ Popular",
+    btn_book:"Inscrever →",
+    price_note:"* Snacks saudáveis incluídos. Almoço — €8 (opcional) ou pode trazer de casa.",
+    info_h:"ALIMENTAÇÃO E MORADA",
+    food_h:"Alimentação", food1:"Snacks saudáveis incluídos no preço",
+    food2:"Almoço — €8 (opcional), podem trazer comida de casa",
+    loc_h:"Morada", contact_sign:"Inscrição: @Nara_Salikova",
+    cta_h:"Pronto(a) para um verão incrível?",
+    cta_p:"Escrevam-nos — inscrevemos e respondemos a todas as perguntas rapidamente!",
+  }
+};
+
+function setLang(lang) {
+  document.documentElement.setAttribute('data-lang', lang);
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent === lang.toUpperCase());
+  });
+  const d = T[lang];
+  document.querySelectorAll('[data-t]').forEach(el => {
+    const key = el.getAttribute('data-t');
+    if (d[key] !== undefined) el.textContent = d[key];
+  });
+}
+</script>
+</body>
+</html>
