@@ -130,7 +130,17 @@ nav {
 }
 .nav-lang button:hover,
 .nav-lang button.active { background: var(--ink); color: #fff; }
+/* ── location ─────────────────────────────────── */
+.location-link {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
 
+.location-link:hover {
+  color: #ff6b00;
+  text-decoration: underline;
+}
 /* ── HERO ─────────────────────────────────── */
 .hero {
   min-height: 100svh; padding-top: 70px;
@@ -434,3 +444,4 @@ footer { background: var(--ink); color: rgba(255,255,255,.5); padding: 56px 0 32
   .cta-wrap  { margin: 0 16px; }
   .cta-inner { padding: 36px 24px; }
 }
+
