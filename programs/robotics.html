@@ -3,132 +3,604 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RoboKittens — Robotics & Engineering</title>
-  <meta name="description" content="Robotics & Engineering at RoboKittens in Gaia." />
+  <title>Robotics & Engineering — RoboKittens</title>
+  <meta name="description" content="Hands-on robotics and engineering for kids aged 7–14 in Vila Nova de Gaia. Real robots, electronics, Arduino — not just theory." />
   <link rel="icon" href="../logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../assets/css/styles.css" />
+  <style>
+    /* ── Program page extras ────────────────────── */
+    .prog-hero {
+      background: var(--ink);
+      color: #fff;
+      padding: 130px 0 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .prog-hero::before {
+      content: '';
+      position: absolute; top: -100px; right: -60px;
+      width: 560px; height: 560px;
+      background: radial-gradient(circle, rgba(244,146,30,.18) 0%, transparent 65%);
+      border-radius: 50%; pointer-events: none;
+    }
+    .prog-hero::after {
+      content: '';
+      position: absolute; bottom: -60px; left: 20%;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(58,143,158,.12) 0%, transparent 65%);
+      border-radius: 50%; pointer-events: none;
+    }
+    .prog-hero-inner {
+      max-width: var(--max); margin: 0 auto; padding: 0 40px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;
+      position: relative; z-index: 1;
+    }
+    .prog-kicker {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(244,146,30,.15); border: 1px solid rgba(244,146,30,.3);
+      color: var(--orange); font-size: .78rem; font-weight: 700;
+      padding: 5px 14px; border-radius: 30px; margin-bottom: 20px;
+      letter-spacing: .04em; text-transform: uppercase;
+    }
+    .prog-hero h1 {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      line-height: 1.08; letter-spacing: -.03em;
+      color: #fff; margin-bottom: 8px;
+    }
+    .prog-hero h1 em { font-style: normal; color: var(--orange); }
+    .prog-hero-sub {
+      font-size: 1.05rem; color: rgba(255,255,255,.65);
+      line-height: 1.7; max-width: 480px; margin: 18px 0 32px;
+    }
+    .prog-hero-cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 36px; }
+    .prog-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .prog-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14);
+      color: rgba(255,255,255,.8); font-size: .8rem; font-weight: 600;
+      padding: 5px 12px; border-radius: 20px;
+    }
+
+    /* hero right — big icon block */
+    .prog-hero-visual {
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .hero-feat {
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 16px; padding: 22px 24px;
+      display: flex; align-items: flex-start; gap: 16px;
+    }
+    .hero-feat-icon {
+      font-size: 2rem; flex-shrink: 0;
+      width: 52px; height: 52px; border-radius: 12px;
+      background: rgba(244,146,30,.15);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-feat h3 {
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: .95rem; color: #fff; margin-bottom: 4px;
+    }
+    .hero-feat p { font-size: .83rem; color: rgba(255,255,255,.55); line-height: 1.5; }
+
+    /* ── Page sections ──────────────────────────── */
+    .page-sec { padding: 72px 0; }
+    .page-sec-inner { max-width: var(--max); margin: 0 auto; padding: 0 40px; }
+    .page-sec.alt { background: var(--cream); }
+    .page-sec.dark { background: var(--ink); color: #fff; }
+    .page-sec.dark .sec-tag  { color: var(--teal); }
+    .page-sec.dark .sec-title { color: #fff; }
+    .page-sec.dark .sec-sub  { color: rgba(255,255,255,.6); }
+
+    /* two-col layout */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+    .two-col.flip { direction: rtl; }
+    .two-col.flip > * { direction: ltr; }
+
+    /* feature list */
+    .feat-list { list-style: none; display: flex; flex-direction: column; gap: 14px; margin-top: 28px; }
+    .feat-list li {
+      display: flex; align-items: flex-start; gap: 14px;
+      font-size: .95rem; line-height: 1.6;
+    }
+    .feat-list li .check {
+      width: 26px; height: 26px; border-radius: 8px; flex-shrink: 0;
+      background: rgba(244,146,30,.12); color: var(--orange);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .9rem; font-weight: 700; margin-top: 2px;
+    }
+
+    /* skill cards grid */
+    .skills-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 40px; }
+    .skill-card {
+      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 14px; padding: 24px 20px;
+    }
+    .skill-card .sk-icon { font-size: 1.6rem; margin-bottom: 12px; }
+    .skill-card h3 {
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: .9rem; color: #fff; margin-bottom: 6px;
+    }
+    .skill-card p { font-size: .82rem; color: rgba(255,255,255,.5); line-height: 1.55; }
+
+    /* quote / testimonial */
+    .quote-block {
+      background: var(--orange-lt); border-left: 4px solid var(--orange);
+      border-radius: 0 14px 14px 0; padding: 24px 28px; margin: 32px 0;
+    }
+    .quote-block p { font-size: 1rem; line-height: 1.7; color: var(--ink); font-style: italic; }
+    .quote-block cite { display: block; margin-top: 10px; font-size: .82rem; font-weight: 700; color: var(--orange); font-style: normal; }
+
+    /* process steps */
+    .steps { display: flex; flex-direction: column; gap: 0; margin-top: 36px; position: relative; }
+    .steps::before {
+      content: ''; position: absolute; left: 18px; top: 0; bottom: 0;
+      width: 2px; background: rgba(58,143,158,.2);
+    }
+    .step { display: flex; gap: 20px; align-items: flex-start; padding-bottom: 32px; position: relative; }
+    .step:last-child { padding-bottom: 0; }
+    .step-num {
+      width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+      background: var(--teal); color: #fff;
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: .85rem;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; z-index: 1;
+    }
+    .step-content h3 {
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: 1rem; margin-bottom: 6px; padding-top: 6px;
+    }
+    .step-content p { font-size: .9rem; color: var(--muted); line-height: 1.6; }
+
+    /* parent outcomes */
+    .outcomes-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 40px; }
+    .outcome-card {
+      background: var(--white); border-radius: 14px; padding: 24px 20px;
+      border: 1px solid var(--border); box-shadow: var(--shadow);
+      text-align: center;
+    }
+    .outcome-card .oc-icon { font-size: 2rem; margin-bottom: 12px; }
+    .outcome-card h3 {
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: .95rem; margin-bottom: 8px;
+    }
+    .outcome-card p { font-size: .85rem; color: var(--muted); line-height: 1.6; }
+
+    /* compare table */
+    .compare { background: var(--white); border-radius: 16px; border: 1px solid var(--border); overflow: hidden; margin-top: 36px; }
+    .compare-row { display: grid; grid-template-columns: 1fr 1fr; }
+    .compare-row:not(:last-child) { border-bottom: 1px solid var(--border); }
+    .compare-col { padding: 16px 20px; font-size: .9rem; line-height: 1.5; }
+    .compare-col.neg { color: var(--muted); }
+    .compare-col.pos { color: var(--ink); font-weight: 500; }
+    .compare-col.neg::before { content: '✗  '; color: #e04040; font-weight: 700; }
+    .compare-col.pos::before { content: '✓  '; color: var(--green); font-weight: 700; }
+    .compare-head .compare-col {
+      background: var(--cream); font-family: 'Syne', sans-serif;
+      font-weight: 700; font-size: .8rem; letter-spacing: .05em; text-transform: uppercase;
+    }
+    .compare-head .compare-col::before { content: '' !important; }
+    .compare-col:first-child { border-right: 1px solid var(--border); }
+
+    /* final CTA */
+    .final-cta {
+      background: var(--orange);
+      border-radius: 24px; margin: 0 40px 80px;
+      padding: 64px 60px;
+      display: grid; grid-template-columns: 1fr auto;
+      align-items: center; gap: 40px;
+    }
+    .final-cta h2 {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(1.6rem, 2.2vw, 2.2rem);
+      color: #fff; margin-bottom: 10px; letter-spacing: -.02em; line-height: 1.2;
+    }
+    .final-cta p { color: rgba(255,255,255,.82); font-size: 1rem; }
+    .final-cta-btns { display: flex; flex-direction: column; gap: 12px; align-items: flex-end; }
+
+    /* ── Responsive ─────────────────────────────── */
+    @media (max-width: 900px) {
+      .prog-hero-inner { grid-template-columns: 1fr; }
+      .prog-hero-visual { display: none; }
+      .two-col, .two-col.flip { grid-template-columns: 1fr; direction: ltr; }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .outcomes-grid { grid-template-columns: 1fr 1fr; }
+      .final-cta { grid-template-columns: 1fr; padding: 48px 40px; }
+      .final-cta-btns { align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
+    }
+    @media (max-width: 600px) {
+      .prog-hero-inner, .page-sec-inner, .final-cta { padding-left: 20px; padding-right: 20px; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .outcomes-grid { grid-template-columns: 1fr; }
+      .final-cta { margin: 0 16px 60px; }
+    }
+  </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="top">
-      <a class="back-link" href="../index.html">← Back to main page</a>
 
-      <div class="lang">
-        <button class="active" type="button">EN</button>
-        <button type="button">PT</button>
-        <button type="button">RU</button>
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="/"><img src="../logo.png" alt="RoboKittens" /></a>
+    <ul class="nav-links">
+      <li><a href="/#programs">Programs</a></li>
+      <li><a href="/#schedule">Schedule</a></li>
+      <li><a href="/#locations">Locations</a></li>
+      <li><a href="https://wa.me/351912510486" class="btn-cta">Book a trial →</a></li>
+    </ul>
+    <div class="nav-lang">
+      <button data-lang="en" onclick="setLang('en')" class="active">EN</button>
+      <button data-lang="pt" onclick="setLang('pt')">PT</button>
+      <button data-lang="ru" onclick="setLang('ru')">RU</button>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════
+     HERO
+════════════════════════════════════════════ -->
+<section class="prog-hero">
+  <div class="prog-hero-inner">
+
+    <div>
+      <div class="prog-kicker">🤖 Robotics · Electronics · Engineering</div>
+      <h1>Build, Create,<br/><em>Invent.</em></h1>
+      <p class="prog-hero-sub">
+        Children don't just learn about technology — they become creators of it.
+        Real robots, real circuits, real results. From the very first lesson.
+      </p>
+
+      <div class="prog-hero-cta">
+        <a href="https://wa.me/351912510486" class="btn-primary">🐾 Book a free trial</a>
+        <a href="../calendar.html" class="btn-secondary" style="border-color:rgba(255,255,255,.25);color:rgba(255,255,255,.85)">View schedule →</a>
+      </div>
+
+      <div class="prog-pills">
+        <span class="prog-pill">👧 Ages 7–14</span>
+        <span class="prog-pill">📍 Vila Nova de Gaia</span>
+        <span class="prog-pill">⚡ Hands-on projects</span>
+        <span class="prog-pill">🏆 Competitions pathway</span>
       </div>
     </div>
 
-    <main class="card">
-      <section class="page-hero">
-        <div>
-          <div class="kicker">🤖 Robotics • Engineering • Hands-on practice</div>
-          <h1>Robotics & Engineering</h1>
-          <p>
-            This direction helps children understand how things work by building, testing,
-            connecting, repairing, and creating with their own hands.
-          </p>
+    <div class="prog-hero-visual">
+      <div class="hero-feat">
+        <div class="hero-feat-icon">🤖</div>
+        <div><h3>Real robots from day one</h3><p>Children build, wire and program working devices — not just watch demonstrations.</p></div>
+      </div>
+      <div class="hero-feat">
+        <div class="hero-feat-icon">⚡</div>
+        <div><h3>Electronics & Arduino</h3><p>Sensors, motors, LEDs, servo drives — practical electronics in every project.</p></div>
+      </div>
+      <div class="hero-feat">
+        <div class="hero-feat-icon">🧠</div>
+        <div><h3>Engineering mindset</h3><p>Not just assembly — children learn why things work and how to improve them.</p></div>
+      </div>
+      <div class="hero-feat">
+        <div class="hero-feat-icon">🏆</div>
+        <div><h3>Competition pathway</h3><p>Motivated students can advance toward RoboCupJunior and other events.</p></div>
+      </div>
+    </div>
 
-          <div class="cta-row">
-            <a class="btn" href="https://wa.me/351912510486" target="_blank" rel="noopener">Book a trial</a>
-            <a class="btn secondary" href="../calendar.html">View calendar</a>
-          </div>
-
-          <div class="pill-row">
-            <span class="pill">Ages 7–14</span>
-            <span class="pill">Practical learning</span>
-            <span class="pill">Projects and prototyping</span>
-          </div>
-        </div>
-
-        <div class="page-image">
-          Robotics & Engineering image
-        </div>
-      </section>
-
-      <section class="section">
-        <h2>What children do here</h2>
-        <ul class="list">
-          <li>Work with circuits, simple electronics, and mechanisms</li>
-          <li>Learn how systems are assembled and how parts interact</li>
-          <li>Build and test small engineering projects</li>
-          <li>Develop practical thinking through real tasks</li>
-        </ul>
-      </section>
-
-      <section class="section">
-        <h2>Format</h2>
-        <div class="info-grid">
-          <div class="info-box">
-            <h3>Age group</h3>
-            <p>Usually best for children around 7–14, depending on readiness and interest.</p>
-          </div>
-          <div class="info-box">
-            <h3>Class style</h3>
-            <p>Hands-on work with explanation, experimentation, and step-by-step building.</p>
-          </div>
-          <div class="info-box">
-            <h3>Outcome</h3>
-            <p>Children gradually move from understanding parts to creating working projects.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <h2>What this direction develops</h2>
-        <div class="info-grid">
-          <div class="info-box">
-            <h3>Logic</h3>
-            <p>Understanding sequence, cause and effect, and how systems behave.</p>
-          </div>
-          <div class="info-box">
-            <h3>Patience</h3>
-            <p>Learning to test, adjust, and improve instead of giving up quickly.</p>
-          </div>
-          <div class="info-box">
-            <h3>Confidence</h3>
-            <p>Seeing that a child can build something real with their own hands.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <h2>What parents can expect</h2>
-        <div class="expect-grid">
-          <div class="expect-box">
-            <h3>Visible progress</h3>
-            <p>Children begin to understand tools, parts, and the logic behind mechanisms.</p>
-          </div>
-          <div class="expect-box">
-            <h3>Real engagement</h3>
-            <p>Interest grows when a child sees a real result they created personally.</p>
-          </div>
-          <div class="expect-box">
-            <h3>Foundation for future learning</h3>
-            <p>This direction supports later growth in robotics, engineering, and technical thinking.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <h2>Who it is for</h2>
-        <p>
-          Suitable for children who love building, taking things apart, understanding mechanisms,
-          and seeing how ideas become working projects.
-        </p>
-      </section>
-
-      <section class="section">
-        <h2>Next step</h2>
-        <p>
-          Message us and we will help choose the right format, age group, and first class option.
-        </p>
-        <div class="cta-row">
-          <a class="btn" href="https://wa.me/351912510486" target="_blank" rel="noopener">Message us on WhatsApp</a>
-        </div>
-      </section>
-    </main>
   </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     WHY IT MATTERS
+════════════════════════════════════════════ -->
+<section class="page-sec">
+  <div class="page-sec-inner">
+    <div class="two-col">
+      <div>
+        <p class="sec-tag">Why robotics matters</p>
+        <h2 class="sec-title">The world needs creators,<br/>not just consumers</h2>
+        <p class="sec-sub">
+          Today's children grow up surrounded by technology — smartphones, AI, smart devices.
+          But very few understand how these systems actually work.
+        </p>
+        <p style="color:var(--muted);font-size:.95rem;line-height:1.7;margin-top:16px;max-width:480px">
+          At RoboKittens, we help children move beyond passive consumption.
+          They learn how machines think, how sensors collect data, how robots make decisions,
+          and how engineering turns ideas into reality.
+          These skills are becoming as essential as reading and mathematics.
+        </p>
+      </div>
+      <div>
+        <div class="quote-block">
+          <p>"The future belongs to those who can understand, build and improve technology — not just use it."</p>
+          <cite>— RoboKittens teaching philosophy</cite>
+        </div>
+
+        <ul class="feat-list" style="margin-top:20px">
+          <li><span class="check">✓</span><span>Children stop being passive users of technology</span></li>
+          <li><span class="check">✓</span><span>They begin asking "how does this work?" instead of just "what does it do?"</span></li>
+          <li><span class="check">✓</span><span>Engineering thinking carries into school, creativity and everyday problem-solving</span></li>
+          <li><span class="check">✓</span><span>They build confidence by making things that actually work</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     WHAT CHILDREN DO
+════════════════════════════════════════════ -->
+<section class="page-sec alt">
+  <div class="page-sec-inner">
+    <p class="sec-tag">Inside the classroom</p>
+    <h2 class="sec-title">Learning through building</h2>
+    <p class="sec-sub">
+      Children learn by creating real projects from the very first lesson — not by reading textbooks
+      or watching videos.
+    </p>
+
+    <div style="margin-top:40px; display:grid; grid-template-columns:1fr 1fr; gap:20px">
+
+      <div class="steps" style="margin-top:0">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>Build a real robot</h3>
+            <p>Assemble mechanisms, connect motors and sensors, program movement and reactions. Every student works hands-on, not just observes.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3>Work with electronics</h3>
+            <p>Arduino boards, LED displays, servo drives, ultrasonic sensors — children learn by connecting real components, not simulations.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h3>Experiment, fail, improve</h3>
+            <p>If something doesn't work the first time, that's the lesson. Children test, debug, adjust and try again — exactly as real engineers do.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="steps" style="margin-top:0">
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h3>Understand the why</h3>
+            <p>Not just "press this button." Children learn why a circuit works, why a sensor triggers, why a motor spins in one direction and not another.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h3>Create their own projects</h3>
+            <p>As skills grow, children design and build their own inventions — not replicas of a template, but original ideas brought to life.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">6</div>
+          <div class="step-content">
+            <h3>Present and be proud</h3>
+            <p>Completed projects are demonstrated — to classmates, parents, and eventually at exhibitions. Real results build real confidence.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     SKILLS
+════════════════════════════════════════════ -->
+<section class="page-sec dark">
+  <div class="page-sec-inner">
+    <p class="sec-tag">What children gain</p>
+    <h2 class="sec-title">Skills that last a lifetime</h2>
+    <p class="sec-sub">
+      Our robotics programme develops far more than technical knowledge.
+      These are the skills that universities, employers and life increasingly require.
+    </p>
+
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="sk-icon">🧩</div>
+        <h3>Logical thinking</h3>
+        <p>Sequence, cause-and-effect, systematic analysis of how systems behave.</p>
+      </div>
+      <div class="skill-card">
+        <div class="sk-icon">💡</div>
+        <h3>Problem solving</h3>
+        <p>Breaking complex challenges into steps. Finding solutions instead of avoiding difficulty.</p>
+      </div>
+      <div class="skill-card">
+        <div class="sk-icon">🎨</div>
+        <h3>Creativity</h3>
+        <p>Engineering is design. Children learn to imagine, sketch, prototype and iterate.</p>
+      </div>
+      <div class="skill-card">
+        <div class="sk-icon">🤝</div>
+        <h3>Teamwork</h3>
+        <p>Real projects often require collaboration. Children learn to communicate ideas and divide tasks effectively.</p>
+      </div>
+      <div class="skill-card">
+        <div class="sk-icon">🔁</div>
+        <h3>Persistence</h3>
+        <p>Testing and fixing is part of engineering. Children learn that failure is information, not defeat.</p>
+      </div>
+      <div class="skill-card">
+        <div class="sk-icon">📋</div>
+        <h3>Project planning</h3>
+        <p>From idea to working prototype. Children practice thinking ahead and organising their approach.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     HOW WE'RE DIFFERENT
+════════════════════════════════════════════ -->
+<section class="page-sec">
+  <div class="page-sec-inner">
+    <p class="sec-tag">What makes us different</p>
+    <h2 class="sec-title">More than a typical robotics club</h2>
+    <p class="sec-sub">
+      Many programs focus on assembling the same kit every week. We focus on understanding —
+      because a child who understands can build anything.
+    </p>
+
+    <div class="compare">
+      <div class="compare-row compare-head">
+        <div class="compare-col">Typical robotics club</div>
+        <div class="compare-col">RoboKittens approach</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-col neg">Follow step-by-step instructions to build a pre-designed kit</div>
+        <div class="compare-col pos">Understand the concept, then design and build your own version</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-col neg">The same project for every student regardless of level</div>
+        <div class="compare-col pos">Personalised progression — each child works at their own pace and depth</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-col neg">Focus on "does it work?" as the only question</div>
+        <div class="compare-col pos">Always asks "why does it work?" and "how can we improve it?"</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-col neg">No pathway for advanced students</div>
+        <div class="compare-col pos">Clear route toward Arduino, autonomous systems and competitions</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-col neg">Robotics stays inside the robotics box</div>
+        <div class="compare-col pos">Cross-disciplinary — connects to physics, maths, coding and design</div>
+      </div>
+    </div>
+
+    <p style="font-size:.88rem;color:var(--muted);margin-top:16px">
+      For motivated students, RoboKittens provides a clear pathway toward
+      <strong>Arduino projects, autonomous robotics, 3D design</strong> and international competitions including
+      <strong>RoboCupJunior</strong>.
+    </p>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     FOR PARENTS
+════════════════════════════════════════════ -->
+<section class="page-sec alt">
+  <div class="page-sec-inner">
+    <p class="sec-tag">For parents</p>
+    <h2 class="sec-title">What parents notice<br/>after a few months</h2>
+    <p class="sec-sub">
+      The changes go far beyond robotics. Parents often tell us about a different kind of
+      transformation — one that carries into school, friendships and everyday life.
+    </p>
+
+    <div class="outcomes-grid">
+      <div class="outcome-card">
+        <div class="oc-icon">💪</div>
+        <h3>More confidence</h3>
+        <p>A child who has built a working robot trusts their own ability to figure things out — in class and beyond.</p>
+      </div>
+      <div class="outcome-card">
+        <div class="oc-icon">🔍</div>
+        <h3>Deeper curiosity</h3>
+        <p>Instead of "I don't know," they start asking "how does this work?" — and actually trying to find out.</p>
+      </div>
+      <div class="outcome-card">
+        <div class="oc-icon">🧱</div>
+        <h3>Greater independence</h3>
+        <p>Children become more willing to tackle problems on their own rather than waiting for someone to solve it for them.</p>
+      </div>
+      <div class="outcome-card">
+        <div class="oc-icon">📚</div>
+        <h3>Better at school</h3>
+        <p>Engineering thinking supports mathematics, physics and logical reasoning — subjects where the improvement often becomes visible.</p>
+      </div>
+      <div class="outcome-card">
+        <div class="oc-icon">🎯</div>
+        <h3>Real focus</h3>
+        <p>Children who love what they're doing naturally develop concentration, patience and the ability to work toward a goal.</p>
+      </div>
+      <div class="outcome-card">
+        <div class="oc-icon">🌟</div>
+        <h3>A sense of pride</h3>
+        <p>"I built that" is one of the most powerful things a child can feel. It stays with them long after the class is over.</p>
+      </div>
+    </div>
+
+    <div class="quote-block" style="margin-top:36px">
+      <p>"Instead of saying 'I can't do this,' my son now says 'let me try and figure it out.' That shift happened after just a few months."</p>
+      <cite>— Parent of a student, Gaia</cite>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     FINAL CTA
+════════════════════════════════════════════ -->
+<div style="padding: 80px 0 0;">
+  <div class="final-cta">
+    <div>
+      <h2>Start building the future today.</h2>
+      <p>
+        Every engineer started with curiosity and one first project.
+        Book a free trial class — no commitment required.
+        Just bring your child and let them discover what they can create.
+      </p>
+    </div>
+    <div class="final-cta-btns">
+      <a href="https://wa.me/351912510486" class="btn-white">💬 WhatsApp us</a>
+      <a href="../calendar.html" class="btn-white ghost">📅 View schedule</a>
+    </div>
+  </div>
+</div>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo"><img src="../logo.png" alt="RoboKittens" /></div>
+        <p class="f-desc">STEAM education space for children aged 4–16. Robotics, science, coding, yoga — in Gaia and Matosinhos.</p>
+        <div class="social-links">
+          <a class="social-link" href="https://www.instagram.com/robokittens.space">📷 Instagram</a>
+          <a class="social-link" href="https://t.me/RoboKittens">✈️ Telegram</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Programs</h4>
+        <ul class="footer-links">
+          <li><a href="robotics.html">Robotics &amp; Engineering</a></li>
+          <li><a href="science.html">Science Lab</a></li>
+          <li><a href="coding.html">Coding</a></li>
+          <li><a href="yoga.html">Yoga &amp; Focus</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacts</h4>
+        <ul class="footer-links">
+          <li><a href="tel:+351912510486">+351 912 510 486</a></li>
+          <li><a href="mailto:robokittens.space@gmail.com">robokittens.space@gmail.com</a></li>
+          <li><a href="../calendar.html">Book a class →</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 RoboKittens · Vila Nova de Gaia &amp; Matosinhos</span>
+      <span>🐾 Where kids build, experiment, and discover</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
 </body>
 </html>
